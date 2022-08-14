@@ -1,0 +1,610 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Kang Asu
+Dr. ROBOT - Tool To Enumerate The Subdomains Associated With A Company By Aggregating The Results Of Multiple OSINT Tools
+Dr. ROBOT is a tool for Domain Reconnaissance and Enumeration. By utilizing containers to reduce the overhead of dealing with dependencies, inconsistency across operating sytems, and different languages, Dr. ROBOT is built to be highly portable and configurable.
+Use Case: Gather as many public facing servers that a target organization possesses."><title>Dr. ROBOT</title><link rel=canonical href=https://Nexus-Security.github.io/posts/2016-09-09-dr-robot/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="Dr. ROBOT"><meta property="og:description" content="Kang Asu
+Dr. ROBOT - Tool To Enumerate The Subdomains Associated With A Company By Aggregating The Results Of Multiple OSINT Tools
+Dr. ROBOT is a tool for Domain Reconnaissance and Enumeration. By utilizing containers to reduce the overhead of dealing with dependencies, inconsistency across operating sytems, and different languages, Dr. ROBOT is built to be highly portable and configurable.
+Use Case: Gather as many public facing servers that a target organization possesses."><meta property="og:url" content="https://Nexus-Security.github.io/posts/2016-09-09-dr-robot/"><meta property="og:site_name" content="ZYChimne"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2019-09-30T15:47:00+01:00"><meta property="article:modified_time" content="2019-09-30T15:47:00+01:00"><meta name=twitter:title content="Dr. ROBOT"><meta name=twitter:description content="Kang Asu
+Dr. ROBOT - Tool To Enumerate The Subdomains Associated With A Company By Aggregating The Results Of Multiple OSINT Tools
+Dr. ROBOT is a tool for Domain Reconnaissance and Enumeration. By utilizing containers to reduce the overhead of dealing with dependencies, inconsistency across operating sytems, and different languages, Dr. ROBOT is built to be highly portable and configurable.
+Use Case: Gather as many public facing servers that a target organization possesses."></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu8b78332b6420dc9affabe23720d11e63_1937019_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍇</span></figure><div class=site-meta><h1 class=site-name><a href=/>ZYChimne</a></h1><h2 class=site-description>Computer Science, Wuhan University</h2></div></header><ol class=social-menu><li><a href=https://github.com/ZYChimne target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com/ZChimne target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/about-me/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/posts/2016-09-09-dr-robot/>Dr. ROBOT</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Sep 30, 2019</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>19 minute read</time></div></footer></div></header><section class=article-content><p><strong>Kang Asu</strong></p><p><a class=link href=https://1.bp.blogspot.com/-Zz82-8f0Xlk/XYTnIhPhOXI/AAAAAAAABs8/A7J_x2SsbiQTV1oG3HuJjYAoOMKgMDliwCLcBGAsYHQ/s1600/dr_robot_4_demo.gif target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-Zz82-8f0Xlk/XYTnIhPhOXI/AAAAAAAABs8/A7J_x2SsbiQTV1oG3HuJjYAoOMKgMDliwCLcBGAsYHQ/s1600/dr_robot_4_demo.gif loading=lazy></a></p><p><strong>Dr. ROBOT - Tool To Enumerate The Subdomains Associated With A Company By Aggregating The Results Of Multiple OSINT Tools</strong></p><p>Dr. ROBOT is a tool for <strong>Domain <a class=link href=https://www.kitploit.com/search/label/Reconnaissance title=Reconnaissance target=_blank rel=noopener>Reconnaissance</a> and Enumeration</strong>. By utilizing containers to reduce the overhead of dealing with dependencies, inconsistency across operating sytems, and different languages, Dr. ROBOT is built to be highly portable and configurable.<br><strong>Use Case</strong>: Gather as many public facing servers that a target organization possesses. Querying DNS resources enables us to quickly develop a large list of possible targets that you can run further analysis on.<br><strong>Note</strong>: Dr. ROBOT is not just a one trick pony. You can easily customize the tools that are used gather information, so that you can enjoy the benefits of using latest and greatest along with your battle tested favorites.<br><a class=link href=https://www.blogger.com/u/1/null target=_blank rel=noopener></a></p><p><strong>Install and Run</strong></p><p><a class=link href=https://1.bp.blogspot.com/-qV1qoBa1-dY/XX0CHT4rbjI/AAAAAAAAQVQ/ZTysrlGEPlQuAyer11b3J1sATidjxLMHACNcBGAsYHQ/s1600/dr_robot_4_demo.gif target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-qV1qoBa1-dY/XX0CHT4rbjI/AAAAAAAAQVQ/ZTysrlGEPlQuAyer11b3J1sATidjxLMHACNcBGAsYHQ/s640/dr_robot_4_demo.gif loading=lazy></a></p><p><strong>Inspect</strong></p><p><a class=link href=https://1.bp.blogspot.com/-rWuMP5HVeIU/XX0CQF-yLsI/AAAAAAAAQVU/E8_MO-2BgjI0VdoQEAC5CXTtaCFWBRD0gCNcBGAsYHQ/s1600/dr_robot_5_inspect.gif target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-rWuMP5HVeIU/XX0CQF-yLsI/AAAAAAAAQVU/E8_MO-2BgjI0VdoQEAC5CXTtaCFWBRD0gCNcBGAsYHQ/s640/dr_robot_5_inspect.gif loading=lazy></a></p><p><strong>Upload Slack</strong></p><p><a class=link href=https://1.bp.blogspot.com/-bYktZeyYTvw/XX0CUfE6aYI/AAAAAAAAQVY/-cxmw3NIr6ctu3WLpb9AiCgp604r2a0XgCNcBGAsYHQ/s1600/dr_robot_6_upload_slack.gif target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-bYktZeyYTvw/XX0CUfE6aYI/AAAAAAAAQVY/-cxmw3NIr6ctu3WLpb9AiCgp604r2a0XgCNcBGAsYHQ/s640/dr_robot_6_upload_slack.gif loading=lazy></a></p><p><strong>Dump DB</strong></p><p><a class=link href=https://1.bp.blogspot.com/-Z1qrRnZ7-Z8/XX0CYOkWNWI/AAAAAAAAQVc/iOi3-S5aHx0Zk6FpNvMa0o4DXSWEfavPQCNcBGAsYHQ/s1600/dr_robot_7_dumpdb.gif target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-Z1qrRnZ7-Z8/XX0CYOkWNWI/AAAAAAAAQVc/iOi3-S5aHx0Zk6FpNvMa0o4DXSWEfavPQCNcBGAsYHQ/s640/dr_robot_7_dumpdb.gif loading=lazy></a></p><p><strong>Output</strong></p><p><a class=link href=https://1.bp.blogspot.com/-jeKt-DdZrkE/XX0CcwWu_KI/AAAAAAAAQVk/TrNAZt40z5oGycdBK-nvU5g442JvKYJ1ACNcBGAsYHQ/s1600/dr_robot_8_output.gif target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-jeKt-DdZrkE/XX0CcwWu_KI/AAAAAAAAQVk/TrNAZt40z5oGycdBK-nvU5g442JvKYJ1ACNcBGAsYHQ/s640/dr_robot_8_output.gif loading=lazy></a></p><p><strong>Serve</strong></p><p><a class=link href=https://1.bp.blogspot.com/-r7x2spRfwHs/XX0ChZg6mpI/AAAAAAAAQVo/WKY-wRlkN0cRLxhPCNiR-EXqc4-im226QCNcBGAsYHQ/s1600/dr_robot_9_serve.gif target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-r7x2spRfwHs/XX0ChZg6mpI/AAAAAAAAQVo/WKY-wRlkN0cRLxhPCNiR-EXqc4-im226QCNcBGAsYHQ/s640/dr_robot_9_serve.gif loading=lazy></a></p><p><strong>Command Examples</strong></p><ul><li>Run gather using Sublist3r and Aquatone and Shodan```
+python drrobot.py example.domain gather -sub -aqua -shodan<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback></code></pre></td></tr></table></div></div></li><li>Run gather using Sublist3r with Proxy```
+python drrobot.py &ndash;proxy <a class=link href=http://some.proxy:port/ target=_blank rel=noopener>http://some.proxy:port</a> example.domain gather -sub<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback></code></pre></td></tr></table></div></div></li><li>Run inspect using Eyewitness```
+python drrobot.py example.domain inspect -eye<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback></code></pre></td></tr></table></div></div></li><li>Run inspect using httpscreenshot and grabbing headers```
+python drrobot.py example.domain inspect -http -headers<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback></code></pre></td></tr></table></div></div></li><li>Run upload using Mattermost/Slack```
+python drrobot.py example.domain upload -matter<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback></code></pre></td></tr></table></div></div></li></ul><p><strong>MAIN</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: drrobot.py [-h] [--proxy PROXY] [--dns DNS] [--verbose]                    [--dbfile DBFILE]                    {gather,inspect,upload,rebuild,dumpdb,output,serve}                    ...    Docker DNS recon tool    positional arguments:    {gather,inspect,upload,rebuild,dumpdb,output,serve}      gather              Run scanners against a specified domain and gather the associated                          systems. You have the option to run using any                          docker_buildfiles/webtools included in your config.      inspect             Run further tools against domain information gathered                          from the gather step. Note: you must either supply a file                          which contains a list of IP/Hostnames, or the targeted                          domain must have a db file in the dbs folder      upload              Upload recon data to Mattermost. Currently only works                          with afolder that contain PNG images.      rebuild             Rebuild the database with additional files/all files                          from the previous runtime      dumpdb              Dump the database of ip, hostname, and banners to a text                          file      output              Generate output in specified format. Contains all                          information from scans (images, headers, hostnames,                          ips)      serve               Serve database file in docker container using django    optional arguments:    -h, --help            show this help message and exit    --proxy PROXY         Proxy server URL to set DOCKER http_proxy too    --dns DNS             DNS server to add to resolv.conf of DOCKER containers    --verbose             Display verbose statements    --dbfile DBFILE       Specify what db file to use for saving data too 
+</span></span></code></pre></td></tr></table></div></div><p><strong>Gather</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl> usage: drrobot.py domain gather [-h] [-aqua] [-sub] [-brute] [-sfinder]                                  [-knock] [-amass] [-recong] [-shodan] [-arin]                                  [-hack] [-dump] [-virus] [--ignore IGNORE]                                  [--headers]    positional arguments:    domain                Domain to run scan against    optional arguments:    -h, --help            Show this help message and exit    -aqua, --Aquatone     AQUATONE is a set of tools for performing                          reconnaissance on domain names    -sub, --Sublist3r     Sublist3r is a python tool designed to enumerate                          subdomains of websites using OSINT    -brute, --Subbrute    SubBrute is a community driven project with the goal                          of creating the fastest, and most accurate subdomain                          enumeration tool.    -sfinder, --Subfinder                          SubFinder is a subdomain discovery tool that discovers                          valid subdomains for websites by using passive online                          sources    -knock, --Knock       Knockpy is a python tool designed to enumerate                          subdomains on a target domain through a wordlist    -amass, --Amass       The OWASP Amass tool suite obtains subdomain names by                          scraping data sources, recursive brute forcing,                          crawling web archives, permuting/altering names and                          reverse DNS sweeping.    -recon, --Reconng     Recon-ng is a full-featured Web Reconnaissance                          framework written in Python. DrRobot utilizes several                          of the recon/hosts-domain modules in this framework.    -shodan, --Shodan     Query SHODAN for publicly facing sites of given domain    -arin, --Arin         Query ARIN for public CIDR ranges. This is better as a                          [brute force](https://www.kitploit.com/search/label/Brute%20Force &#34;brute force&#34;) option as the ranges    -hack, --HackerTarget                          This query will display the forward DNS records                          discovered using the data sets outlined above.    -dump, --Dumpster     Use the limited response of DNSDumpster. Requires API                          access for better results.    -virus, --VirusTotal  Utilize VirusTotal&#39;s Observer Subdomain Search    --ignore IGNORE       Space seperated list of subnets to ignore    --headers             If headers should be scraped from ip addresses                          gathered 
+</span></span></code></pre></td></tr></table></div></div><p><strong>INSPECT</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: main.py inspect [-h] [-httpscreen] [-eye] [--proxy PROXY] [--dns DNS]                         [--file FILE]    positional arguments:    domain                Domain to run scan against    optional arguments:    -h, --help            Show this help message and exit    -httpscreen, --HTTPScreenshot                          Post enumeration tool for screen grabbing websites.                          All images will be downloaded to an output file:                          httpscreenshot.tar and unpacked httpscreenshots    -eye, --Eyewitness    Post enumeration tool for screen grabbing websites.                          All images will be downloaded to outfile:                          Eyewitness.tar and unpacked in Eyewitness    --proxy PROXY         Proxy server URL to set for DOCKER http_proxy    --dns DNS             DNS server for the resolv.conf of DOCKER containers    --file FILE           (NOT WORKING) File with hostnames to run further                          inspection on 
+</span></span></code></pre></td></tr></table></div></div><p><strong>UPLOAD</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: drrobot.py [-h] [--proxy PROXY] [--dns DNS] [--verbose]  
+</span></span><span class=line><span class=cl>                  [--dbfile DBFILE]  
+</span></span><span class=line><span class=cl>                  {gather,inspect,upload,rebuild,dumpdb,output,serve}  
+</span></span><span class=line><span class=cl>                  ...  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>Docker DNS recon tool  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>positional arguments:  
+</span></span><span class=line><span class=cl>  {gather,inspect,upload,rebuild,dumpdb,output,serve}  
+</span></span><span class=line><span class=cl>    gather              Run scanners against a specified domain and gather the associated  
+</span></span><span class=line><span class=cl>                        systems. You have the option to run using any  
+</span></span><span class=line><span class=cl>                        docker_buildfiles/webtools included in your config.  
+</span></span><span class=line><span class=cl>    inspect             Run further tools against domain information gathered  
+</span></span><span class=line><span class=cl>                        from the gather step. Note: you must either supply a file  
+</span></span><span class=line><span class=cl>                        which contains a list of IP/Hostnames, or the targeted  
+</span></span><span class=line><span class=cl>                        domain must have a db file in the dbs folder  
+</span></span><span class=line><span class=cl>    upload              Upload recon data to Mattermost. Currently only works  
+</span></span><span class=line><span class=cl>                           with afolder that contain PNG images.  
+</span></span><span class=line><span class=cl>    rebuild             Rebuild the database with additional files/all files  
+</span></span><span class=line><span class=cl>                        from the previous runtime  
+</span></span><span class=line><span class=cl>    dumpdb              Dump the database of ip, hostname, and banners to a text  
+</span></span><span class=line><span class=cl>                        file  
+</span></span><span class=line><span class=cl>    output              Generate output in specified format. Contains all  
+</span></span><span class=line><span class=cl>                        information from scans (images, headers, hostnames,  
+</span></span><span class=line><span class=cl>                        ips)  
+</span></span><span class=line><span class=cl>    serve               Serve database file in docker container using django  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help            show this help message and exit  
+</span></span><span class=line><span class=cl>  --proxy PROXY         Proxy server URL to set DOCKER http_proxy too  
+</span></span><span class=line><span class=cl>  --dns DNS             DNS server to add to resolv.conf of DOCKER containers  
+</span></span><span class=line><span class=cl>  --verbose             Display verbose statements  
+</span></span><span class=line><span class=cl>  --dbfile DBFILE       Specify what db file to use for saving data too
+</span></span></code></pre></td></tr></table></div></div><p><strong>Rebuild</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>usage: drrobot.py domain gather [-h] [-aqua] [-sub] [-brute] [-sfinder]  
+</span></span><span class=line><span class=cl>                                [-knock] [-amass] [-recong] [-shodan] [-arin]  
+</span></span><span class=line><span class=cl>                                [-hack] [-dump] [-virus] [--ignore IGNORE]  
+</span></span><span class=line><span class=cl>                                [--headers]  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>positional arguments:  
+</span></span><span class=line><span class=cl>  domain                Domain to run scan against  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help            Show this help message and exit  
+</span></span><span class=line><span class=cl>  -aqua, --Aquatone     AQUATONE is a set of tools for performing  
+</span></span><span class=line><span class=cl>                        reconnaissance on domain names  
+</span></span><span class=line><span class=cl>  -sub, --Sublist3r     Sublist3r is a python tool designed to enumerate  
+</span></span><span class=line><span class=cl>                        subdomains of websites using OSINT  
+</span></span><span class=line><span class=cl>  -brute, --Subbrute    SubBrute is a community driven project with the goal  
+</span></span><span class=line><span class=cl>                        of creating the fastest, and most accurate subdomain  
+</span></span><span class=line><span class=cl>                        enumeration tool.  
+</span></span><span class=line><span class=cl>  -sfinder, --Subfinder  
+</span></span><span class=line><span class=cl>                           SubFinder is a subdomain discovery tool that discovers  
+</span></span><span class=line><span class=cl>                        valid subdomains for websites by using passive online  
+</span></span><span class=line><span class=cl>                        sources  
+</span></span><span class=line><span class=cl>  -knock, --Knock       Knockpy is a python tool designed to enumerate  
+</span></span><span class=line><span class=cl>                        subdomains on a target domain through a wordlist  
+</span></span><span class=line><span class=cl>  -amass, --Amass       The OWASP Amass tool suite obtains subdomain names by  
+</span></span><span class=line><span class=cl>                        scraping data sources, recursive brute forcing,  
+</span></span><span class=line><span class=cl>                        crawling web archives, permuting/altering names and  
+</span></span><span class=line><span class=cl>                        reverse DNS sweeping.  
+</span></span><span class=line><span class=cl>  -recon, --Reconng     Recon-ng is a full-featured Web Reconnaissance  
+</span></span><span class=line><span class=cl>                        framework written in Python. DrRobot utilizes several  
+</span></span><span class=line><span class=cl>                        of the recon/hosts-domain modules in this framework.  
+</span></span><span class=line><span class=cl>  -shodan, --Shodan     Query SHODAN for publicly facing sites of given domain  
+</span></span><span class=line><span class=cl>  -arin, --Arin         Query ARIN for public CIDR r   anges. This is better as a  
+</span></span><span class=line><span class=cl>                        brute force option as the ranges  
+</span></span><span class=line><span class=cl>  -hack, --HackerTarget  
+</span></span><span class=line><span class=cl>                        This query will display the forward DNS records  
+</span></span><span class=line><span class=cl>                        discovered using the data sets outlined above.  
+</span></span><span class=line><span class=cl>  -dump, --Dumpster     Use the limited response of DNSDumpster. Requires API  
+</span></span><span class=line><span class=cl>                        access for better results.  
+</span></span><span class=line><span class=cl>  -virus, --VirusTotal  Utilize VirusTotal&#39;s Observer Subdomain Search  
+</span></span><span class=line><span class=cl>  --ignore IGNORE       Space seperated list of subnets to ignore  
+</span></span><span class=line><span class=cl>  --headers             If headers should be scraped from ip addresses  
+</span></span><span class=line><span class=cl>                        gathered
+</span></span></code></pre></td></tr></table></div></div><p><strong>Dumpdb</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: main.py inspect [-h] [-httpscreen] [-eye] [--proxy PROXY] [--dns DNS]  
+</span></span><span class=line><span class=cl>                       [--file FILE]  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>positional arguments:  
+</span></span><span class=line><span class=cl>  domain                Domain to run scan against  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help            Show this help message and exit  
+</span></span><span class=line><span class=cl>  -httpscreen, --HTTPScreenshot  
+</span></span><span class=line><span class=cl>                        Post enumeration tool for screen grabbing websites.  
+</span></span><span class=line><span class=cl>                        All images will be downloaded to an output file:  
+</span></span><span class=line><span class=cl>                        httpscreenshot.tar and unpacked httpscreenshots  
+</span></span><span class=line><span class=cl>  -eye, --Eyewitness    Post enumeration tool for screen grabbing websites.  
+</span></span><span class=line><span class=cl>                        All images will be downloaded to outfile:  
+</span></span><span class=line><span class=cl>                        Eyewitness.tar and unpacked in Eyewitness  
+</span></span><span class=line><span class=cl>  --proxy PROXY         Proxy server URL to set for DOCKER http_proxy  
+</span></span><span class=line><span class=cl>  --dns DNS             DNS server for the resolv.conf of DOCKER containers  
+</span></span><span class=line><span class=cl>  --file FILE           (NOT WORKING) File with    hostnames to run further  
+</span></span><span class=line><span class=cl>                        inspection on
+</span></span></code></pre></td></tr></table></div></div><p><strong>OUTPUT</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: drrobot.py domain upload [-h] [-matter] [-slack] [--filepath FILEPATH]  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>positional arguments:  
+</span></span><span class=line><span class=cl>  domain                Domain to run scan against  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help            Show this help message and exit  
+</span></span><span class=line><span class=cl>  -matter, --Mattermost Mattermost server to upload findings to  
+</span></span><span class=line><span class=cl>                        Mattermost server  
+</span></span><span class=line><span class=cl>  -slack, --Slack       Slack server  
+</span></span><span class=line><span class=cl>  --filepath FILEPATH   Filepath to the folder containing images to upload.  
+</span></span><span class=line><span class=cl>                        This is relative to the domain specified. By default,  
+</span></span><span class=line><span class=cl>                        this will be the path to the output folder
+</span></span></code></pre></td></tr></table></div></div><p><strong>Serve</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: drrobot.py rebuild [-h] [-f [FILES [FILES ...]]]  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help            Show this help message and exit  
+</span></span><span class=line><span class=cl>  -f [FILES [FILES ...]], --files [FILES [FILES ...]]  
+</span></span><span class=line><span class=cl>                        Additional files to supply in addition to the ones in the  
+</span></span><span class=line><span class=cl>                        config file
+</span></span></code></pre></td></tr></table></div></div><p><strong>Configurations</strong><br>This tool is highly dependent on the configuration you provide it. Provided for you is a <strong>default_config.json</strong> that you can use as a simple template for your <strong>user_config.json</strong>. Most of the configurations under <strong>Scanners</strong> are done for you and can be used as is. Note the use of <strong>default</strong> in this and other sections.</p><blockquote><p> default : specifies a Docker or Ansible instance. Make sure you adjust configurations according to their usage.</p></blockquote><ul><li><p> Docker Configuration Requirements</p><ul><li><p> Example:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: drrobot.py dumpdb [-h]  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>positional arguments:  
+</span></span><span class=line><span class=cl>  domain                Domain to run scan against  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help            Show this help message and exit
+</span></span></code></pre></td></tr></table></div></div></li><li><p> name: Identifiable name for the program/utility you are using</p></li><li><p> default : (Disabled for now)</p></li><li><p> mode : DOCKER (uses docker container with this tool when chosen)</p></li><li><p> docker_name : What the docker image name will be when running <code>docker images</code></p></li><li><p> network_mode : Network mode to use when creating container. Host uses the host network</p></li><li><p> default_conf : Template Dockerfile to build form</p></li><li><p> active_conf : Target specific configuration that will be used during runtime</p></li><li><p> description : Description of tool (optional)</p></li><li><p> src : Where the tool comes from (optional)</p></li><li><p> output : Location of output on the docker container. Can be hardcoded into Dockerfiles for preference</p></li><li><p> output_folder : Location under the <em>outputs/target</em> folder where output for target will be stored</p></li></ul></li><li><p> Ansible Configuration Requirements</p><ul><li>Example</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: drrobot.py domain output [-h] [--output OUTPUT] {json,xml}  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>positional arguments:  
+</span></span><span class=line><span class=cl>  {json,xml}       Generate json file under outputs folder (format)  
+</span></span><span class=line><span class=cl>  domain           Domain to dump output of  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help       Show this help message and exit  
+</span></span><span class=line><span class=cl>  --output OUTPUT  Alternative location to create output file
+</span></span></code></pre></td></tr></table></div></div><ul><li>name: Identifiable name for the program/utility you are using</li><li>default : (Disabled for now)</li><li>mode : ANSIBLE (uses Ansible with this tool when chosen)</li><li>ansible_arguments : Json configuration for specific informaiton<ul><li>config : playbook to use ($config keyword is replaces for full path to file when issuing ansible playbook command)</li><li>flags : specifies extra flags to be used with the ansible command (specifically useful for any extra flags you would like to use)</li><li>extra flags : key does not matter so long as it is different from any other key. These extra flags will all be applied to the ansible file in question</li></ul></li><li>description : Description of tool (optional)</li><li>src : Where the tool comes from (optional)</li><li>output : Where output will be stored on the external file system</li><li>infile : (Unique for certain modules) what files this program will use as input to the program. In this case you will notice that it searches /tmp/output for aggregated_protocol_hostnames.txt. This file is supplied from the above extra flags option.</li></ul></li><li><p> Web Modules</p><ul><li>Example:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: drrobot.py domain serve [-h]  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help  show this help message and exit  
+</span></span></code></pre></td></tr></table></div></div><ul><li>short_name : quick reference name for use in CLI</li><li>class_name : this must match the name you specify for a given class under the respective module name<ul><li>The reason behind this results from the loading of modules at runtime which requires the use of importlib. This will load the respective class from the classname provided via the CLI options.</li></ul></li><li>default : false (Disabled for now)</li><li>api_call_unused : (Old, may be used later&mldr;)</li><li>description : Description of tool (optional)</li></ul></li><li><p> Serve Module:</p><ul><li>Example</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&#34;Sublist3r&#34;: {  
+</span></span><span class=line><span class=cl>    &#34;name&#34;: &#34;Sublist3r&#34;,  
+</span></span><span class=line><span class=cl>    &#34;default&#34; : true,  
+</span></span><span class=line><span class=cl>    &#34;mode&#34; : &#34;DOCKER&#34;,  
+</span></span><span class=line><span class=cl>    &#34;docker_name&#34;: &#34;sub&#34;,  
+</span></span><span class=line><span class=cl>    &#34;network_mode&#34;: &#34;host&#34;,  
+</span></span><span class=line><span class=cl>    &#34;default_conf&#34;: &#34;docker_buildfiles/Dockerfile.Sublist3r.tmp&#34;,  
+</span></span><span class=line><span class=cl>    &#34;active_conf&#34;: &#34;docker_buildfiles/Dockerfile.Sublist3r&#34;,  
+</span></span><span class=line><span class=cl>    &#34;description&#34;: &#34;Sublist3r is a python tool designed to [enumerate subdomains](https://www.kitploit.com/search/label/Enumerate%20Subdomains &#34;enumerate subdomains&#34;) of websites using OSINT&#34;,  
+</span></span><span class=line><span class=cl>    &#34;src&#34;: &#34;[https://github.com/aboul3la/Sublist3r](https://github.com/aboul3la/Sublist3r)&#34;,  
+</span></span><span class=line><span class=cl>    &#34;output&#34;: &#34;/root/sublist3r&#34;,  
+</span></span><span class=line><span class=cl>    &#34;output_folder&#34;: &#34;sublist3r&#34;  
+</span></span><span class=line><span class=cl>},
+</span></span></code></pre></td></tr></table></div></div><ul><li>command: Command to start server on Docker container (Note: For now only using docker)</li><li>docker_name : What the docker image name will be when running <code>docker images</code></li><li>network_mode : Network mode to use when creating container. Host uses the host network</li><li>default_conf : Template Dockerfile to build form</li><li>active_conf : Target specific configuration that will be used during runtime</li><li>description : Description of tool (optional)</li><li>ports: Port mapping of localhost to container for docker</li></ul></li></ul><p><strong>Example Configuration For WebTools</strong><br>Under <strong>configs</strong>, you will find a default_config that contains a majority of the default scanners you can use. If you wish to extend upon the <strong>WebTools</strong> list just follow these steps:</p><ol><li><p>Add the new tool to the user_config.json</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl> &#34;HTTPScreenshot&#34;: {  
+</span></span><span class=line><span class=cl>        &#34;name&#34; : &#34;HTTPScreenshot&#34;,  
+</span></span><span class=line><span class=cl>        &#34;short_name&#34; : &#34;http&#34;,  
+</span></span><span class=line><span class=cl>        &#34;mode&#34; : &#34;ANSIBLE&#34;,  
+</span></span><span class=line><span class=cl>        &#34;ansible_arguments&#34; : {  
+</span></span><span class=line><span class=cl>            &#34;config&#34; : &#34;$config/httpscreenshot_play.yml&#34;,  
+</span></span><span class=line><span class=cl>            &#34;flags&#34;: &#34;-e &#39;$extra&#39; -i ansible_plays/inventory.yml&#34;,  
+</span></span><span class=line><span class=cl>            &#34;extra_flags&#34;:{  
+</span></span><span class=line><span class=cl>                &#34;1&#34; : &#34;variable_host=localhost&#34;,  
+</span></span><span class=line><span class=cl>                &#34;2&#34; : &#34;infile=$infile/aggregated/aggregated_protocol_hostnames.txt&#34;,  
+</span></span><span class=line><span class=cl>                &#34;3&#34; : &#34;outfile=$outfile/httpscreenshots.tar&#34;,  
+</span></span><span class=line><span class=cl>                &#34;4&#34; : &#34;outfolder=$outfile/httpscreenshots&#34;,  
+</span></span><span class=line><span class=cl>                &#34;5&#34; : &#34;variable_user=bitnami&#34;  
+</span></span><span class=line><span class=cl>            }  
+</span></span><span class=line><span class=cl>        },  
+</span></span><span class=line><span class=cl>        &#34;description&#34; : &#34;Post enumeration tool for screen grabbing websites. All images will be downloaded to outfile: httpscreenshot.tar and unpacked httpscreenshots&#34;,  
+</span></span><span class=line><span class=cl>        &#34;output&#34; : &#34;/tmp/output&#34;,  
+</span></span><span class=line><span class=cl>        &#34;infile&#34; : &#34;/tmp/output/aggregated_protocol_hostnames.txt&#34;,  
+</span></span><span class=line><span class=cl>        &#34;   enabled&#34; : false
+</span></span></code></pre></td></tr></table></div></div></li><li><p>Open <strong>src/web_resources.py</strong> and make a class with the <strong>class_name</strong> specified in the previous step. <em><strong>MAKE SURE IT MATCHES EXACTLY</strong></em></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl> &#34;HackerTarget&#34; :  
+</span></span><span class=line><span class=cl>    {  
+</span></span><span class=line><span class=cl>        &#34;short_name&#34; : &#34;hack&#34;,  
+</span></span><span class=line><span class=cl>        &#34;class_name&#34; : &#34;HackerTarget&#34;,  
+</span></span><span class=line><span class=cl>        &#34;default&#34; : false,  
+</span></span><span class=line><span class=cl>        &#34;description&#34; : &#34;This query will display the forward DNS records discovered using the data sets outlined above.&#34;,  
+</span></span><span class=line><span class=cl>        &#34;api_call_unused&#34; : &#34;[https://api.hackertarget.com/hostsearch/?q=example.com](https://api.hackertarget.com/hostsearch/?q=example.com)&#34;,  
+</span></span><span class=line><span class=cl>        &#34;output_file&#34; : &#34;hacker.txt&#34;  
+</span></span><span class=line><span class=cl>    },
+</span></span></code></pre></td></tr></table></div></div></li></ol><p><strong>Example Configurations For Docker Containers</strong><br>Under <strong>configs</strong>, you will find a <strong>default_config</strong> which contains a majority of the default scanners you can utilize. If you wish to extend upon the <strong>Scanners</strong> list just follow these steps:</p><ol><li><p>Add the <strong>json</strong> to the <strong>config</strong> file (user if generated).</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&#34;Serve&#34; : {  
+</span></span><span class=line><span class=cl>    &#34;name&#34; : &#34;Django&#34;,  
+</span></span><span class=line><span class=cl>    &#34;command&#34; : &#34;python manage.py runserver 0.0.0.0:8888&#34;,  
+</span></span><span class=line><span class=cl>    &#34;docker_name&#34;: &#34;django&#34;,  
+</span></span><span class=line><span class=cl>    &#34;network_mode&#34;: &#34;host&#34;,  
+</span></span><span class=line><span class=cl>    &#34;default_conf&#34;: &#34;serve_api/Dockerfile.Django.tmp&#34;,  
+</span></span><span class=line><span class=cl>    &#34;active_conf&#34;: &#34;serve_api/Dockerfile.Django&#34;,  
+</span></span><span class=line><span class=cl>    &#34;description&#34; : &#34;Django container for hosting database&#34;,  
+</span></span><span class=line><span class=cl>    &#34;ports&#34; : {  
+</span></span><span class=line><span class=cl>        &#34;8888&#34; : &#34;8888&#34;  
+</span></span><span class=line><span class=cl>     }  
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><ol><li>Note <em>network_mode</em> is an option specifically for docker containers. It is implementing the <code>--network</code> flag when using docker</li></ol></li><li><p>Under the <strong>docker_buildfiles/</strong> folder, create your <strong>Dockerfile.NewTool.tmp</strong> dockerfile.</p><ol><li>If you desire adding more options at run time to the Dockerfiles, look at editing <strong>src/dockerize</strong></li><li><strong>Note:</strong> As of right now Dockerfiles must come from the <strong>docker_buildfiles</strong> folder. Future work includes specifying a remote source for the docker images.</li></ol></li></ol><p><strong>Example Ansible Configuration</strong><br>Under <strong>configs</strong> you will find a <strong>default_config</strong> which contains a majority of the default scanners you can have. For this step however, we will be looking at configuring an inspection too <strong>Eyewitness</strong> for utilization with <strong>Ansible</strong>.</p><ol><li><p>Add the <strong>json</strong> to the <strong>config</strong> file (user if generated).</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>{  
+</span></span><span class=line><span class=cl>  &#34;WebTools&#34;:  
+</span></span><span class=line><span class=cl>  {  
+</span></span><span class=line><span class=cl>    &#34;NewTool&#34; :  
+</span></span><span class=line><span class=cl>    {  
+</span></span><span class=line><span class=cl>      &#34;short_name&#34;: &#34;ntool&#34;,  
+</span></span><span class=line><span class=cl>      &#34;class_name&#34;: &#34;NewTool&#34;,  
+</span></span><span class=line><span class=cl>      &#34;description&#34; : &#34;NewTool description&#34;,  
+</span></span><span class=line><span class=cl>      &#34;output_file&#34; : &#34;newtool.txt&#34;,  
+</span></span><span class=line><span class=cl>      &#34;api_key&#34; : null,  
+</span></span><span class=line><span class=cl>      &#34;endpoint&#34; : null,  
+</span></span><span class=line><span class=cl>      &#34;username&#34; : null,  
+</span></span><span class=line><span class=cl>      &#34;password&#34; : null  
+</span></span><span class=line><span class=cl>    },
+</span></span></code></pre></td></tr></table></div></div></li><li><p>As you can see, this has a few items that may seem confusing at first, but will be clarified here:</p><ol><li>mode: Allows you to specify how you want to deploy a tool you want to use. Currently <strong>DOCKER</strong> or <strong>ANSIBLE</strong> are the only available methods to deploy.</li><li>All options outside of <strong>ansible_configuration</strong> will be ignored when developing for <strong>ANSIBLE</strong>.</li><li>Options under <em>ansible_arguments</em><ol><li><p><strong>config</strong>: specify which playbook to use</p></li><li><p><strong>flags</strong>: which flags to pass to the <strong>ansible-playbook</strong> command. With the exception of the <strong>$extra</strong> flag, you can add anything you would like to be done uniquely here.</p></li><li><p><strong>extra_flags</strong> : this corresponds to the <strong>$extra</strong> flag as seen above. This will be used to populate variables that you input into your playbook. You can use this to supply <a class=link href=https://www.kitploit.com/search/label/Command%20Line title="command line" target=_blank rel=noopener>command line</a> arguments when utilizing ansible and Dr. Robot in order to add files and other utilities to your script.</p><ol><li><strong>variable_host</strong> : hostname alias found in the inventory file</li><li><strong>variable_user</strong> : user to login as on the variable_host machine</li><li><strong>infile</strong>: file to be used with the tool above. Eyewitness requires hostnames with the format <code>[https://some.url](https://some.url/)</code>, hence <em>aggregated_protocol_hostnames.txt</em></li><li>Note the use of the prefix <strong>$infile</strong>- these names all match as they are placeholders for the default locations that <strong>$infile</strong> corresponds to in <strong>outputs/target_name/aggregated</strong></li><li>If you have a file in another location you can just specify the entire path without any errors occurring.</li><li><strong>outfile</strong> : The output file location</li><li>As with the above infile <strong>$outfile</strong> in the name is just a key to the location <strong>outputs/target_name/</strong></li><li>You may specify a hard coded path for other use. Just remember the location for uploading or other processing with Dr. Robot</li><li><strong>outfolder</strong> : The output folder to unpack/download files too</li><li>As with the above infile <strong>$outfile</strong> in the name is just a key to the location <strong>outputs/target_name/</strong></li><li>This is a special case for Eyewitness and HttpScreenshot, which you can see in their playbooks. They generate a lot of files and rather than download each individually having them pack up the files as a step in the playbook and then unpacking allows for some integrity.</li><li>A quick example below shows how we use the <strong>extra_flags</strong> to supply the hostname to the playbook for ansible.</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>class NewTool(WebTool):  
+</span></span><span class=line><span class=cl> def __init__(self, **kwargs):  
+</span></span><span class=line><span class=cl>     super().__init__(**kwargs)  
+</span></span><span class=line><span class=cl>     ....  
+</span></span><span class=line><span class=cl> def do_query(self):  
+</span></span><span class=line><span class=cl>     .... do the query ...   
+</span></span><span class=line><span class=cl>     store results in  
+</span></span><span class=line><span class=cl>     self.results
+</span></span></code></pre></td></tr></table></div></div></li></ol></li></ol></li></ol><p><strong>Docker Integration and Customization</strong><br>Docker is relied upon heavily for this tool to function.<br>All Docker files will have a <strong>default_conf</strong> and an <strong>active_conf</strong>.</p><p><strong>default_conf</strong> represents the template that will be used for generation of the docker files. The reason for building the docker images is to allow for finer control on the user end, especially if you are in a more restricted environment without access to the docker repositories.<br><strong>active_conf</strong> represents the configuration which will be build into the current image.<br><strong>example Dockerfile.tmp</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&#34;Scanners&#34; : {  
+</span></span><span class=line><span class=cl> ...  
+</span></span><span class=line><span class=cl>    &#34;NewTool&#34;: {  
+</span></span><span class=line><span class=cl>        &#34;name&#34;: &#34;NewTool&#34;,  
+</span></span><span class=line><span class=cl>        &#34;default&#34; : true,   
+</span></span><span class=line><span class=cl>        &#34;mode&#34; : DOCKER,  
+</span></span><span class=line><span class=cl>        &#34;docker_name&#34;: &#34;ntool&#34;,  
+</span></span><span class=line><span class=cl>        &#34;network_mode&#34;: &#34;host&#34;,  
+</span></span><span class=line><span class=cl>        &#34;default_conf&#34;: &#34;docker_buildfiles/Dockerfile.NewTool.tmp&#34;,  
+</span></span><span class=line><span class=cl>        &#34;active_conf&#34;: &#34;docker_buildfiles/Dockerfile.NewTool&#34;,  
+</span></span><span class=line><span class=cl>        &#34;description&#34;: &#34;NewTool is an awesome tool for domain enumeration&#34;,  
+</span></span><span class=line><span class=cl>        &#34;src&#34;: &#34;[https://github.com/NewTool](https://github.com/NewTool)&#34;,  
+</span></span><span class=line><span class=cl>        &#34;output&#34;: &#34;/home/newtool&#34;,  
+</span></span><span class=line><span class=cl>        &#34;output_file&#34;: &#34;NewTool.txt&#34;  
+</span></span><span class=line><span class=cl>      },  
+</span></span><span class=line><span class=cl>      ...  
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><p>We use <strong>ENV</strong> to keep track of most variable input from Python on the user end.<br>Using the <strong>DNS</strong> information provided by the user we are able to download packages and git repos during building.</p><p><strong>Ansible Configuration</strong><br>Please see the ansible documentation: <a class=link href=https://docs.ansible.com/ title=https://docs.ansible.com/ target=_blank rel=noopener>https://docs.ansible.com/</a> for details on how to develop a playbook for use with DrRobot.</p><p><strong>Inventory</strong><br>Ansible inventory files will be self contained within DrRobot so as to further seperate itself from any one system. The inventory file will be located under <strong>configs/ansible_inventory</strong><br>As noted in the documentation ansible inventory can be defined as groups or single IP&rsquo;s. A quick example:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&#34;Enumeration&#34; : {  
+</span></span><span class=line><span class=cl>        &#34;Eyewitness&#34;: {  
+</span></span><span class=line><span class=cl>            &#34;name&#34; : &#34;Eyewitness&#34;,  
+</span></span><span class=line><span class=cl>            &#34;short_name&#34; : &#34;eye&#34;,  
+</span></span><span class=line><span class=cl>            &#34;docker_name&#34; : &#34;eye&#34;,  
+</span></span><span class=line><span class=cl>            &#34;mode&#34; : &#34;ANSIBLE&#34;,  
+</span></span><span class=line><span class=cl>            &#34;network_mode&#34;: &#34;host&#34;,  
+</span></span><span class=line><span class=cl>            &#34;default_conf&#34; : &#34;docker_buildfiles/Dockerfile.Eyewitness.tmp&#34;,  
+</span></span><span class=line><span class=cl>            &#34;active_conf&#34; : &#34;docker_buildfiles/Dockerfile.Eyewitness&#34;,  
+</span></span><span class=line><span class=cl>            &#34;ansible_arguments&#34; : {  
+</span></span><span class=line><span class=cl>                &#34;config&#34; : &#34;$config/eyewitness_play.yml&#34;,  
+</span></span><span class=line><span class=cl>                &#34;flags&#34;: &#34;-e &#39;$extra&#39; -i ansible_plays/inventory&#34;,  
+</span></span><span class=line><span class=cl>                &#34;extra_flags&#34;:{  
+</span></span><span class=line><span class=cl>                    &#34;1&#34; : &#34;variable_host=localhost&#34;,  
+</span></span><span class=line><span class=cl>                    &#34;2&#34; : &#34;variable_user=root&#34;,  
+</span></span><span class=line><span class=cl>                    &#34;3&#34; : &#34;infile=$infile/aggregated_protocol_hostnames.txt&#34;,  
+</span></span><span class=line><span class=cl>                    &#34;4&#34; : &#34;outfile=$outfile/Eyewitness.tar&#34;,  
+</span></span><span class=line><span class=cl>                    &#34;5&#34; : &#34;outfolder=$outfile/Eyewitness&#34;  
+</span></span><span class=line><span class=cl>                }  
+</span></span><span class=line><span class=cl>            },  
+</span></span><span class=line><span class=cl>            &#34;desc   ription&#34; : &#34;Post enumeration tool for screen grabbing websites. All images will be downloaded to outfile: Eyewitness.tar and unpacked in Eyewitness&#34;,  
+</span></span><span class=line><span class=cl>            &#34;output&#34; : &#34;/tmp/output&#34;,  
+</span></span><span class=line><span class=cl>            &#34;infile&#34; : &#34;/tmp/output/aggregated/aggregated_protocol_hostnames.txt&#34;,  
+</span></span><span class=line><span class=cl>            &#34;enabled&#34; : false  
+</span></span><span class=line><span class=cl>        },  
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><p><strong>SSH + Ansible</strong><br>If you desire to run Ansible with this tool and require ssh authentication be done you can use the application as is to run Ansible scripts. The plays will be piped to STDIN/STDOUT so that you may supply credentials if required.<br>If you wish to have to not manually provide credentials just use an <strong>ssh-agent</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>---  
+</span></span><span class=line><span class=cl>- hosts: &#34;{{ variable_host|quote }}&#34;  
+</span></span><span class=line><span class=cl>  remote_user: root   
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  tasks:  
+</span></span><span class=line><span class=cl>      - name: Apt install git  
+</span></span><span class=line><span class=cl>        become: true  
+</span></span><span class=line><span class=cl>        apt:  
+</span></span><span class=line><span class=cl>            name: git  
+</span></span><span class=line><span class=cl>            force: yes
+</span></span></code></pre></td></tr></table></div></div><p><strong>Adding Docker Containers</strong><br>If you wish to add another Dockerfile to the project make a <strong>Dockerfile.toolname.tmp</strong> file within the <strong>docker_buildfiles</strong> folder. Then opening up your <strong>user_config</strong> add a new section under the appropriate section as shown above in the [docker](#Example Configurations For Docker Containers)</p><p><strong>Dependencies</strong></p><ul><li><p> <strong>Docker</strong> required for any of the scanners to run</p></li><li><p> <strong>Python 3.6</strong> required</p><ul><li><p> <strong>Pipenv</strong> for versioning of all Python packages. You can use the Pipfile with setup.py <a class=link href=https://www.kitploit.com/search/label/Requirements title=requirements target=_blank rel=noopener>requirements</a> as well.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>FROM python:3.4  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>WORKDIR /home  
+</span></span><span class=line><span class=cl>ENV http_proxy $proxy  
+</span></span><span class=line><span class=cl>ENV https_proxy $proxy  
+</span></span><span class=line><span class=cl>ENV DNS $dns  
+</span></span><span class=line><span class=cl>ENV TARGET $target  
+</span></span><span class=line><span class=cl>ENV OUTPUT $output  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>RUN mkdir -p $$OUTPUT  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>RUN if [ -n &#34;$$DNS&#34; ]; then echo &#34;nameserver $DNS&#34; &gt; /etc/resolv.conf; fi; apt-get install git  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>RUN if [ -n &#34;$$DNS&#34; ]; then echo &#34;nameserver $DNS&#34; &gt; /etc/resolv.conf; fi; git clone [https://github.com/aboul3la/Sublist3r.git](https://github.com/aboul3la/Sublist3r.git) /home/sublist  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>WORKDIR /home/sublist  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>RUN if [ -n &#34;$$DNS&#34; ]; then echo &#34;nameserver $DNS&#34; &gt; /etc/resolv.conf; fi; pip3 install -r requirements.txt  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>ENTRYPOINT python3 sublist3r.py --domain $target -o $output/sublist3r.txt
+</span></span></code></pre></td></tr></table></div></div></li></ul></li><li><p> <strong>Ansible</strong> if you require the use of external servers.</p></li><li><p> <strong>Python Mattermost Driver</strong> [Optional] if using Mattermost you will require this module</p></li></ul><p><strong>Output</strong><br><strong>Gather</strong> : when ran will produce an output similar to:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[example-host]  
+</span></span><span class=line><span class=cl>[ip.example.com](http://ip.example.com/)
+</span></span></code></pre></td></tr></table></div></div><p>You will also notice a <strong>sqlite</strong> file found under the <strong>dbs</strong> folder (You can specify alternative db filenames):</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>eval $(ssh-agent -s)  
+</span></span><span class=line><span class=cl>ssh-add /path/to/sshkey
+</span></span></code></pre></td></tr></table></div></div><p><strong>Inspect</strong>: when ran will continue to add files to the output folder. If you provided a domain file under the db section the domain folder will be created for you. The output will look similar to the above but with some added contents:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>cd /path/to/drrobot/  
+</span></span><span class=line><span class=cl>pipenv install &amp;&amp; pipenv shell  
+</span></span><span class=line><span class=cl>python drrobot.py   target
+</span></span></code></pre></td></tr></table></div></div><p><strong>Slack</strong><br>Please check the following for a guide on how to setup your Python bot for messaging.<br><a class=link href=https://github.com/slackapi/python-slackclient title=https://github.com/slackapi/python-slackclient target=_blank rel=noopener>https://github.com/slackapi/python-slackclient</a></p><p><strong>SQLite DB file schema</strong><br>Table Data: | domainid | INTEGER | PRIMARY KEY | &mdash;&mdash;&ndash; | &mdash;&mdash;- | | ip | VARCHAR | | hostname | VARCHAR | | headers | VARCHAR | | http_headers | TEXT | | https_headers| TEXT | | domain | VARCHAR | FOREIGN KEY<br>Table Domain: | domain | VARCHAR | PRIMARY KEY | &mdash;&mdash;&ndash; | &mdash;&mdash;- |</p><p><strong>Serve</strong><br>As is often the case, having an API can be nice for automation purposes. Under the serve-api folder, there is a simple Django server implementation that you can stand up locally or serve via Docker. In order to serve the datak, you need to copy your database folder to the root directory of <strong>serve-api</strong> and rename the file to <strong>drrobot.db</strong>. If you would like to use an alternative name, simply change the name in the Django <strong>serve____-api/drrobot/drrobot/settings.py</strong>.</p><p><strong><a class=link href=http://eunsetee.com/DPs6 title="Download Dr_Robot" target=_blank rel=noopener>Download Dr_Robot</a></strong></p><p><strong>Regards</strong></p><p><strong>Kang Asu</strong></p></section><footer class=article-footer><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 ZYChimne</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.11.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,362 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Bit Manipulation Tricks"><title>Bit Manipulation</title><link rel=canonical href=https://Nexus-Security.github.io/posts/bit-manipulation/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="Bit Manipulation"><meta property="og:description" content="Bit Manipulation Tricks"><meta property="og:url" content="https://Nexus-Security.github.io/posts/bit-manipulation/"><meta property="og:site_name" content="ZYChimne"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="algorithms"><meta property="article:published_time" content="2022-05-28T00:00:00+00:00"><meta property="article:modified_time" content="2022-05-28T00:00:00+00:00"><meta name=twitter:title content="Bit Manipulation"><meta name=twitter:description content="Bit Manipulation Tricks"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu8b78332b6420dc9affabe23720d11e63_1937019_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍇</span></figure><div class=site-meta><h1 class=site-name><a href=/>ZYChimne</a></h1><h2 class=site-description>Computer Science, Wuhan University</h2></div></header><ol class=social-menu><li><a href=https://github.com/ZYChimne target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com/ZChimne target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/about-me/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/bit-manipulation/>Bit Manipulation</a></h2><h3 class=article-subtitle>Bit Manipulation Tricks</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>May 28, 2022</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>7 minute read</time></div></footer></div></header><section class=article-content><p>Bit Manipulation is elegant, as it operates on bits and has unparalleled efficiency. It is also confusing and difficult to understand, because its algorithms are not intuitive. Here is my collection of bit manipulation tricks.</p><h2 id=simple-bit-manipulation-tricks>Simple Bit Manipulation Tricks</h2><ul><li>Set Union: A | B</li><li>Set Intersection: A & B</li><li>Set Subtraction: A & ~B</li><li>Set Negation of All Bits: ^A or ~A</li><li>Set Bit of A: A |= (1 &#171; bit)</li><li>Clear Bit: A & ~(1 &#171; bit)</li><li>Test Bit: (A & (1 &#171; bit)) != 0</li><li>Toggle Bit: (A ^ (1 &#171; bit))</li><li>Extract Last Bit: A & ~A or A & (A-1) or A ^ (A & (A-1))</li><li>Remove Last Bit: A & (A-1)</li><li>Get All 1 Bits: ~0</li><li>Isolate Rightmost Bit: A & (-A)</li><li>Propagate Rightmost Bit: (A | (A-1))</li><li>Isolate Rightmost 0: ~A & (A+1)</li><li>Turn on Rightmost 0 Bit: (A | (A+1))</li><li>Contrast Number: ~A + 1 or (A ^ -1) + 1</li><li>Modulo 2^A against B: A & (B - 1);</li><li>Absolute Value: (A ^ (A &#187; 31)) - (A &#187; 31)</li><li>Get Max Value: B & ((A-B) &#187; 31) | A & (~(A-B) &#187; 31)</li><li>Get Min Value: A & ((A-B) &#187; 31) | B & (~(A-B) &#187; 31)</li></ul><h2 id=count-the-number-of-ones>Count the Number of Ones</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>count_one</span><span class=p>(</span><span class=kt>int</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>n</span> <span class=o>=</span> <span class=n>n</span><span class=o>&amp;</span><span class=p>(</span><span class=n>n</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>count</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>count</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=is-power-of-2>Is Power of 2</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>is_power_of_two</span><span class=p>(</span><span class=kt>int</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=o>!</span><span class=p>(</span><span class=n>n</span><span class=o>&amp;</span><span class=p>(</span><span class=n>n</span><span class=o>-</span><span class=mi>1</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=is-power-of-4>Is Power of 4</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=n>mask</span> <span class=o>=</span> <span class=mh>0x55555555</span> <span class=c1>// check the 1-bit location;
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>bool</span> <span class=n>is_power_of_four</span><span class=p>(</span><span class=kt>int</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=o>!</span><span class=p>(</span><span class=n>n</span><span class=o>&amp;</span><span class=p>(</span><span class=n>n</span><span class=o>-</span><span class=mi>1</span><span class=p>))</span> <span class=o>&amp;&amp;</span> <span class=p>(</span><span class=n>n</span><span class=o>&amp;</span><span class=n>mask</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=sum-of-2-integers>Sum of 2 Integers</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>sum</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// be careful about the terminating condition
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=n>b</span><span class=o>==</span><span class=mi>0</span><span class=o>?</span> <span class=nl>a</span><span class=p>:</span><span class=n>sum</span><span class=p>(</span><span class=n>a</span><span class=o>^</span><span class=n>b</span><span class=p>,</span> <span class=p>(</span><span class=n>a</span><span class=o>&amp;</span><span class=n>b</span><span class=p>)</span><span class=o>&lt;&lt;</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>sum</span><span class=p>(</span><span class=kt>int</span> <span class=n>a</span><span class=p>,</span> <span class=kt>int</span> <span class=n>b</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>b</span><span class=o>!=</span><span class=mi>0</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>c</span><span class=o>=</span><span class=p>(</span><span class=kt>unsigned</span> <span class=kt>int</span><span class=p>)(</span><span class=n>a</span><span class=o>&amp;</span><span class=n>b</span><span class=p>)</span><span class=o>&lt;&lt;</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>a</span><span class=o>=</span><span class=n>a</span><span class=o>^</span><span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>b</span><span class=o>=</span><span class=n>c</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=missing-number>Missing Number</h2><p>Given an array containing n distinct numbers taken from 0, 1, 2, &mldr;, n, find the one that is missing from the array.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>missing_number</span><span class=p>(</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;&amp;</span> <span class=n>nums</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>ret</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=n>nums</span><span class=p>.</span><span class=n>size</span><span class=p>();</span> <span class=o>++</span><span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>ret</span> <span class=o>^=</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>ret</span> <span class=o>^=</span> <span class=n>nums</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>ret</span><span class=o>^=</span><span class=n>nums</span><span class=p>.</span><span class=n>size</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=the-most-significant-bit>The Most Significant Bit</h2><p>Find the largest power of 2 (most significant bit in binary form), which is less than or equal to the given number N.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>long</span> <span class=nf>most_significant_bit</span><span class=p>(</span><span class=kt>long</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//changing all right side bits to 1.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span><span class=o>&gt;&gt;</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span><span class=o>&gt;&gt;</span><span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span><span class=o>&gt;&gt;</span><span class=mi>4</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span><span class=o>&gt;&gt;</span><span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span><span class=o>&gt;&gt;</span><span class=mi>16</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span><span class=n>n</span><span class=o>+</span><span class=mi>1</span><span class=p>)</span><span class=o>&gt;&gt;</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=reverse-bits>Reverse Bits</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>uint32_t</span> <span class=nf>reverse_bits</span><span class=p>(</span><span class=kt>uint32_t</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>mask</span> <span class=o>=</span> <span class=mi>1</span><span class=o>&lt;&lt;</span><span class=mi>31</span><span class=p>,</span> <span class=n>res</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=mi>32</span><span class=p>;</span> <span class=o>++</span><span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mi>1</span><span class=p>)</span> <span class=n>res</span> <span class=o>|=</span> <span class=n>mask</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>mask</span> <span class=o>&gt;&gt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>n</span> <span class=o>&gt;&gt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>uint32_t</span> <span class=nf>reverse_bits</span><span class=p>(</span><span class=kt>uint32_t</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>uint32_t</span> <span class=n>mask</span> <span class=o>=</span> <span class=mi>1</span><span class=p>,</span> <span class=n>ret</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=mi>32</span><span class=p>;</span> <span class=o>++</span><span class=n>i</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>ret</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>mask</span> <span class=o>&amp;</span> <span class=n>n</span><span class=p>)</span> <span class=n>ret</span> <span class=o>|=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>mask</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>ret</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>uint32_t</span> <span class=nf>reverse_bits</span><span class=p>(</span><span class=kt>uint32_t</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=p>(</span><span class=n>n</span> <span class=o>&gt;&gt;</span> <span class=mi>16</span><span class=p>)</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span> <span class=o>&lt;&lt;</span> <span class=mi>16</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=p>((</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mh>0xff00ff00</span><span class=p>)</span> <span class=o>&gt;&gt;</span> <span class=mi>8</span><span class=p>)</span> <span class=o>|</span> <span class=p>((</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mh>0x00ff00ff</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=p>((</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mh>0xf0f0f0f0</span><span class=p>)</span> <span class=o>&gt;&gt;</span> <span class=mi>4</span><span class=p>)</span> <span class=o>|</span> <span class=p>((</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mh>0x0f0f0f0f</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>4</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=p>((</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mh>0xcccccccc</span><span class=p>)</span> <span class=o>&gt;&gt;</span> <span class=mi>2</span><span class=p>)</span> <span class=o>|</span> <span class=p>((</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mh>0x33333333</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=p>((</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mh>0xaaaaaaaa</span><span class=p>)</span> <span class=o>&gt;&gt;</span> <span class=mi>1</span><span class=p>)</span> <span class=o>|</span> <span class=p>((</span><span class=n>n</span> <span class=o>&amp;</span> <span class=mh>0x55555555</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>n</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=k>const</span> <span class=kt>uint32_t</span> <span class=n>M1</span> <span class=o>=</span> <span class=mh>0x55555555</span><span class=p>;</span> <span class=c1>// 01010101010101010101010101010101
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>const</span> <span class=kt>uint32_t</span> <span class=n>M2</span> <span class=o>=</span> <span class=mh>0x33333333</span><span class=p>;</span> <span class=c1>// 00110011001100110011001100110011
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>const</span> <span class=kt>uint32_t</span> <span class=n>M4</span> <span class=o>=</span> <span class=mh>0x0f0f0f0f</span><span class=p>;</span> <span class=c1>// 00001111000011110000111100001111
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=k>const</span> <span class=kt>uint32_t</span> <span class=n>M8</span> <span class=o>=</span> <span class=mh>0x00ff00ff</span><span class=p>;</span> <span class=c1>// 00000000111111110000000011111111
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>uint32_t</span> <span class=nf>reverse_bits</span><span class=p>(</span><span class=kt>uint32_t</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>&gt;&gt;</span> <span class=mi>1</span> <span class=o>&amp;</span> <span class=n>M1</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span> <span class=o>&amp;</span> <span class=n>M1</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>&gt;&gt;</span> <span class=mi>2</span> <span class=o>&amp;</span> <span class=n>M2</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span> <span class=o>&amp;</span> <span class=n>M2</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>&gt;&gt;</span> <span class=mi>4</span> <span class=o>&amp;</span> <span class=n>M4</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span> <span class=o>&amp;</span> <span class=n>M4</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>4</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>n</span> <span class=o>=</span> <span class=n>n</span> <span class=o>&gt;&gt;</span> <span class=mi>8</span> <span class=o>&amp;</span> <span class=n>M8</span> <span class=o>|</span> <span class=p>(</span><span class=n>n</span> <span class=o>&amp;</span> <span class=n>M8</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=mi>8</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>n</span> <span class=o>&gt;&gt;</span> <span class=mi>16</span> <span class=o>|</span> <span class=n>n</span> <span class=o>&lt;&lt;</span> <span class=mi>16</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=bitwise-and-of-numbers-range>Bitwise AND of Numbers Range</h2><p>Given a range [m, n] where 0 &lt;= m &lt;= n &lt;= 2147483647, return the bitwise AND of all numbers in this range, inclusive.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>range_bitwise_and</span><span class=p>(</span><span class=kt>int</span> <span class=n>m</span><span class=p>,</span> <span class=kt>int</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>a</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>m</span> <span class=o>!=</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>m</span> <span class=o>&gt;&gt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>n</span> <span class=o>&gt;&gt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>a</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>m</span><span class=o>&lt;&lt;</span><span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=number-of-1-bits>Number of 1 Bits</h2><p>Write a function that takes an unsigned integer and returns the number of ’1&rsquo; bits it has (also known as the Hamming weight).</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>hamming_weight</span><span class=p>(</span><span class=kt>uint32_t</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>count</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>n</span> <span class=o>=</span> <span class=n>n</span><span class=o>&amp;</span><span class=p>(</span><span class=n>n</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>count</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>count</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>hamming_weight</span><span class=p>(</span><span class=kt>uint32_t</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>mask</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>count</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=mi>32</span><span class=p>;</span> <span class=o>++</span><span class=n>i</span><span class=p>){</span> <span class=c1>// 31 will not do, delicate
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>if</span><span class=p>(</span><span class=n>mask</span> <span class=o>&amp;</span> <span class=n>n</span><span class=p>)</span> <span class=n>count</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>mask</span> <span class=o>&lt;&lt;=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>count</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>hamming_weight</span><span class=p>(</span><span class=kt>uint32_t</span> <span class=n>z</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// each bit in n is a one-bit integer that indicates
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// how many bits are set in that bit
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>z</span> <span class=o>=</span> <span class=p>(</span><span class=n>z</span> <span class=o>&amp;</span> <span class=mh>0x55555555</span><span class=p>)</span> <span class=o>+</span> <span class=p>((</span><span class=n>z</span> <span class=o>&gt;&gt;</span> <span class=mi>1</span><span class=p>)</span> <span class=o>&amp;</span> <span class=mh>0x55555555</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Now every two bits are a two bit integer that indicate
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// how many bits were set in those two bits in the original number
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>z</span> <span class=o>=</span> <span class=p>(</span><span class=n>z</span> <span class=o>&amp;</span> <span class=mh>0x33333333</span><span class=p>)</span> <span class=o>+</span> <span class=p>((</span><span class=n>z</span> <span class=o>&gt;&gt;</span> <span class=mi>2</span><span class=p>)</span> <span class=o>&amp;</span> <span class=mh>0x33333333</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Now we&#39;re at 4 bits
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>z</span> <span class=o>=</span> <span class=p>(</span><span class=n>z</span> <span class=o>&amp;</span> <span class=mh>0x0f0f0f0f</span><span class=p>)</span> <span class=o>+</span> <span class=p>((</span><span class=n>z</span> <span class=o>&gt;&gt;</span> <span class=mi>4</span><span class=p>)</span> <span class=o>&amp;</span> <span class=mh>0x0f0f0f0f</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>z</span> <span class=o>=</span> <span class=p>(</span><span class=n>z</span> <span class=o>&amp;</span> <span class=mh>0x00ff00ff</span><span class=p>)</span> <span class=o>+</span> <span class=p>((</span><span class=n>z</span> <span class=o>&gt;&gt;</span> <span class=mi>8</span><span class=p>)</span> <span class=o>&amp;</span> <span class=mh>0x00ff00ff</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>z</span> <span class=o>=</span> <span class=p>(</span><span class=n>z</span> <span class=o>&amp;</span> <span class=mh>0x0000ffff</span><span class=p>)</span> <span class=o>+</span> <span class=p>((</span><span class=n>z</span> <span class=o>&gt;&gt;</span> <span class=mi>16</span><span class=p>)</span> <span class=o>&amp;</span> <span class=mh>0x0000ffff</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 32 bits
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=p>(</span><span class=kt>int</span><span class=p>)</span><span class=n>z</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=exchange-two-integers-without-additional-parameters>Exchange Two Integers without Additional Parameters</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=n>a</span> <span class=o>=</span> <span class=n>a</span> <span class=o>^</span> <span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>b</span> <span class=o>=</span> <span class=n>a</span> <span class=o>^</span> <span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>a</span> <span class=o>=</span> <span class=n>a</span> <span class=o>^</span> <span class=n>b</span><span class=p>;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=find-two-numbers-appearing-twice>Find Two Numbers Appearing Twice</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span> <span class=n>single_number</span><span class=p>(</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;&amp;</span> <span class=n>nums</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>sum</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span><span class=o>&amp;</span> <span class=nl>num</span><span class=p>:</span><span class=n>nums</span><span class=p>)</span><span class=n>sum</span><span class=o>^=</span><span class=n>num</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>type1</span><span class=o>=</span><span class=n>sum</span><span class=o>==</span><span class=n>INT_MIN</span><span class=o>?</span><span class=nl>sum</span><span class=p>:</span><span class=n>sum</span><span class=o>&amp;</span><span class=p>(</span><span class=o>-</span><span class=n>sum</span><span class=p>),</span> <span class=n>sum1</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span><span class=o>&amp;</span> <span class=nl>num</span><span class=p>:</span><span class=n>nums</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>num</span><span class=o>&amp;</span><span class=n>type1</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>            <span class=n>sum1</span><span class=o>^=</span><span class=n>num</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span><span class=n>sum1</span><span class=p>,</span> <span class=n>sum</span><span class=o>^</span><span class=n>sum1</span><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=binary-number-with-alternating-bits>Binary Number with Alternating Bits</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>bool</span> <span class=nf>has_alternating_bits</span><span class=p>(</span><span class=kt>int</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>a</span> <span class=o>=</span> <span class=n>n</span> <span class=o>^</span> <span class=p>(</span><span class=n>n</span> <span class=o>&gt;&gt;</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span><span class=n>a</span> <span class=o>&amp;</span> <span class=p>(</span><span class=n>a</span> <span class=o>+</span> <span class=mi>1</span><span class=p>))</span> <span class=o>==</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=number-complement>Number Complement</h2><p>The complement of an integer is the integer you get when you flip all the 0&rsquo;s to 1&rsquo;s and all the 1&rsquo;s to 0&rsquo;s in its binary representation.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>find_complement</span><span class=p>(</span><span class=kt>int</span> <span class=n>num</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>highestBit</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span><span class=n>i</span><span class=o>&lt;</span><span class=mi>31</span><span class=p>;</span><span class=n>i</span><span class=o>++</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>num</span><span class=o>&gt;=</span><span class=p>(</span><span class=mi>1</span><span class=o>&lt;&lt;</span><span class=n>i</span><span class=p>))</span><span class=n>highestBit</span><span class=o>=</span><span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span> <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>mask</span><span class=o>=</span><span class=n>highestBit</span><span class=o>==</span><span class=mi>30</span><span class=o>?</span><span class=mh>0x7fffffff</span><span class=o>:</span><span class=p>((</span><span class=mi>1</span><span class=o>&lt;&lt;</span><span class=p>(</span><span class=n>highestBit</span><span class=o>+</span><span class=mi>1</span><span class=p>))</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>num</span><span class=o>^</span><span class=n>mask</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=counting-bits>Counting Bits</h2><p>Given an integer n, return an array ans of length n + 1 such that for each i (0 &lt;= i &lt;= n), ans[i] is the number of 1&rsquo;s in the binary representation of i.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span> <span class=n>count_bits</span><span class=p>(</span><span class=kt>int</span> <span class=n>n</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span><span class=n>res</span><span class=p>(</span><span class=n>n</span><span class=o>+</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span><span class=n>i</span><span class=o>&lt;=</span><span class=n>n</span><span class=p>;</span><span class=n>i</span><span class=o>++</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>res</span><span class=p>[</span><span class=n>i</span><span class=o>&gt;&gt;</span><span class=mi>1</span><span class=p>]</span><span class=o>+</span><span class=p>(</span><span class=n>i</span><span class=o>&amp;</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=maximum-product-of-word-length>Maximum Product of Word Length</h2><p>Given a string array words, return the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters. If no such two words exist, return 0.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>int</span> <span class=nf>max_product</span><span class=p>(</span><span class=n>vector</span><span class=o>&lt;</span><span class=n>string</span><span class=o>&gt;&amp;</span> <span class=n>words</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>size</span><span class=o>=</span><span class=n>words</span><span class=p>.</span><span class=n>size</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=n>unordered_map</span><span class=o>&lt;</span><span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=o>&gt;</span><span class=n>m</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=k>const</span> <span class=n>string</span><span class=o>&amp;</span> <span class=nl>word</span><span class=p>:</span><span class=n>words</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>temp</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span><span class=p>(</span><span class=k>const</span> <span class=kt>char</span><span class=o>&amp;</span> <span class=nl>c</span><span class=p>:</span><span class=n>word</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>            <span class=n>temp</span><span class=o>|=</span><span class=p>(</span><span class=mi>1</span><span class=o>&lt;&lt;</span><span class=p>(</span><span class=n>c</span><span class=o>-</span><span class=sc>&#39;a&#39;</span><span class=p>));</span> <span class=c1>// use bit to save space
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=o>!</span><span class=n>m</span><span class=p>.</span><span class=n>count</span><span class=p>(</span><span class=n>temp</span><span class=p>)</span><span class=o>||</span><span class=n>word</span><span class=p>.</span><span class=n>size</span><span class=p>()</span><span class=o>&gt;</span><span class=n>m</span><span class=p>[</span><span class=n>temp</span><span class=p>]){</span>
+</span></span><span class=line><span class=cl>            <span class=n>m</span><span class=p>[</span><span class=n>temp</span><span class=p>]</span><span class=o>=</span><span class=n>word</span><span class=p>.</span><span class=n>size</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>res</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=k>const</span> <span class=k>auto</span><span class=o>&amp;</span> <span class=nl>mask1</span><span class=p>:</span><span class=n>m</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span><span class=p>(</span><span class=k>const</span> <span class=k>auto</span><span class=o>&amp;</span> <span class=nl>mask2</span><span class=p>:</span><span class=n>m</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span><span class=p>((</span><span class=n>mask1</span><span class=p>.</span><span class=n>first</span><span class=o>&amp;</span><span class=n>mask2</span><span class=p>.</span><span class=n>first</span><span class=p>)</span><span class=o>==</span><span class=mi>0</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>                <span class=n>res</span><span class=o>=</span><span class=n>max</span><span class=p>(</span><span class=n>res</span><span class=p>,</span> <span class=n>mask1</span><span class=p>.</span><span class=n>second</span><span class=o>*</span><span class=n>mask2</span><span class=p>.</span><span class=n>second</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=references>References</h2><ul><li><a class=link href=https://leetcode.com/problems/sum-of-two-integers/discuss/84278/A-summary%3A-how-to-use-bit-manipulation-to-solve-problems-easily-and-efficiently target=_blank rel=noopener>A summary: how to use bit manipulation to solve problems easily and efficiently</a></li><li><a class=link href=https://stackoverflow.com/questions/1533131/what-useful-bitwise-operator-code-tricks-should-a-developer-know-about target=_blank rel=noopener>What USEFUL bitwise operator code tricks should a developer know about?</a></li></ul><h2 id=additional-resources>Additional Resources</h2><ul><li><a class=link href=https://graphics.stanford.edu/~seander/bithacks.html target=_blank rel=noopener>Bit Twiddling Hacks</a></li></ul></section><footer class=article-footer><section class=article-tags></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-contents--wrapper><h2 class=section-title>Related contents</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/posts/algorithms/><div class=article-details><h2 class=article-title>Algorithms</h2></div></a></article><article><a href=/posts/regular-expression/><div class=article-details><h2 class=article-title>Regular Expression</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 ZYChimne</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.11.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#simple-bit-manipulation-tricks>Simple Bit Manipulation Tricks</a></li><li><a href=#count-the-number-of-ones>Count the Number of Ones</a></li><li><a href=#is-power-of-2>Is Power of 2</a></li><li><a href=#is-power-of-4>Is Power of 4</a></li><li><a href=#sum-of-2-integers>Sum of 2 Integers</a></li><li><a href=#missing-number>Missing Number</a></li><li><a href=#the-most-significant-bit>The Most Significant Bit</a></li><li><a href=#reverse-bits>Reverse Bits</a></li><li><a href=#bitwise-and-of-numbers-range>Bitwise AND of Numbers Range</a></li><li><a href=#number-of-1-bits>Number of 1 Bits</a></li><li><a href=#exchange-two-integers-without-additional-parameters>Exchange Two Integers without Additional Parameters</a></li><li><a href=#find-two-numbers-appearing-twice>Find Two Numbers Appearing Twice</a></li><li><a href=#binary-number-with-alternating-bits>Binary Number with Alternating Bits</a></li><li><a href=#number-complement>Number Complement</a></li><li><a href=#counting-bits>Counting Bits</a></li><li><a href=#maximum-product-of-word-length>Maximum Product of Word Length</a></li><li><a href=#references>References</a></li><li><a href=#additional-resources>Additional Resources</a></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,182 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Kang Asu
+AutoSploit v4.0 - Automated Mass Exploiter
+As the name might suggest AutoSploit attempts to automate the exploitation of remote hosts. Targets can be collected automatically through Shodan, Censys or Zoomeye. But options to add your custom targets and host lists have been included as well. The available Metasploit modules have been selected to facilitate Remote Code Execution and to attempt to gain Reverse TCP Shells and/or Meterpreter sessions. Workspace, local host and local port for MSF facilitated back connections are configured by filling out the dialog that comes up before the exploit component is started"><title>AutoSploit v4.0</title><link rel=canonical href=https://Nexus-Security.github.io/posts/2016-09-09-autosploit-v40/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="AutoSploit v4.0"><meta property="og:description" content="Kang Asu
+AutoSploit v4.0 - Automated Mass Exploiter
+As the name might suggest AutoSploit attempts to automate the exploitation of remote hosts. Targets can be collected automatically through Shodan, Censys or Zoomeye. But options to add your custom targets and host lists have been included as well. The available Metasploit modules have been selected to facilitate Remote Code Execution and to attempt to gain Reverse TCP Shells and/or Meterpreter sessions. Workspace, local host and local port for MSF facilitated back connections are configured by filling out the dialog that comes up before the exploit component is started"><meta property="og:url" content="https://Nexus-Security.github.io/posts/2016-09-09-autosploit-v40/"><meta property="og:site_name" content="ZYChimne"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2019-10-26T13:49:00+01:00"><meta property="article:modified_time" content="2019-10-26T13:49:00+01:00"><meta name=twitter:title content="AutoSploit v4.0"><meta name=twitter:description content="Kang Asu
+AutoSploit v4.0 - Automated Mass Exploiter
+As the name might suggest AutoSploit attempts to automate the exploitation of remote hosts. Targets can be collected automatically through Shodan, Censys or Zoomeye. But options to add your custom targets and host lists have been included as well. The available Metasploit modules have been selected to facilitate Remote Code Execution and to attempt to gain Reverse TCP Shells and/or Meterpreter sessions. Workspace, local host and local port for MSF facilitated back connections are configured by filling out the dialog that comes up before the exploit component is started"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu8b78332b6420dc9affabe23720d11e63_1937019_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍇</span></figure><div class=site-meta><h1 class=site-name><a href=/>ZYChimne</a></h1><h2 class=site-description>Computer Science, Wuhan University</h2></div></header><ol class=social-menu><li><a href=https://github.com/ZYChimne target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com/ZChimne target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/about-me/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/posts/2016-09-09-autosploit-v40/>AutoSploit v4.0</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Oct 26, 2019</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>5 minute read</time></div></footer></div></header><section class=article-content><p><strong>Kang Asu</strong></p><p><a class=link href=https://1.bp.blogspot.com/-hznXstvsNIU/XbWS02EpAxI/AAAAAAAABwE/pYEtH24crcAe_5emB7zF7Ktic5uhLTUJQCLcBGAsYHQ/s1600/AutoSploit_1.jpeg target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-hznXstvsNIU/XbWS02EpAxI/AAAAAAAABwE/pYEtH24crcAe_5emB7zF7Ktic5uhLTUJQCLcBGAsYHQ/s320/AutoSploit_1.jpeg loading=lazy></a></p><p><strong>AutoSploit v4.0 - Automated Mass Exploiter</strong></p><p>As the name might suggest AutoSploit attempts to automate the <a class=link href=https://www.kitploit.com/search/label/Exploitation title=exploitation target=_blank rel=noopener>exploitation</a> of remote hosts. Targets can be collected automatically through Shodan, Censys or Zoomeye. But options to add your custom targets and host lists have been included as well. The available Metasploit modules have been selected to facilitate <a class=link href=https://www.kitploit.com/search/label/Remote%20Code%20Execution title="Remote Code Execution" target=_blank rel=noopener>Remote Code Execution</a> and to attempt to gain Reverse TCP Shells and/or Meterpreter sessions. Workspace, local host and local port for MSF facilitated back connections are configured by filling out the dialog that comes up before the exploit component is started</p><p><a class=link href=https://www.blogger.com/u/1/null target=_blank rel=noopener></a><br><em><strong>Operational Security Consideration:</strong></em><br>Receiving back connections on your local machine might not be the best idea from an OPSEC standpoint. Instead consider running this tool from a VPS that has all the dependencies required, available.<br>The new version of AutoSploit has a feature that allows you to set a proxy before you connect and a custom user-agent.</p><p><strong>Installation</strong><br>Installing AutoSploit is very simple, you can find the latest stable release <a class=link href=https://github.com/NullArray/AutoSploit/releases/latest title=here target=_blank rel=noopener>here</a>. You can also download the master branch as a <a class=link href=https://github.com/NullArray/AutSploit/zipball/master title=zip target=_blank rel=noopener>zip</a> or <a class=link href=https://github.com/NullArray/AutSploit/tarball/master title=tarball target=_blank rel=noopener>tarball</a> or follow one of the below methods;</p><p><strong>Docker Compose</strong><br>Using Docker Compose is by far the easiest way to get AutoSploit up and running without too much of a hassle.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>git clone https://github.com/NullArray/AutoSploit.git  
+</span></span><span class=line><span class=cl>cd Autosploit/Docker  
+</span></span><span class=line><span class=cl>docker-compose run --rm autosploit
+</span></span></code></pre></td></tr></table></div></div><p><strong>Docker</strong><br>Just using Docker.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>git clone https://github.com/NullArray/AutoSploit.git  
+</span></span><span class=line><span class=cl>cd Autosploit/Docker  
+</span></span><span class=line><span class=cl># If you wish to edit default postgres service details, edit database.yml. Should work out of the box  
+</span></span><span class=line><span class=cl># nano database.yml  
+</span></span><span class=line><span class=cl>docker network create -d bridge haknet  
+</span></span><span class=line><span class=cl>docker run --network haknet --name msfdb -e POSTGRES_PASSWORD=s3cr3t -d postgres  
+</span></span><span class=line><span class=cl>docker build -t autosploit .  
+</span></span><span class=line><span class=cl>docker run -it --network haknet -p 80:80 -p 443:443 -p 4444:4444 autosploit
+</span></span></code></pre></td></tr></table></div></div><p>Dev team contributor <a class=link href=https://github.com/khast3x title=Khast3x target=_blank rel=noopener>Khast3x</a> recently improved Docker operations as well as add more details to the README.md in the <code>Docker</code>subdirectory. For more information on deploying AutoSploit with Docker please be sure to click <a class=link href=https://github.com/NullArray/AutoSploit/tree/master/Docker title=here target=_blank rel=noopener>here</a></p><p><strong>Cloning</strong><br>On any Linux system the following should work;</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>git clone https://github.com/NullArray/AutoSploit  
+</span></span><span class=line><span class=cl>cd AutoSploit  
+</span></span><span class=line><span class=cl>chmod +x install.sh  
+</span></span><span class=line><span class=cl>./install.sh
+</span></span></code></pre></td></tr></table></div></div><p>AutoSploit is compatible with macOS, however, you have to be inside a virtual environment for it to run successfully. In order to accomplish this employ/perform the below operations via the terminal or in the form of a shell script.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo -s &lt;&lt; &#39;_EOF&#39;  
+</span></span><span class=line><span class=cl>pip2 install virtualenv --user  
+</span></span><span class=line><span class=cl>git clone https://github.com/NullArray/AutoSploit.git  
+</span></span><span class=line><span class=cl>virtualenv   
+</span></span><span class=line><span class=cl>source /bin/activate  
+</span></span><span class=line><span class=cl>cd   
+</span></span><span class=line><span class=cl>pip2 install -r requirements.txt  
+</span></span><span class=line><span class=cl>chmod +x install.sh  
+</span></span><span class=line><span class=cl>./install.sh  
+</span></span><span class=line><span class=cl>python autosploit.py  
+</span></span><span class=line><span class=cl>_EOF
+</span></span></code></pre></td></tr></table></div></div><p><strong>Usage</strong><br>Starting the program with <code>python autosploit.py</code> will open an AutoSploit terminal session. The options for which are as follows.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>1. Usage And Legal  
+</span></span><span class=line><span class=cl>2. Gather Hosts  
+</span></span><span class=line><span class=cl>3. Custom Hosts  
+</span></span><span class=line><span class=cl>4. Add Single Host  
+</span></span><span class=line><span class=cl>5. View Gathered Hosts  
+</span></span><span class=line><span class=cl>6. Exploit Gathered Hosts  
+</span></span><span class=line><span class=cl>99. Quit
+</span></span></code></pre></td></tr></table></div></div><p>Choosing option <code>2</code> will prompt you for a platform specific search query. Enter <code>IIS</code> or <code>Apache</code> in example and choose a search engine. After doing so the collected hosts will be saved to be used in the <code>Exploit</code> component.<br>As of version 2.0 AutoSploit can be started with a number of <a class=link href=https://www.kitploit.com/search/label/Command%20Line title="command line" target=_blank rel=noopener>command line</a> arguments/flags as well. Type <code>python autosploit.py -h</code> to display all the options available to you. I&rsquo;ve posted the options below as well for reference.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>usage: python autosploit.py -[c|z|s|a] -[q] QUERY  
+</span></span><span class=line><span class=cl>                            [-C] WORKSPACE LHOST LPORT [-e] [--whitewash] PATH  
+</span></span><span class=line><span class=cl>                            [--ruby-exec] [--msf-path] PATH [-E] EXPLOIT-FILE-PATH  
+</span></span><span class=line><span class=cl>                            [--rand-agent] [--proxy] PROTO://IP:PORT [-P] AGENT  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>optional arguments:  
+</span></span><span class=line><span class=cl>  -h, --help            show this help message and exit  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>search engines:  
+</span></span><span class=line><span class=cl>  possible search engines to use  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  -c, --censys          use censys.io as the search engine to gather hosts  
+</span></span><span class=line><span class=cl>  -z, --zoomeye         use zoomeye.org as the search engine to gather hosts  
+</span></span><span class=line><span class=cl>  -s, --shodan          use shodan.io as the search engine to gather hosts  
+</span></span><span class=line><span class=cl>  -a, --all             search all available search engines to gather hosts  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>requests:  
+</span></span><span class=line><span class=cl>  arguments to edit your requests  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  --proxy PROTO://IP:PORT  
+</span></span><span class=line><span class=cl>                        run behind a proxy while performing the searches  
+</span></span><span class=line><span class=cl>  --random-agent        use a rando   m HTTP User-Agent header  
+</span></span><span class=line><span class=cl>  -P USER-AGENT, --personal-agent USER-AGENT  
+</span></span><span class=line><span class=cl>                        pass a personal User-Agent to use for HTTP requests  
+</span></span><span class=line><span class=cl>  -q QUERY, --query QUERY  
+</span></span><span class=line><span class=cl>                        pass your search query  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>exploits:  
+</span></span><span class=line><span class=cl>  arguments to edit your exploits  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  -E PATH, --exploit-file PATH  
+</span></span><span class=line><span class=cl>                        provide a text file to convert into JSON and save for  
+</span></span><span class=line><span class=cl>                        later use  
+</span></span><span class=line><span class=cl>  -C WORKSPACE LHOST LPORT, --config WORKSPACE LHOST LPORT  
+</span></span><span class=line><span class=cl>                        set the configuration for MSF (IE -C default 127.0.0.1  
+</span></span><span class=line><span class=cl>                        8080)  
+</span></span><span class=line><span class=cl>  -e, --exploit         start exploiting the already gathered hosts  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>misc arguments:  
+</span></span><span class=line><span class=cl>  arguments that don&#39;t fit anywhere else  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  --ruby-exec           if you need to run the Ruby executable with MSF use  
+</span></span><span class=line><span class=cl>                        this  
+</span></span><span class=line><span class=cl>  --msf-path MSF-PATH   pass the path to your framework if it is not in your  
+</span></span><span class=line><span class=cl>                           ENV PATH  
+</span></span><span class=line><span class=cl>  --whitelist PATH      only exploit hosts listed in the whitelist file
+</span></span></code></pre></td></tr></table></div></div><p><strong>Dependencies</strong><br><em>Note</em>: All dependencies should be installed using the above installation method, however, if you find they are not:<br>AutoSploit depends on the following Python2.7 modules.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>requests  
+</span></span><span class=line><span class=cl>psutil
+</span></span></code></pre></td></tr></table></div></div><p>Should you find you do not have these installed get them with pip like so.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>pip install requests psutil
+</span></span></code></pre></td></tr></table></div></div><p>or</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>pip install -r requirements.txt
+</span></span></code></pre></td></tr></table></div></div><p>Since the program invokes functionality from the <a class=link href=https://www.kitploit.com/search/label/Metasploit%20Framework title="Metasploit Framework" target=_blank rel=noopener>Metasploit Framework</a> you need to have this installed also. Get it from Rapid7 by clicking <a class=link href=https://www.rapid7.com/products/metasploit/ title=here target=_blank rel=noopener>here</a>.</p><p><strong>Acknowledgements</strong><br>Special thanks to <a class=link href=https://github.com/Ekultek title=Ekultek target=_blank rel=noopener>Ekultek</a> without whoms contributions to the project, the new version would have been a lot less spectacular.<br>Thanks to <a class=link href=https://github.com/khast3x title=Khast3x target=_blank rel=noopener>Khast3x</a> for setting up Docker support.<br>Last but certainly not least. Thanks to all who have submitted Pull Requests, bug reports, useful and productive contributions in general.</p><p><strong>Active Development</strong><br>If you would like to contribute to the development of this project please be sure to read <a class=link href=https://github.com/NullArray/AutoSploit/blob/master/CONTRIBUTING.md title=CONTRIBUTING.md target=_blank rel=noopener>CONTRIBUTING.md</a> as it contains our contribution guidelines.<br>Please, also, be sure to read our <a class=link href=https://github.com/NullArray/AutoSploit/wiki/Development-information#contribution-standards title="contribution standards" target=_blank rel=noopener>contribution standards</a> before sending pull requests<br>If you need some help understanding the code, or want to chat with some other AutoSploit community members, feel free to join our <a class=link href=https://discord.gg/DZe4zr2 title="Discord server" target=_blank rel=noopener>Discord server</a>.</p><p><strong>Note</strong><br>If you happen to encounter a bug please feel free to <a class=link href=https://github.com/NullArray/AutoSploit/issues title="Open a Ticket" target=_blank rel=noopener>Open a Ticket</a>.<br>Thanks in advance.</p><p><strong>Translations</strong></p><ul><li><a class=link href=https://github.com/NullArray/AutoSploit/blob/master/.github/.translations/README-fr.md title=FR target=_blank rel=noopener>FR</a></li><li><a class=link href=https://github.com/NullArray/AutoSploit/blob/master/.github/.translations/README-zh.md title=ZH target=_blank rel=noopener>ZH</a></li><li><a class=link href=https://github.com/NullArray/AutoSploit/blob/master/.github/.translations/README-de.md title=DE target=_blank rel=noopener>DE</a></li></ul><p><strong><a class=link href=http://eunsetee.com/eJI1 title="Download AutoSploit" target=_blank rel=noopener>Download AutoSploit</a></strong></p><p><strong>Regards</strong></p><p><strong>Kang Asu</strong></p></section><footer class=article-footer><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 ZYChimne</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.11.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

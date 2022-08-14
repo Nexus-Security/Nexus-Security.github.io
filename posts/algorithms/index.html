@@ -1,0 +1,306 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Algorithms Must Known"><title>Algorithms</title><link rel=canonical href=https://Nexus-Security.github.io/posts/algorithms/><link rel=stylesheet href=/scss/style.min.450926226e724574a6b936335ea06111f8aeb253d932c86cb2cc807341cd2889.css><meta property="og:title" content="Algorithms"><meta property="og:description" content="Algorithms Must Known"><meta property="og:url" content="https://Nexus-Security.github.io/posts/algorithms/"><meta property="og:site_name" content="ZYChimne"><meta property="og:type" content="article"><meta property="article:section" content="Posts"><meta property="article:tag" content="algorithms"><meta property="article:published_time" content="2022-06-10T00:00:00+00:00"><meta property="article:modified_time" content="2022-06-10T00:00:00+00:00"><meta name=twitter:title content="Algorithms"><meta name=twitter:description content="Algorithms Must Known"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu8b78332b6420dc9affabe23720d11e63_1937019_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍇</span></figure><div class=site-meta><h1 class=site-name><a href=/>ZYChimne</a></h1><h2 class=site-description>Computer Science, Wuhan University</h2></div></header><ol class=social-menu><li><a href=https://github.com/ZYChimne target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com/ZChimne target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>Home</span></a></li><li><a href=/about-me/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>About Me</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>Dark Mode</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/algorithms/>Algorithms</a></h2><h3 class=article-subtitle>Algorithms Must Known</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Jun 10, 2022</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>5 minute read</time></div></footer></div></header><section class=article-content><h2 id=tree>Tree</h2><h3 id=binary-tree>Binary Tree</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=cm>/* *
+</span></span></span><span class=line><span class=cl><span class=cm> * Definition for a binary tree node.
+</span></span></span><span class=line><span class=cl><span class=cm> * From LeetCode.
+</span></span></span><span class=line><span class=cl><span class=cm> * struct TreeNode {
+</span></span></span><span class=line><span class=cl><span class=cm> *     int val;
+</span></span></span><span class=line><span class=cl><span class=cm> *     TreeNode *left;
+</span></span></span><span class=line><span class=cl><span class=cm> *     TreeNode *right;
+</span></span></span><span class=line><span class=cl><span class=cm> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+</span></span></span><span class=line><span class=cl><span class=cm> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+</span></span></span><span class=line><span class=cl><span class=cm> *     TreeNode(int x, TreeNode *left, TreeNode *right)
+</span></span></span><span class=line><span class=cl><span class=cm> *       : val(x), left(left), right(right) {}
+</span></span></span><span class=line><span class=cl><span class=cm> * };
+</span></span></span><span class=line><span class=cl><span class=cm> */</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=delete-a-node-in-binary-tree>Delete a Node in Binary Tree</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=n>TreeNode</span><span class=o>*</span> <span class=nf>delete_node</span><span class=p>(</span><span class=n>TreeNode</span><span class=o>*</span> <span class=n>root</span><span class=p>,</span> <span class=kt>int</span> <span class=n>key</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>root</span><span class=o>==</span><span class=k>nullptr</span><span class=p>)</span> <span class=k>return</span> <span class=k>nullptr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span> <span class=k>if</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>val</span><span class=o>&gt;</span><span class=n>key</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>root</span><span class=o>-&gt;</span><span class=n>left</span><span class=o>=</span><span class=n>delete_node</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>left</span><span class=p>,</span> <span class=n>key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span> <span class=k>if</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>val</span><span class=o>&lt;</span><span class=n>key</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>root</span><span class=o>-&gt;</span><span class=n>right</span><span class=o>=</span><span class=n>delete_node</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>right</span><span class=p>,</span> <span class=n>key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>left</span><span class=o>==</span><span class=k>nullptr</span><span class=p>)</span> <span class=k>return</span> <span class=n>root</span><span class=o>-&gt;</span><span class=n>right</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span> <span class=k>if</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>right</span><span class=o>==</span><span class=k>nullptr</span><span class=p>)</span> <span class=k>return</span> <span class=n>root</span><span class=o>-&gt;</span><span class=n>left</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>TreeNode</span><span class=o>*</span> <span class=n>new_root</span><span class=o>=</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>right</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>while</span><span class=p>(</span><span class=n>new_root</span><span class=o>-&gt;</span><span class=n>left</span><span class=o>!=</span><span class=k>nullptr</span><span class=p>)</span> <span class=n>new_root</span><span class=o>=</span><span class=n>new_root</span><span class=o>-&gt;</span><span class=n>left</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>new_root</span><span class=o>-&gt;</span><span class=n>right</span><span class=o>=</span><span class=n>delete_node</span><span class=p>(</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>right</span><span class=p>,</span> <span class=n>new_root</span><span class=o>-&gt;</span><span class=n>val</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>new_root</span><span class=o>-&gt;</span><span class=n>left</span><span class=o>=</span><span class=n>root</span><span class=o>-&gt;</span><span class=n>left</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=n>new_root</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>root</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=segment-tree>Segment Tree</h3><p><a class=link href=https://leetcode.cn/problems/my-calendar-iii/ target=_blank rel=noopener>My Calendar III</a> (Also Differentiation & Prefix Sum)<br><a class=link href=https://oi-wiki.org/ds/seg/ target=_blank rel=noopener>Segment Tree OI-WIKI</a><br>Segment Tree is efficient to tell how many times a point has appeared in a segment.</p><h3 id=trie-prefix-tree>Trie (Prefix Tree)</h3><p><a class=link href=https://leetcode.cn/problems/implement-trie-prefix-tree/description/ target=_blank rel=noopener>Implement Trie</a></p><h2 id=string>String</h2><h3 id=split>Split</h3><p>C++ string doesn&rsquo;t have built-in split function. To split string into an array of substrings by a character,</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=n>vector</span><span class=o>&lt;</span><span class=n>string</span><span class=o>&gt;</span> <span class=n>split</span><span class=p>(</span><span class=n>string</span> <span class=n>str</span><span class=p>,</span> <span class=kt>char</span> <span class=n>c</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>stringstream</span> <span class=nf>ss</span><span class=p>(</span><span class=o>&amp;</span><span class=n>str</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>vector</span><span class=o>&lt;</span><span class=n>string</span><span class=o>&gt;</span><span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>string</span> <span class=n>temp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>getline</span><span class=p>(</span><span class=n>ss</span><span class=p>,</span> <span class=n>temp</span><span class=p>,</span> <span class=n>c</span><span class=p>)){</span>
+</span></span><span class=line><span class=cl>        <span class=n>res</span><span class=p>.</span><span class=n>emplace_back</span><span class=p>(</span><span class=n>temp</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>res</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=kmp>KMP</h3><p>Heuristic string matching algorithm time complexity is O(m*n). KMP (Knuth Morris Pratt) Pattern Searching algorithm uses the previous matching result to optimize the searching process.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span><span class=n>longest_prefix_array</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>compute_longest_prefix_array</span><span class=p>(</span><span class=k>const</span> <span class=n>string</span><span class=o>&amp;</span> <span class=n>pattern</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>longest_prefix_array</span><span class=p>.</span><span class=n>resize</span><span class=p>(</span><span class=n>pattern</span><span class=p>.</span><span class=n>size</span><span class=p>(),</span> <span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>pattern</span><span class=p>.</span><span class=n>size</span><span class=p>();</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>j</span><span class=o>=</span><span class=n>longest_prefix_array</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>1</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span><span class=p>(</span><span class=n>j</span><span class=o>!=-</span><span class=mi>1</span><span class=o>&amp;&amp;</span><span class=n>pattern</span><span class=p>[</span><span class=n>j</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span><span class=o>!=</span><span class=n>pattern</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>j</span><span class=o>=</span><span class=n>longest_prefix_array</span><span class=p>[</span><span class=n>j</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>pattern</span><span class=p>[</span><span class=n>j</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span><span class=o>==</span><span class=n>pattern</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>longest_prefix_array</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>j</span><span class=o>+</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>bool</span> <span class=nf>kmp_search</span><span class=p>(</span><span class=k>const</span> <span class=n>string</span><span class=o>&amp;</span> <span class=n>str</span><span class=p>,</span> <span class=k>const</span> <span class=n>string</span><span class=o>&amp;</span> <span class=n>pattern</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>compute_longest_prefix_array</span><span class=p>(</span><span class=n>pattern</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=n>j</span><span class=o>=-</span><span class=mi>1</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>str</span><span class=p>.</span><span class=n>size</span><span class=p>()</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span><span class=p>(</span><span class=n>j</span><span class=o>!=-</span><span class=mi>1</span><span class=o>&amp;&amp;</span><span class=n>pattern</span><span class=p>[</span><span class=n>j</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span><span class=o>!=</span><span class=n>str</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>j</span><span class=o>=</span><span class=n>longest_prefix_array</span><span class=p>[</span><span class=n>j</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>pattern</span><span class=p>[</span><span class=n>j</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span><span class=o>==</span><span class=n>str</span><span class=p>[</span><span class=n>i</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>j</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span><span class=p>(</span><span class=n>j</span><span class=o>==</span><span class=n>str</span><span class=p>.</span><span class=n>size</span><span class=p>()</span><span class=o>-</span><span class=mi>1</span><span class=p>)</span> <span class=k>return</span> <span class=nb>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nb>false</span><span class=p>;</span> <span class=c1>// mismatch
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=sort>Sort</h2><h3 id=insertion-sort>Insertion Sort</h3><p>Insertion sort outperforms other sorting algorithms in small sizes and is stable.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=kt>void</span> <span class=nf>insertion_sort</span><span class=p>(</span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;&amp;</span> <span class=n>arr</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>arr</span><span class=p>.</span><span class=n>size</span><span class=p>();</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>temp</span><span class=o>=</span><span class=n>arr</span><span class=p>[</span><span class=n>i</span><span class=p>],</span> <span class=n>j</span><span class=o>=</span><span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// Move greater elements to positions of greater indexes
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>while</span><span class=p>(</span><span class=n>arr</span><span class=p>[</span><span class=n>j</span><span class=p>]</span><span class=o>&gt;</span><span class=n>temp</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>arr</span><span class=p>[</span><span class=n>j</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span><span class=o>=</span><span class=n>arr</span><span class=p>[</span><span class=n>j</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>            <span class=n>j</span><span class=o>--</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>arr</span><span class=p>[</span><span class=n>j</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span><span class=o>=</span><span class=n>temp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=quick-sort>Quick Sort</h3><p>Quick Sort is preferred over Merge Sort for arrays.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span><span class=n>arr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=cm>/* This function takes last element as pivot, places
+</span></span></span><span class=line><span class=cl><span class=cm>the pivot element at its correct position in sorted
+</span></span></span><span class=line><span class=cl><span class=cm>array, and places all smaller (smaller than pivot)
+</span></span></span><span class=line><span class=cl><span class=cm>to left of pivot and all greater elements to right
+</span></span></span><span class=line><span class=cl><span class=cm>of pivot */</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>partition</span><span class=p>(</span><span class=kt>int</span> <span class=n>low</span><span class=p>,</span> <span class=kt>int</span> <span class=n>high</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>pivot</span><span class=o>=</span><span class=n>arr</span><span class=p>[</span><span class=n>high</span><span class=p>];</span> <span class=c1>// pivot
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// Index of smaller element 
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// and indicates the right position of pivot found so far
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>i</span><span class=o>=</span><span class=p>(</span><span class=n>low</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span> 
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=kt>int</span> <span class=n>j</span><span class=o>=</span><span class=n>low</span><span class=p>;</span> <span class=n>j</span><span class=o>&lt;=</span><span class=n>high</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span> <span class=n>j</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// If current element is smaller than the pivot
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>if</span> <span class=p>(</span><span class=n>arr</span><span class=p>[</span><span class=n>j</span><span class=p>]</span><span class=o>&lt;</span><span class=n>pivot</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>i</span><span class=o>++</span><span class=p>;</span> <span class=c1>// increment index of smaller element
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>swap</span><span class=p>(</span><span class=n>arr</span><span class=p>[</span><span class=n>i</span><span class=p>],</span> <span class=n>arr</span><span class=p>[</span><span class=n>j</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>swap</span><span class=p>(</span><span class=n>arr</span><span class=p>[</span><span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>],</span> <span class=n>arr</span><span class=p>[</span><span class=n>high</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span><span class=n>i</span> <span class=o>+</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=cm>/* The main function that implements QuickSort
+</span></span></span><span class=line><span class=cl><span class=cm>arr[] --&gt; Array to be sorted,
+</span></span></span><span class=line><span class=cl><span class=cm>low --&gt; Starting index,
+</span></span></span><span class=line><span class=cl><span class=cm>high --&gt; Ending index */</span>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>quickSort</span><span class=p>(</span><span class=kt>int</span> <span class=n>low</span><span class=p>,</span> <span class=kt>int</span> <span class=n>high</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>low</span> <span class=o>&lt;</span> <span class=n>high</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* pi is partitioning index, arr[p] is now
+</span></span></span><span class=line><span class=cl><span class=cm>        at right place */</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>pi</span> <span class=o>=</span> <span class=n>partition</span><span class=p>(</span><span class=n>low</span><span class=p>,</span> <span class=n>high</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// Separately sort elements before
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=c1>// partition and after partition
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>quickSort</span><span class=p>(</span><span class=n>low</span><span class=p>,</span> <span class=n>pi</span> <span class=o>-</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>quickSort</span><span class=p>(</span><span class=n>pi</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=n>high</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=merge-sort>Merge Sort</h3><p>Merge Sort is preferred over Quick Sort for linked lists. <a class=link href=https://www.geeksforgeeks.org/merge-sort/ target=_blank rel=noopener>Merge Sort</a></p><h3 id=hybrid-sort>Hybrid Sort</h3><p>Hybrid sort uses different sorting algorithms in different scenarios, and thus maintaining high performance across the cases.
+For example, <a class=link href=https://github.com/orlp/pdqsort target=_blank rel=noopener>pattern defeating sort</a> use insertion sort when the partition of target is slower than a preset threshold (24). For larger target size, it applies quicksort. Once it learns the partition of target is bad in its definition, it uses a fallback strategy (heap sort).
+Other hybrid sorts include introsort, timsort, etc.</p><h2 id=heap>Heap</h2><h2 id=stack>Stack</h2><h2 id=random>Random</h2><h3 id=mersenne-twister-mt19937>Mersenne Twister (MT19937)</h3><p>The Mersenne Twister is a general-purpose pseudorandom number generator (PRNG). Its name derives from the fact that its period length is chosen to be a Mersenne Prime. <a class=link href=https://en.wikipedia.org/wiki/Mersenne_Twister target=_blank rel=noopener>Read More on Wikipedia</a>. MT19937 stands for mersenne twister with a long period of 219937 – 1 which means mt19937 produces a sequence of 32-bit integers that only repeats itself after 2^19937 – 1 number have been generated.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;ctime&gt; </span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;iostream&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;random&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=k>using</span> <span class=k>namespace</span> <span class=n>std</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=c1>// Using the constructor to
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>// initialize with a seed value
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>mt19937</span> <span class=n>mt</span><span class=p>(</span><span class=n>time</span><span class=p>(</span><span class=k>nullptr</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>  <span class=c1>// Operator() is used to 
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>// generate random numbers
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>cout</span> <span class=o>&lt;&lt;</span> <span class=n>mt</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=search>Search</h2><h3 id=binary-search>Binary Search</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=line><span class=cl><span class=c1>// assume target in candidates
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>vector</span><span class=o>&lt;</span><span class=kt>int</span><span class=o>&gt;</span><span class=n>candidates</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=c1>// return index of target in candidates
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>int</span> <span class=nf>binary_search</span><span class=p>(</span><span class=kt>int</span> <span class=n>target</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>low</span><span class=o>=</span><span class=mi>0</span><span class=p>,</span> <span class=n>high</span><span class=o>=</span><span class=n>candidates</span><span class=p>.</span><span class=n>size</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>low</span><span class=o>&lt;</span><span class=n>high</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>mid</span><span class=o>=</span><span class=p>(</span><span class=n>high</span><span class=o>-</span><span class=n>low</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span><span class=o>+</span><span class=n>low</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>candidates</span><span class=p>[</span><span class=n>mid</span><span class=p>]</span><span class=o>==</span><span class=n>target</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=n>mid</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=k>if</span><span class=p>(</span><span class=n>candidates</span><span class=p>[</span><span class=n>mid</span><span class=p>]</span><span class=o>&gt;</span><span class=n>target</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>high</span><span class=o>=</span><span class=n>mid</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>low</span><span class=o>=</span><span class=n>mid</span><span class=o>+</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>low</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-contents--wrapper><h2 class=section-title>Related contents</h2><div class=related-contents><div class="flex article-list--tile"><article><a href=/posts/bit-manipulation/><div class=article-details><h2 class=article-title>Bit Manipulation</h2></div></a></article><article><a href=/posts/regular-expression/><div class=article-details><h2 class=article-title>Regular Expression</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2022 ZYChimne</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.11.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css integrity="sha256-c0uckgykQ9v5k+IqViZOZKc47Jn7KQil4/MP3ySA3F8=" crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE=" crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#tree>Tree</a><ol><li><a href=#binary-tree>Binary Tree</a><ol><li><a href=#delete-a-node-in-binary-tree>Delete a Node in Binary Tree</a></li></ol></li><li><a href=#segment-tree>Segment Tree</a></li><li><a href=#trie-prefix-tree>Trie (Prefix Tree)</a></li></ol></li><li><a href=#string>String</a><ol><li><a href=#split>Split</a></li><li><a href=#kmp>KMP</a></li></ol></li><li><a href=#sort>Sort</a><ol><li><a href=#insertion-sort>Insertion Sort</a></li><li><a href=#quick-sort>Quick Sort</a></li><li><a href=#merge-sort>Merge Sort</a></li><li><a href=#hybrid-sort>Hybrid Sort</a></li></ol></li><li><a href=#heap>Heap</a></li><li><a href=#stack>Stack</a></li><li><a href=#random>Random</a><ol><li><a href=#mersenne-twister-mt19937>Mersenne Twister (MT19937)</a></li></ol></li><li><a href=#search>Search</a><ol><li><a href=#binary-search>Binary Search</a></li></ol></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
