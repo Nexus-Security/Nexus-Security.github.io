@@ -143,4 +143,38 @@ font-weight:700;
 &lt;h2 id="location-information">Location Information&lt;/h2>
 &lt;p>When You First Launch Any Of Our Mobile Applications That Collect Location Information, You Will Be Asked To Consent To The Application&amp;rsquo;s Collection Of This Information. If You Initially Consent To Our Collection Of Location Information, You Can Subsequently Stop The Collection Of This Information At Any Time By Changing The Preferences On Your Mobile Device. You May Also Stop Our Collection Of Location Information By Following The Standard Uninstall Process To Remove All Of Our Mobile Applications From Your Device.&lt;/p>
 &lt;h2 id="cookies">Cookies&lt;/h2>
-&lt;p>Most Web Browsers Are Set To Accept Cookies By Default. If You Prefer, You Can Usually Choose To Set Your Browser To Remove Or Reject Browser Cookies. Please Note That If You Choose To Remove Or Reject Cookies, This Could Affect The Availability And Functionality Of Our Service.&lt;/p></description></item></channel></rss>
+&lt;p>Most Web Browsers Are Set To Accept Cookies By Default. If You Prefer, You Can Usually Choose To Set Your Browser To Remove Or Reject Browser Cookies. Please Note That If You Choose To Remove Or Reject Cookies, This Could Affect The Availability And Functionality Of Our Service.&lt;/p></description></item><item><title>2004 Crown Victoria Blower Control Module Repair</title><link>https://Nexus-Security.github.io/posts/2004-crown-victoria-blower-control-module-repair/</link><pubDate>Sun, 22 Jul 2012 15:28:00 +0100</pubDate><guid>https://Nexus-Security.github.io/posts/2004-crown-victoria-blower-control-module-repair/</guid><description>&lt;p>My 2004 Crown Victoria&amp;rsquo;s blower motor started acting up, making proper air conditioning in the Florida heat impossible. The car utilizes an EATC system (likely standing for Electronic Automatic Temperature Control) which automatically regulates air temperature and blower speed based on the desired setting. The blower motor&amp;rsquo;s speed began fluctuating erratically. Research on crownvic.net suggested a common issue is a faulty solder joint within the blower control module located in the A/C system&amp;rsquo;s air intake near the firewall.&lt;/p>
+&lt;p>Contrary to some online opinions, accessing the module wasn&amp;rsquo;t too difficult. Here&amp;rsquo;s a breakdown of the process:&lt;/p>
+&lt;p>The module is found beneath a collection of hoses that need to be detached.&lt;/p>
+&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiU-UL1Oetz-QE8e03sPLgHqvTW0IFT8EeFcPRTJYxHVZPsjEqclwtfsPpM3Ygx_N4Du1t-QlS3vSUZ76btRrAk1G99iXBKKfh09Cv9FEk0eviuW2Mloj6lYsyQxlueAlBug3WSLaX4GnME/s1600/Start.jpg" target="_blank" rel="noopener"
+>&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiU-UL1Oetz-QE8e03sPLgHqvTW0IFT8EeFcPRTJYxHVZPsjEqclwtfsPpM3Ygx_N4Du1t-QlS3vSUZ76btRrAk1G99iXBKKfh09Cv9FEk0eviuW2Mloj6lYsyQxlueAlBug3WSLaX4GnME/s1600/Start.jpg"
+loading="lazy"
+>&lt;/a>&lt;/p>
+&lt;p>Fortunately, the heater core hoses are positioned at the cooling system&amp;rsquo;s highest point, eliminating the need for a system drain. Minimal fluid escapes when disconnecting the hoses with a cold engine (it&amp;rsquo;s recommended to do this in the morning before driving to prevent potential burns from hot coolant). Using a plastic tub underneath the work area collected any leaking fluid.&lt;/p>
+&lt;p>The blower control module, a black unit with an orange tag, is revealed after hose removal. It is secured to the A/C box with two screws.&lt;/p>
+&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRxCVmq5lwmoaKogXuCMwS3kuxY_MlsvTsKimHpt5JB0tvHN4CUWEzXwUlLhXPEfT2Y4IBOMUDSxs4-06hc8KbDPADXdky1aJJ9VqjTNZWh0ulTC08BAPjh_pAxSr848keG34qDmMTUGPR/s1600/After&amp;#43;Removal&amp;#43;of&amp;#43;Hoses.jpg" target="_blank" rel="noopener"
+>&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRxCVmq5lwmoaKogXuCMwS3kuxY_MlsvTsKimHpt5JB0tvHN4CUWEzXwUlLhXPEfT2Y4IBOMUDSxs4-06hc8KbDPADXdky1aJJ9VqjTNZWh0ulTC08BAPjh_pAxSr848keG34qDmMTUGPR/s1600/After&amp;#43;Removal&amp;#43;of&amp;#43;Hoses.jpg"
+loading="lazy"
+>&lt;/a>&lt;/p>
+&lt;p>A 5/16 nut loosens the module:&lt;/p>
+&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgi0JiztGvaWX6VWJRsa94qs4nO5YuTv2-hK6_BS9wbPmKznA7vKJA2hq_GK0MxDGlBcDGWO2x4Eicjii3XZ15SIKX9hTxQBUm5tZXuHGuxKfELVAI-nrDEVkXOzxznb_CElTXdDzKrRq2e/s1600/Blower&amp;#43;Module&amp;#43;2.jpg" target="_blank" rel="noopener"
+>&lt;/a>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHBSQnb-xUeEk4PERKoqEZKlfMIe8Zzrh8oa_7gmlaBhCmMN2K59eayWuWe5vZiIGUcB5ZE3w9xamB_75ocz_G5RH6ECH21h_eqYT1cKESoSis6hSjBZrvmzcd_5WYJ2q1olaSHiHAvgfN/s1600/Use&amp;#43;of&amp;#43;Wrench.jpg" target="_blank" rel="noopener"
+>&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHBSQnb-xUeEk4PERKoqEZKlfMIe8Zzrh8oa_7gmlaBhCmMN2K59eayWuWe5vZiIGUcB5ZE3w9xamB_75ocz_G5RH6ECH21h_eqYT1cKESoSis6hSjBZrvmzcd_5WYJ2q1olaSHiHAvgfN/s1600/Use&amp;#43;of&amp;#43;Wrench.jpg"
+loading="lazy"
+>&lt;/a>&lt;/p>
+&lt;p>The extracted module has two screws holding it to the plastic casing that need to be removed to access the board.&lt;/p>
+&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixYeWnPogQVlFPGYtM0gjboeYydmvHK9HdIpC4_4pJQrIPJ56mI0VWf9NR9UpvPwanjZwL99pb-QL9_kMMklGaJZBaOb78f6ZrsMlA5gZY4k5rpzJkkQBKRPRblm6eKBOlC7TJ0-MX0s0a/s1600/Blower&amp;#43;Module.jpg" target="_blank" rel="noopener"
+>&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEixYeWnPogQVlFPGYtM0gjboeYydmvHK9HdIpC4_4pJQrIPJ56mI0VWf9NR9UpvPwanjZwL99pb-QL9_kMMklGaJZBaOb78f6ZrsMlA5gZY4k5rpzJkkQBKRPRblm6eKBOlC7TJ0-MX0s0a/s1600/Blower&amp;#43;Module.jpg"
+loading="lazy"
+>&lt;/a>&lt;/p>
+&lt;p>The board removed from its plastic casing.&lt;/p>
+&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjL0sUCHd4ECMvjfOik6JrPGOaEKsjDQ5ccr6DlxB1Z2qr_RruTWib69H5St4pgdnzBA-qjhAKb9A7hG8D_M94EK3EkkHyBDknpnd6vdgs_hNG0Wpvux6jXETcAZiwlgLe7PH7L4opSaEVX/s1600/Blower&amp;#43;Module&amp;#43;wo&amp;#43;Housing.jpg" target="_blank" rel="noopener"
+>&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjL0sUCHd4ECMvjfOik6JrPGOaEKsjDQ5ccr6DlxB1Z2qr_RruTWib69H5St4pgdnzBA-qjhAKb9A7hG8D_M94EK3EkkHyBDknpnd6vdgs_hNG0Wpvux6jXETcAZiwlgLe7PH7L4opSaEVX/s1600/Blower&amp;#43;Module&amp;#43;wo&amp;#43;Housing.jpg"
+loading="lazy"
+>&lt;/a>&lt;/p>
+&lt;p>The five connector assembly pins required resoldering. As anticipated from the online forum, the left large connector pin exhibited an intermittent connection, confirmed by multimeter testing while manipulating the contact. While the remaining four pins appeared fine, all five were resoldered for preventative measures.&lt;/p>
+&lt;p>Resoldering proved challenging due to a protective film on the board affecting solder flow. Nonetheless, the repair seems successful. After reinstalling the module, everything appears to be functioning correctly.&lt;/p>
+&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEisclgI_WUTnRFcK3D2i8_NfRZHiYzvZcDCWPBAyNR56abK7Tg-hQytj7MENsFA4FqRuLtvWXdpbYfRuSHhfybzXjmQvaWUgebO-G2wiKCQ1ScuHSyVY6D2dP8Av8GkxX2YsCEo0cFTaE_L/s1600/Resoldered&amp;#43;Contacts.jpg" target="_blank" rel="noopener"
+>&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEisclgI_WUTnRFcK3D2i8_NfRZHiYzvZcDCWPBAyNR56abK7Tg-hQytj7MENsFA4FqRuLtvWXdpbYfRuSHhfybzXjmQvaWUgebO-G2wiKCQ1ScuHSyVY6D2dP8Av8GkxX2YsCEo0cFTaE_L/s1600/Resoldered&amp;#43;Contacts.jpg"
+loading="lazy"
+>&lt;/a>&lt;/p></description></item></channel></rss>
