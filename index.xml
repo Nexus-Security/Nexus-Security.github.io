@@ -469,7 +469,49 @@ loading="lazy"
 >&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh93TUHv7_N1Lv0r0VnrrXTiGKN68msyJDEP0wvqjOA_0_6-reiYrEViIcakYgc1fcZSOryy_wN55jSc5nRaMTZoxOoMKpSgQXQoKyblchCvYC-eY8Jas9gOMLb5gWcGhCiHldzrL8p4e5q8t1Ly-89f6ewI99PpeUdg18Op5wbj7WTesBw8JkPqPdEZ1E/w640-h390/6.jpg"
 loading="lazy"
 >&lt;/a>&lt;/p>
-&lt;p>The hood will soon be returned with a Beolover internal RIAA pre-amp and a Beolover Commander remote control system. What a fantastic upgrade! Truly Beolovely!&lt;/p></description></item><item><title>Beogram 4002 (5503): Installation of Upgrades - Internal RIAA Preamp, Commander Remote Control and a New Hood</title><link>https://Nexus-Security.github.io/posts/beogram-4002-5503-installation-of-upgrades-internal-riaa-preamp-commander-remote-control-and-a-new-hood/</link><pubDate>Tue, 12 Sep 2023 18:14:00 +0100</pubDate><guid>https://Nexus-Security.github.io/posts/beogram-4002-5503-installation-of-upgrades-internal-riaa-preamp-commander-remote-control-and-a-new-hood/</guid><description>&lt;p>Following the functional restoration of a Beogram 4002 (Type 5503) from Oklahoma, the next step was to add the customer&amp;rsquo;s desired upgrades. These included an internal Beolover RIAA pre-amplifier (designed for AC motor Beogram 4002s), a Beolover Commander remote control system, and a new hood for a pristine appearance.&lt;/p>
+&lt;p>The hood will soon be returned with a Beolover internal RIAA pre-amp and a Beolover Commander remote control system. What a fantastic upgrade! Truly Beolovely!&lt;/p></description></item><item><title>The 3 Types of VoIP Lines for Business</title><link>https://Nexus-Security.github.io/the-3-types-of-voip-lines-for-business/</link><pubDate>Sun, 17 Sep 2023 18:14:00 +0100</pubDate><guid>https://Nexus-Security.github.io/the-3-types-of-voip-lines-for-business/</guid><description>&lt;p>&lt;em>By: John Shepler&lt;/em>&lt;/p>
+&lt;p>For years, businesses of all sizes have been transitioning to VoIP phone systems. While some are thrilled with the switch, others find the call quality lacking, with muffled audio and challenging conversations. The technology is the same, so why does VoIP performance vary so greatly? Let&amp;rsquo;s investigate.&lt;/p>
+&lt;p>&lt;a class="link" href="http://www.EnterpriseVoIP.com/" target="_blank" rel="noopener"
+>&lt;img src="http://www.EnterpriseVoIP.com/images/PhoneBuilding250.jpg"
+loading="lazy"
+alt="Check out the range of VoIP options for your business."
+>&lt;/a>&lt;strong>What is VoIP?&lt;/strong>&lt;/p>
+&lt;p>VoIP, or Voice over Internet Protocol, transforms phones into computer accessories, saving money and enabling features impossible with traditional phone systems. While powerful, network voice is more susceptible to degradation than analog phones.&lt;/p>
+&lt;p>&lt;strong>Traditional Phone Systems&lt;/strong>&lt;/p>
+&lt;p>Business phone lines, often called POTS (Plain Old Telephone Service), use dedicated copper wires from each phone to the telephone company. This setup leads to high costs for larger businesses due to internal call charges.&lt;/p>
+&lt;p>To combat this, companies install phone switches. Small businesses use Key Telephone Systems, enabling internal calls over shared lines and access to multiple external lines. Larger companies opt for PBX (Private Branch Exchange) switches, managing a pool of external lines assignable to any phone.&lt;/p>
+&lt;p>With few phones and dedicated lines, the phone company handles call switching. With numerous phones, businesses manage internal calls, requiring specialized wiring, Key/PBX equipment, and multiple analog lines or a digital PRI trunk.&lt;/p>
+&lt;p>&lt;strong>VoIP: A Different Approach&lt;/strong>&lt;/p>
+&lt;p>VoIP phones connect to the company&amp;rsquo;s LAN, eliminating the need for a separate phone network. Call switching is handled by an in-house VoIP PBX, IP PBX, or a hosted PBX from a provider. This &amp;ldquo;hosted&amp;rdquo; model, similar to web hosting, involves monthly payments instead of equipment management.&lt;/p>
+&lt;p>&lt;strong>VoIP Phone Line Requirements&lt;/strong>&lt;/p>
+&lt;p>All VoIP phones connect to a local network, whether a small office network or an extensive corporate LAN. Regardless of the network size, high-quality performance relies on shared principles and needs.&lt;/p>
+&lt;p>Since the network is shared, ensuring high-quality voice calls requires prioritization. Unlike dedicated analog lines managed by the phone company, VoIP performance becomes an IT responsibility.&lt;/p>
+&lt;p>Sufficient bandwidth for all devices is crucial, but prioritizing voice packets over data is equally important. Prioritization prevents choppy calls, even if file downloads slow down. The network also needs low latency, minimal packet loss, and jitter to ensure clear VoIP conversations.&lt;/p>
+&lt;p>&lt;strong>3 Types of VoIP Phone Lines&lt;/strong>&lt;/p>
+&lt;p>Unlike the uniformity of analog lines and ISDN PRI trunks, VoIP phone lines come in various forms, from basic Internet VoIP to dedicated SIP Trunks and private MPLS networks.&lt;/p>
+&lt;p>&lt;strong>The Internet as Your Phone Line&lt;/strong>&lt;/p>
+&lt;p>For cost-conscious home offices and small businesses, broadband Internet serves as the connection to the VoIP provider. Sharing the connection with computers, a WiFi router, and VoIP phones requires a router with Quality of Service (QoS) features to prioritize voice traffic.&lt;/p>
+&lt;p>While cost-effective, using the Internet as a phone line presents challenges. Designed for reliable data transfer, the Internet lacks built-in voice prioritization. Shared broadband connections like DSL, Cable, Satellite, and Cellular can lead to inconsistent call quality depending on network traffic.&lt;/p>
+&lt;p>Dedicated Internet access (DIA) options like T1 or Ethernet over Copper offer improved reliability by avoiding congestion caused by other users on the shared connection. However, they remain susceptible to congestion on the broader Internet.&lt;/p>
+&lt;p>&lt;strong>Private Line VoIP Service&lt;/strong>&lt;/p>
+&lt;p>Businesses prioritizing high-quality phone service often choose SIP Trunks for their predictability. Similar to traditional analog and PRI lines, SIP Trunks are dedicated, unshared digital broadband connections. The name derives from their support for SIP (Session Initiation Protocol), the VoIP call switching system.&lt;/p>
+&lt;p>A basic SIP Trunk, often a T1 line connecting the business network to the provider, supports numerous simultaneous calls or combined voice and internet traffic. Lower-priority internet traffic utilizes remaining bandwidth, making it a cost-effective solution for smaller businesses.&lt;/p>
+&lt;p>Larger SIP Trunks, utilizing copper or fiber optic bandwidth, cater to larger companies and call centers, providing the necessary capacity for high call volumes.&lt;/p>
+&lt;p>&lt;strong>Voice over MPLS Networks&lt;/strong>&lt;/p>
+&lt;p>Large corporations with multiple locations benefit from VoMPLS (Voice over MPLS networks). MPLS offers a private network solution with regional, national, or international coverage. Network providers ensure consistent Class of Service, bandwidth, low latency, and minimal packet loss and jitter for all customers.&lt;/p>
+&lt;p>VoMPLS functions similarly to SIP Trunks but eliminates the need for dedicated lines between locations. Businesses connect each location to the MPLS network through an access line, achieving cost savings, especially for international calls, while maintaining high performance.&lt;/p>
+&lt;p>Looking to improve your telephone system, reduce costs, or enhance features? Explore the range of &lt;a class="link" href="http://www.enterprisevoip.com/" target="_blank" rel="noopener"
+>VoIP telephone solutions&lt;/a> available.&lt;/p>
+&lt;p>&lt;a class="link" href="http://www.telexplainer.net/" target="_blank" rel="noopener"
+>&lt;img src="http://www.T1Rex.com/images/CheckPricesSupportButton.gif"
+loading="lazy"
+alt="Click to check pricing and features or get support from a Telarus product specialist."
+>&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="http://www.twitter.com/Telexplainer" target="_blank" rel="noopener"
+>&lt;img src="http://twitter-badges.s3.amazonaws.com/follow_me-a.png"
+loading="lazy"
+alt="Follow Telexplainer on Twitter"
+>&lt;/a>&lt;/p></description></item><item><title>Beogram 4002 (5503): Installation of Upgrades - Internal RIAA Preamp, Commander Remote Control and a New Hood</title><link>https://Nexus-Security.github.io/posts/beogram-4002-5503-installation-of-upgrades-internal-riaa-preamp-commander-remote-control-and-a-new-hood/</link><pubDate>Tue, 12 Sep 2023 18:14:00 +0100</pubDate><guid>https://Nexus-Security.github.io/posts/beogram-4002-5503-installation-of-upgrades-internal-riaa-preamp-commander-remote-control-and-a-new-hood/</guid><description>&lt;p>Following the functional restoration of a Beogram 4002 (Type 5503) from Oklahoma, the next step was to add the customer&amp;rsquo;s desired upgrades. These included an internal Beolover RIAA pre-amplifier (designed for AC motor Beogram 4002s), a Beolover Commander remote control system, and a new hood for a pristine appearance.&lt;/p>
 &lt;p>The first upgrade was preparing the keypad for the Commander remote system. AC motor Beograms primarily use directly soldered wiring harnesses, so Commander installation isn&amp;rsquo;t &amp;ldquo;plug and play&amp;rdquo; like the DC motor version. It requires creating a breakout for keypad signals, allowing the Commander to interface with the Beogram&amp;rsquo;s control system.&lt;/p>
 &lt;p>This involved accessing the keypad PCB, identifying the solder pads connecting to the wiring harness responsible for keypad signals, and carefully creating a &amp;ldquo;corridor&amp;rdquo; by removing some solder. A keypad breakout adapter was then soldered onto these pads, ensuring a precise and secure connection. This adapter essentially mirrors the keypad pad connections to a small white connector.&lt;/p>
 &lt;p>Before proceeding with the Commander installation, the Beolover RIAA preamp board was installed, taking advantage of the exposed area with the keypad removed. This involved a straightforward swap of the original output board with the new green RIAA board, utilizing the same connectors for ease of installation.&lt;/p>
@@ -5534,106 +5576,4 @@ loading="lazy"
 &lt;p>Finally, adjustments and testing will be conducted.&lt;/p></description></item><item><title>Beogram 4002 (5513): Replacement of Degraded Transport Lock Bushings and Missing Cabinet Guiding Washers</title><link>https://Nexus-Security.github.io/posts/beogram-4002-5513-replacement-of-degraded-transport-lock-bushings-and-missing-cabinet-guiding-washers/</link><pubDate>Fri, 26 Jan 2018 06:03:00 +0100</pubDate><guid>https://Nexus-Security.github.io/posts/beogram-4002-5513-replacement-of-degraded-transport-lock-bushings-and-missing-cabinet-guiding-washers/</guid><description>&lt;p>The Beogram 4002 restoration involved addressing the common issue of fragile orange transport lock bushings and missing cabinet guiding washers. Many Beograms used plastic washers, which are prone to cracking and falling apart. This was evident in the restoration project, as some washers were missing entirely.&lt;/p>
 &lt;p>To rectify this, five new 3D-printed washers were installed. For aesthetic purposes, using a black washer for the front-center position is recommended to avoid visibility through the gap between the aluminum panel and the plinth. Replacement washers are available for purchase.&lt;/p>
 &lt;p>Accessing the transport lock bushings requires disassembling the locks. The degraded bushings can then be removed. Vacuuming out any remaining fragments, especially beneath the floating sub-chassis, is advisable to prevent interference with its movement. The old bushings were replaced with new 3D-printed ones.&lt;/p>
-&lt;p>Each replacement bushing consists of two parts, inserted from the top and bottom. These parts are available for purchase. With the bushings replaced, the chassis can be reinstalled. The project concluded with the replacement of a corroded DIN5 plug.&lt;/p></description></item><item><title>Beogram 4002 (5513): Restoration of a Cracked Hood - Another Process Improvement</title><link>https://Nexus-Security.github.io/posts/beogram-4002-5513-restoration-of-a-cracked-hood-another-process-improvement/</link><pubDate>Mon, 22 Jan 2018 05:29:00 +0100</pubDate><guid>https://Nexus-Security.github.io/posts/beogram-4002-5513-restoration-of-a-cracked-hood-another-process-improvement/</guid><description>&lt;p>The Beogram 4002 I&amp;rsquo;m currently working on has a cracked hood around the hinge attachments. The left side was entirely detached, and the right side had a crack extending around one of the holes.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgK0cpC_TpzNQNrlBqsy7jUOJOHyzwXSG7Ajl-VwVqBUNIzZwEsX_XzTSU9aviMq8Mkb7pgYNp9wyBoBh78JekFMbYyKfyrnpt6DBIOtvs-klvxZov5SsfO3Cf6UTjWBH9D3FKU0uR_AsU/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;broken&amp;#43;our&amp;#43;left&amp;#43;hinge.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgK0cpC_TpzNQNrlBqsy7jUOJOHyzwXSG7Ajl-VwVqBUNIzZwEsX_XzTSU9aviMq8Mkb7pgYNp9wyBoBh78JekFMbYyKfyrnpt6DBIOtvs-klvxZov5SsfO3Cf6UTjWBH9D3FKU0uR_AsU/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;broken&amp;#43;our&amp;#43;left&amp;#43;hinge.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>The right side had a crack going all the way around one of the attachment holes:&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhot8b8oxNw30u5-IhwUYwnUtRnv3qjmgdA2B8g-HfkaEuEJEm3oHA1QqQJ5VhCC2cIL8SLZrGaeBnVC8lBPxp8ntf0cH5t8xUqL3seeu6MIF4jqnXcQCzUONP4-gJX4PwfFJeg7ZwA0vc/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;cracked&amp;#43;right&amp;#43;hinge.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhot8b8oxNw30u5-IhwUYwnUtRnv3qjmgdA2B8g-HfkaEuEJEm3oHA1QqQJ5VhCC2cIL8SLZrGaeBnVC8lBPxp8ntf0cH5t8xUqL3seeu6MIF4jqnXcQCzUONP4-gJX4PwfFJeg7ZwA0vc/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;cracked&amp;#43;right&amp;#43;hinge.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>To begin, I glued the broken pieces back together using Weld-On #4 acrylic solvent. This low-viscosity solvent is ideal for injecting into cracks, as capillary action draws it in. This created a strong initial bond between the broken parts.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHyOp7iSVBth5YzOgH6QkQqIYri5CqILKbqqq2CsTY09uTnbh0oZDPNxFYQogqk12jr-grqcb7VAWwXRHrhH_0R5UESyR0Bjl4nJrOOcs0sOKlc0Ec9RIQo_KSTrqLBONGyu47rObrMfg/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;left&amp;#43;hinge&amp;#43;glued&amp;#43;together.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHyOp7iSVBth5YzOgH6QkQqIYri5CqILKbqqq2CsTY09uTnbh0oZDPNxFYQogqk12jr-grqcb7VAWwXRHrhH_0R5UESyR0Bjl4nJrOOcs0sOKlc0Ec9RIQo_KSTrqLBONGyu47rObrMfg/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;left&amp;#43;hinge&amp;#43;glued&amp;#43;together.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglJ_1H8zOoARJ7JlCwMmEqJ6QpEZAdiAZbfHHw4bEhTg-dPOgNdb1jZD4XIbpivc1ODHYHmEE4bq52Y2oHDB22tdf5EOA49xb8aRkrNfd45PFGVLDCaZHjev8WCqIwyGPyp4b2ilRK8BU/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;right&amp;#43;hinge&amp;#43;glued&amp;#43;together.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglJ_1H8zOoARJ7JlCwMmEqJ6QpEZAdiAZbfHHw4bEhTg-dPOgNdb1jZD4XIbpivc1ODHYHmEE4bq52Y2oHDB22tdf5EOA49xb8aRkrNfd45PFGVLDCaZHjev8WCqIwyGPyp4b2ilRK8BU/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;right&amp;#43;hinge&amp;#43;glued&amp;#43;together.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>While this already creates a fairly strong bond, I reinforced the repair by applying thin patches to the cracked areas using Weld-On #16. These patches, made from 20 mil PETG sheet, were chosen for their thinness and compatibility with acrylic.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjcjLSTBCAAca7aKscezLhR7FkLmhhT02JJpJnsKp16aoBARw26vI2Hfq9lHc467ezKYe_ots_sRQsD4LBq5DZ0TeWh-ZGTC7XGi0OEhtQN9Nl0OTKqdOy53Wc85-PAh6ymbaCH9bPhiN0/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;using&amp;#43;hole&amp;#43;punch&amp;#43;to&amp;#43;make&amp;#43;patches.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjcjLSTBCAAca7aKscezLhR7FkLmhhT02JJpJnsKp16aoBARw26vI2Hfq9lHc467ezKYe_ots_sRQsD4LBq5DZ0TeWh-ZGTC7XGi0OEhtQN9Nl0OTKqdOy53Wc85-PAh6ymbaCH9bPhiN0/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;using&amp;#43;hole&amp;#43;punch&amp;#43;to&amp;#43;make&amp;#43;patches.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>To ensure even clamping pressure, I used 3D-printed clamping parts. These parts, along with metal components to prevent bonding with the plexiglass, allowed for a secure fit while the glue dried.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhPIlzsN3qREUUmNOol8NFDZRZF5O4tN8iY-FdhAc06GQw-Hq97Kv7sF6VtDobZKgKL3MB9Zi7jffdeQ7cwG-tLt67AJhVGx7fccc5pY-5GPdCWIOIFksfsOThkHy9gCylz6Jxv716oJM/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;tools&amp;#43;and&amp;#43;patches.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhPIlzsN3qREUUmNOol8NFDZRZF5O4tN8iY-FdhAc06GQw-Hq97Kv7sF6VtDobZKgKL3MB9Zi7jffdeQ7cwG-tLt67AJhVGx7fccc5pY-5GPdCWIOIFksfsOThkHy9gCylz6Jxv716oJM/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;tools&amp;#43;and&amp;#43;patches.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiWDZhM7SDtSmRuzG34bDjEvwiiC1ZTtxM3uGYPZDbyyJQM-KIYDRokMdgY4QA31YLIQShENBWJaREjDKRap52cluf-PvLf19l0bmFBB4mVe_sZE95qJcsUPCPMFs05ZmWnTv-84gZB9FM/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;left&amp;#43;hinge&amp;#43;glueing.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiWDZhM7SDtSmRuzG34bDjEvwiiC1ZTtxM3uGYPZDbyyJQM-KIYDRokMdgY4QA31YLIQShENBWJaREjDKRap52cluf-PvLf19l0bmFBB4mVe_sZE95qJcsUPCPMFs05ZmWnTv-84gZB9FM/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;left&amp;#43;hinge&amp;#43;glueing.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHbjE-y4ygXaDuPT3lw_qgRSJ6R2LQTsbRBmmczKWYBCVra_3QCj05I3Gx1BkXjvRAoX3Qjs4Uq_YuhbWDsb6oCAtXBv8AGUkCwcp4k97_cJ53hzmogxDcXRBCkK-r6ab8eho2jc1ccIQ/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;left&amp;#43;hinge&amp;#43;glueing&amp;#43;II.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHbjE-y4ygXaDuPT3lw_qgRSJ6R2LQTsbRBmmczKWYBCVra_3QCj05I3Gx1BkXjvRAoX3Qjs4Uq_YuhbWDsb6oCAtXBv8AGUkCwcp4k97_cJ53hzmogxDcXRBCkK-r6ab8eho2jc1ccIQ/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;left&amp;#43;hinge&amp;#43;glueing&amp;#43;II.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhKsHkY9tW-uAgDcvSjxRk3DEBaLmJXdDcWIYrTMQ2fQ7pO2l8bWJ_0rGjNJgTP4H4ORLZ9srebTzVpVRtQjNpMkG_J7UfX93cqvovG09strzYetQpZiKHWytgkgcRzF_Gnr9cJ42wRGdA/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;right&amp;#43;hinge&amp;#43;glueing.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhKsHkY9tW-uAgDcvSjxRk3DEBaLmJXdDcWIYrTMQ2fQ7pO2l8bWJ_0rGjNJgTP4H4ORLZ9srebTzVpVRtQjNpMkG_J7UfX93cqvovG09strzYetQpZiKHWytgkgcRzF_Gnr9cJ42wRGdA/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;right&amp;#43;hinge&amp;#43;glueing.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>Once the glue cured, I trimmed any excess material and reattached the aluminum trim using 3M 300LSE laminating tape. Locking pliers held everything securely in place for a day, ensuring a strong bond.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhiCQNjJ0hDc1T19c3Pz3NktHes4CgXTbtPQgXMmAcqqNBkLFSEXD_531WvL3oTYg__e429SrtRcc9Noe_G-bvL50u5YDRhJ3ARiJsXs_6HKPDoQO5mpM4448tFf051-YSnOw0Ans2hrC4/s1600/Beogram&amp;#43;4002&amp;#43;hood.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhiCQNjJ0hDc1T19c3Pz3NktHes4CgXTbtPQgXMmAcqqNBkLFSEXD_531WvL3oTYg__e429SrtRcc9Noe_G-bvL50u5YDRhJ3ARiJsXs_6HKPDoQO5mpM4448tFf051-YSnOw0Ans2hrC4/s640/Beogram&amp;#43;4002&amp;#43;hood.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgwnozX48C0QJPYWMjuUB7kKboEcmJVCaNhyEGQbP4LaRzvzr22MK_8EVxkLoNIzpiLa9egVv_QBOL9TKm54jGhFZi0KTMFaD271ydvaa0MbVX4JG0O6O_O8Mrl0IUpzELDqxIvoCfJqR8/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;left&amp;#43;hinge&amp;#43;patches&amp;#43;in&amp;#43;place.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgwnozX48C0QJPYWMjuUB7kKboEcmJVCaNhyEGQbP4LaRzvzr22MK_8EVxkLoNIzpiLa9egVv_QBOL9TKm54jGhFZi0KTMFaD271ydvaa0MbVX4JG0O6O_O8Mrl0IUpzELDqxIvoCfJqR8/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;left&amp;#43;hinge&amp;#43;patches&amp;#43;in&amp;#43;place.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgbaAHuvefzEJXKp0ero2JRbeth9c3jnnv_xvhku1gt33AwooSqEiQN7mYsa3G-_jCBAPGprCs3RNxEuBXvcnXA5BHH_ibEtdoH-B6oIwtUaHE-23rqX-vha0cmllqw7OjqW0MGatNh5z8/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;double&amp;#43;sided&amp;#43;tape&amp;#43;for&amp;#43;aluminum&amp;#43;strip&amp;#43;reattachment.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgbaAHuvefzEJXKp0ero2JRbeth9c3jnnv_xvhku1gt33AwooSqEiQN7mYsa3G-_jCBAPGprCs3RNxEuBXvcnXA5BHH_ibEtdoH-B6oIwtUaHE-23rqX-vha0cmllqw7OjqW0MGatNh5z8/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;double&amp;#43;sided&amp;#43;tape&amp;#43;for&amp;#43;aluminum&amp;#43;strip&amp;#43;reattachment.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi2R2R-Dp1QtU4Jj0XHzc2G_s2lQXcQWmaY2K_xzCRmirUQNJnMH49ROCJWpgekG3_ym5wZABfZbNb3u5stTBfg-7MKMM7thCWbC2i6PNgs1c1jU2gn5DtS-9iwve4TD710mOLAKzH__5w/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;clamping.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi2R2R-Dp1QtU4Jj0XHzc2G_s2lQXcQWmaY2K_xzCRmirUQNJnMH49ROCJWpgekG3_ym5wZABfZbNb3u5stTBfg-7MKMM7thCWbC2i6PNgs1c1jU2gn5DtS-9iwve4TD710mOLAKzH__5w/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;clamping.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>The final result was a nearly invisible repair, with the patches blending seamlessly into the hood.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjkaaP3pARkriia_btkfNpVnBLaGRv5JBhomLJ413mrUnci_s1XPV4fBFTFA4m_9hMzxB3dOKS-YiMDvcl_lMrN3OYhTMev543ZdpbjpXvtOyFQt2f3Bmig5REE0A0138zkw4M7OpESSw/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;hinge&amp;#43;repaired&amp;#43;left.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjkaaP3pARkriia_btkfNpVnBLaGRv5JBhomLJ413mrUnci_s1XPV4fBFTFA4m_9hMzxB3dOKS-YiMDvcl_lMrN3OYhTMev543ZdpbjpXvtOyFQt2f3Bmig5REE0A0138zkw4M7OpESSw/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;hinge&amp;#43;repaired&amp;#43;left.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFTHKkF40SoL6KQ799C3PtUxt080nvZfgnb1nTpjeyNFEhuzQqJTfbFJ0N47Yt1m6fZKWfGnPq3k9v-u7ozFic18EuIi6ow_6nqWFRy81ZcWt75JAQZGmO30g1i4n2Euep0iimIi2xFaY/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;hinge&amp;#43;repaired&amp;#43;right.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFTHKkF40SoL6KQ799C3PtUxt080nvZfgnb1nTpjeyNFEhuzQqJTfbFJ0N47Yt1m6fZKWfGnPq3k9v-u7ozFic18EuIi6ow_6nqWFRy81ZcWt75JAQZGmO30g1i4n2Euep0iimIi2xFaY/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;hinge&amp;#43;repaired&amp;#43;right.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>To address scratches on the hood&amp;rsquo;s surface, I performed a multi-step polishing process, starting with 320-grit sandpaper and progressing through increasingly finer grits.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtOCBX0Hith5TilXyBF_cwVv2fhNapR90_8bBw5hcm38ai2JUnKgHMzfeDwpOPYutcq20y2XoYJTNlJ3IA20dWAJ2xNoTe8HOLL4jcveDNLrukQWc-xL981FsUXiPmt0cAJCtB4wG3NWo/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;scratched.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtOCBX0Hith5TilXyBF_cwVv2fhNapR90_8bBw5hcm38ai2JUnKgHMzfeDwpOPYutcq20y2XoYJTNlJ3IA20dWAJ2xNoTe8HOLL4jcveDNLrukQWc-xL981FsUXiPmt0cAJCtB4wG3NWo/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;scratched.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilmlSydyXTNGP7Wx-Hva5-ROdHPR3YwhEtYZ38ZlhB8mO_c1bLlsfY18knyU9gl-ernlxq4Kse6EMgFJolzjW1lqEnu8cVncbZEvh0P-Hadct915imV3Kw3oVa_UwNdVor5vvDBZmF5Jw/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;400&amp;#43;grit.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilmlSydyXTNGP7Wx-Hva5-ROdHPR3YwhEtYZ38ZlhB8mO_c1bLlsfY18knyU9gl-ernlxq4Kse6EMgFJolzjW1lqEnu8cVncbZEvh0P-Hadct915imV3Kw3oVa_UwNdVor5vvDBZmF5Jw/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;400&amp;#43;grit.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>This restored the hood to a like-new shine.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiLIPhXCSrUzU8NmaIENGZ0yUtT_EmVzAQxbFqjTc_DKbStqtb9QaKCWvb_EMYG8WRE5gX2km3hOYep6OmWMRU8w9VspWDTX56hSuBWaEloECitO5MBshjEK6splCNWg9UU14TMqbgbiCA/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;final&amp;#43;result.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiLIPhXCSrUzU8NmaIENGZ0yUtT_EmVzAQxbFqjTc_DKbStqtb9QaKCWvb_EMYG8WRE5gX2km3hOYep6OmWMRU8w9VspWDTX56hSuBWaEloECitO5MBshjEK6splCNWg9UU14TMqbgbiCA/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;final&amp;#43;result.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>Lastly, I replaced the worn rubber bumpers with sections of a 2mm O-ring.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOTtZ4aB8nL9krgiYmeYBNC7w7GgHAUruU2yDCFQ0BFJshZ1GOVCVBqqPbEY7fVS1q43cZdslkXmAr4cyWl4LijmshpaqLd8dT85H_3wT7RvaOBpahbdi176OtmYA6vyQNQ-sgUlQk6iE/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;missing&amp;#43;bumpers.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOTtZ4aB8nL9krgiYmeYBNC7w7GgHAUruU2yDCFQ0BFJshZ1GOVCVBqqPbEY7fVS1q43cZdslkXmAr4cyWl4LijmshpaqLd8dT85H_3wT7RvaOBpahbdi176OtmYA6vyQNQ-sgUlQk6iE/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;missing&amp;#43;bumpers.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKB6iApPOHVQ7SQwLs_33wMGq8c40GEEFq1FE-tMdlIUmHGS0RbOPdh1x7qI_h78mCdPC5oydG9288c3wBgzHgljZFvHoOhlj3hmd-n2nFRNhfN07wCyjbjuXYwy3MnuIhygGaFf6FSrQ/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;drilling&amp;#43;out&amp;#43;bumper.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKB6iApPOHVQ7SQwLs_33wMGq8c40GEEFq1FE-tMdlIUmHGS0RbOPdh1x7qI_h78mCdPC5oydG9288c3wBgzHgljZFvHoOhlj3hmd-n2nFRNhfN07wCyjbjuXYwy3MnuIhygGaFf6FSrQ/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;drilling&amp;#43;out&amp;#43;bumper.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilrUAIBzWmL8JCcVhL5CIQ8lhK5NjMStw8S3y80IE-czzyQbiAqYgWoCacxS5mufYWla5bTSYagL2bRHIPdHVKHI3Y3kJEcYw3rLIkkybCI6umhh-sYmXI1HisRFs3KVByNAjaW0WtzzY/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;installing&amp;#43;o-ring&amp;#43;snippet.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEilrUAIBzWmL8JCcVhL5CIQ8lhK5NjMStw8S3y80IE-czzyQbiAqYgWoCacxS5mufYWla5bTSYagL2bRHIPdHVKHI3Y3kJEcYw3rLIkkybCI6umhh-sYmXI1HisRFs3KVByNAjaW0WtzzY/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;installing&amp;#43;o-ring&amp;#43;snippet.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjl-iA8FxvO5_puXWUGUgmeu5y0bFuoImgPB5XhLJpXiiMmyHKsYMrffjollwFEo8N8BunIWdFXTQInPNwOopx6uok8Vq7DeXore4DCIA39yRJvhowtk6WBYVJZj2thi_HsIVVFfI_wXts/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;cutting&amp;#43;o-ring&amp;#43;snippet.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjl-iA8FxvO5_puXWUGUgmeu5y0bFuoImgPB5XhLJpXiiMmyHKsYMrffjollwFEo8N8BunIWdFXTQInPNwOopx6uok8Vq7DeXore4DCIA39yRJvhowtk6WBYVJZj2thi_HsIVVFfI_wXts/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;cutting&amp;#43;o-ring&amp;#43;snippet.jpg"
-loading="lazy"
->&lt;/a>&lt;/p>
-&lt;p>These new bumpers ensured the hood sat level when closed. With these repairs, the hood is now restored to excellent condition.&lt;/p>
-&lt;p>&lt;a class="link" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhbd6IFCoWOK1WX71YVEnXIYYpVKfXnz4ljQ34-a_ZK2AUbOcG23hqLyvLvmbfZoPwbdK-put1jHFRRPYu1-eYTFdYVkhRItK3MB-5U0PkW7cf5kchA_JFi7Et5ohrGwN7jPMU14mmKlC4/s1600/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;bumpers&amp;#43;restored.jpg" target="_blank" rel="noopener"
->&lt;img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhbd6IFCoWOK1WX71YVEnXIYYpVKfXnz4ljQ34-a_ZK2AUbOcG23hqLyvLvmbfZoPwbdK-put1jHFRRPYu1-eYTFdYVkhRItK3MB-5U0PkW7cf5kchA_JFi7Et5ohrGwN7jPMU14mmKlC4/s640/Beogram&amp;#43;4002&amp;#43;hood&amp;#43;bumpers&amp;#43;restored.jpg"
-loading="lazy"
->&lt;/a>&lt;/p></description></item></channel></rss>
+&lt;p>Each replacement bushing consists of two parts, inserted from the top and bottom. These parts are available for purchase. With the bushings replaced, the chassis can be reinstalled. The project concluded with the replacement of a corroded DIN5 plug.&lt;/p></description></item></channel></rss>
