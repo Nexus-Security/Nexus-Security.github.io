@@ -1,0 +1,936 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Over the past few years, functional programming has earned a reputation for being a highly precise and efficient programming approach. Not only are functional programming languages gaining popularity among developers, but also, many major companies are adopting them to address business challenges. For instance, Walmart has started utilizing Clojure, a JVM-based functional Lisp dialect, for its checkout system. Jet.com, a major e-commerce platform (now acquired by Walmart), employs F# to develop most of its microservices."><title>Tutorial on F#: Creating a Full-stack F# Application</title>
+<link rel=canonical href=https://Nexus-Security.github.io/tutorial-on-f%23-creating-a-full-stack-f%23-application/><link rel=stylesheet href=/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css><meta property='og:title' content="Tutorial on F#: Creating a Full-stack F# Application"><meta property='og:description' content="Over the past few years, functional programming has earned a reputation for being a highly precise and efficient programming approach. Not only are functional programming languages gaining popularity among developers, but also, many major companies are adopting them to address business challenges. For instance, Walmart has started utilizing Clojure, a JVM-based functional Lisp dialect, for its checkout system. Jet.com, a major e-commerce platform (now acquired by Walmart), employs F# to develop most of its microservices."><meta property='og:url' content='https://Nexus-Security.github.io/tutorial-on-f%23-creating-a-full-stack-f%23-application/'><meta property='og:site_name' content='Nexus Security'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2023-09-12T00:00:00+00:00'><meta property='article:modified_time' content='2023-09-12T00:00:00+00:00'><meta name=twitter:title content="Tutorial on F#: Creating a Full-stack F# Application"><meta name=twitter:description content="Over the past few years, functional programming has earned a reputation for being a highly precise and efficient programming approach. Not only are functional programming languages gaining popularity among developers, but also, many major companies are adopting them to address business challenges. For instance, Walmart has started utilizing Clojure, a JVM-based functional Lisp dialect, for its checkout system. Jet.com, a major e-commerce platform (now acquired by Walmart), employs F# to develop most of its microservices."><link rel="shortcut icon" href=/fav.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"light")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><ol class=menu-social><li><a href=https://github.com/Nexus-Security target=_blank title=GitHub rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><defs><filter id="alpha" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%"><feColorMatrix type="matrix" in="SourceGraphic" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/></filter><mask id="mask0"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.2;stroke:none"/></g></mask><clipPath id="clip1"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface5" clip-path="url(#clip1)"><path style="stroke:none;fill-rule:nonzero;fill:#fff;fill-opacity:1" d="M10.9375 83.867188c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C21.6875 48.125 21.40625 33.070312 26.488281 17.675781c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C58.9375 34.65625 59.957031 34.84375 60.894531 34.554688 64.824219 33.382812 71.851562 32.6875 79.6875 32.6875S94.550781 33.386719 98.476562 34.554688C99.417969 34.835938 100.433594 34.65625 101.226562 34.074219 113.96875 24.65625 124.011719 20.445312 129.8125 18.582031c-.476562000000001-1.882812-1.019531-3.746093-1.625-5.589843-4.78125 1.207031-16.300781 5.050781-31.648438 16.394531C95.746094 29.96875 94.730469 30.144531 93.789062 29.867188c-3.925781-1.171876-10.953124-1.875-18.789062-1.875-7.832031.0-14.855469.703124000000003-18.792969 1.871093C55.265625 30.144531 54.246094 29.964844 53.457031 29.382812c-15.355469-11.34375-26.875-15.1875-31.65625-16.402343C16.71875 28.382812 17 43.4375 17.726562 45.523438 18.101562 46.589844 17.890625 47.777344 17.175781 48.648438 9.71875 57.367188 6.25 67.070312 6.25 79.179688c0 23.515624 7.175781 37.921874 17.417969 46.550781C16.007812 116.851562 10.9375 103.582031 10.9375 83.867188zm0 0"/></g><mask id="mask1"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.101961;stroke:none"/></g></mask><clipPath id="clip2"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface8" clip-path="url(#clip2)"><path style="stroke:none;fill-rule:nonzero;fill:#000;fill-opacity:1" d="M32.34375 78.5c3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 73.425781 55.824219 73.730469 60.023438 74.054688c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 74.917969 85.210938 74.425781 89.976562 74.054688 102.070312 73.125 111.605469 72.367188 117.648438 78.492188c4.527343 4.601562 6.890624 10.328124 7.21875 16.945312C124.925781 94.398438 125 93.382812 125 92.261719c0-7.285157-2.476562-13.492188-7.351562-18.449219-6.042969-6.117188-15.578126-5.367188-27.671876-4.4375C85.210938 69.742188 80.34375 70.238281 74.867188 70.117188 69.914062 70.0625 64.960938 69.8125 60.023438 69.375 55.824219 69.050781 51.929688 68.742188 48.382812 68.742188c-6.65625.0-12.09375 1.070312-16.039062 5.078124C27.476562 78.769531 25 84.976562 25 92.261719 25 93.375 25.074219 94.398438 25.132812 95.445312 25.460938 88.820312 27.820312 83.101562 32.34375 78.5zm0 0"/></g><linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="10.768" y1="13.86" x2="18.633" y2="21.724" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear1" gradientUnits="userSpaceOnUse" x1="4.004" y1="18.529" x2="4.047" y2="18.573" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear2" gradientUnits="userSpaceOnUse" x1=".617" y1="5.771" x2="23.69" y2="16.53" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#fff;stop-opacity:.2"/><stop offset="1" style="stop-color:#fff;stop-opacity:0"/></linearGradient></defs><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#5c6671;fill-opacity:1" d="M88.539062 137.488281 75 137.5 61.457031 137.488281C36.273438 137.488281 6.25 127.367188 6.25 79.179688c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C17 43.4375 16.71875 28.382812 21.800781 12.988281c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C54.25 29.96875 55.269531 30.15625 56.207031 29.867188c3.9375-1.171876 10.960938-1.875 18.792969-1.875 7.835938.0 14.863281.703124000000003 18.789062 1.871093C94.730469 30.140625 95.746094 29.964844 96.539062 29.382812c15.347657-11.34375 26.867188-15.1875 31.648438-16.394531 5.082031 15.394531 4.804688 30.449219 4.082031 32.53125C131.867188 46.585938 132.078125 47.785156 132.820312 48.648438 140.273438 57.367188 143.75 67.070312 143.75 79.179688c0 48.1875-30.023438 58.308593-55.210938 58.308593zm0 0"/><use xlink:href="#surface5" mask="url(#mask0)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M89.488281 63.144531C84.886719 63.507812 80.125 63.875 75.226562 63.875H74.78125C69.875 63.875 65.117188 63.5 60.519531 63.144531 47.898438 62.164062 35.988281 61.230469 27.894531 69.429688 21.824219 75.59375 18.75 83.28125 18.75 92.261719 18.75 128.238281 46.429688 131.25 75.226562 131.25c28.34375.0 56.023438-3.011719 56.023438-38.988281.0-8.988281-3.074219-16.667969-9.144531-22.835938-8.085938-8.195312-20.003907-7.269531-32.617188-6.28125zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#d9cfcc;fill-opacity:1" d="M74.773438 125C42.492188 125 25 119.78125 25 92.261719c0-7.285157 2.476562-13.492188 7.34375-18.449219 3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 68.738281 55.824219 69.042969 60.023438 69.367188c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 70.230469 85.210938 69.738281 89.976562 69.367188c12.09375-.929687999999999 21.628907-1.6875 27.671876 4.4375C122.523438 78.769531 125 84.976562 125 92.261719 125 119.78125 107.507812 125 74.773438 125zm0 0"/><use xlink:href="#surface8" mask="url(#mask1)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M50 75c-7.125.0-12.5 9.40625-12.5 21.875S42.875 118.75 50 118.75s12.5-9.40625 12.5-21.875S57.125 75 50 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M50 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S47.449219 81.25 50 81.25s6.25 6.085938 6.25 15.625S52.550781 112.5 50 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M1e2 75c-7.125.0-12.5 9.40625-12.5 21.875S92.875 118.75 1e2 118.75s12.5-9.40625 12.5-21.875S107.125 75 1e2 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M1e2 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S97.449219 81.25 1e2 81.25s6.25 6.085938 6.25 15.625S102.550781 112.5 1e2 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M52.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M102.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear0)" d="M125 72.8125 124.894531 72.855469C129.039062 78.382812 131.25 84.851562 131.25 92.261719c0 35.976562-27.679688 38.988281-56.023438 38.988281-16.664062.0-32.914062-1.054688-43.683593-8.875l13.386719 13.386719c5.507812 1.207031 11.121093 1.71875 16.527343 1.71875L75 137.5 88.539062 137.488281c22.992188.0 49.941407-8.53125 54.472657-46.664062zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear1)" d="M25.070312 115.800781 25 115.832031 25.269531 116.101562zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear2)" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/></g></svg></a></li><li><a href=mailto:0x000216@gmail.com target=_blank title=Email rel=me><svg width="512" height="512" viewBox="0 0 512 512"><path d="M33.994 73.934C27.135 76.021 21.866 80.426 18.364 87 16.567 90.374 16.5 96.438 16.5 256V421.5l2.158 4C21.184 430.18 25.101 434.027 30 436.636 33.003 438.235 36.304 438.546 53.246 438.825L72.993 439.15l.253-137.978L73.5 163.194 90 175.45C99.075 182.191 140.17 212.762 181.321 243.386l74.821 55.68 21.179-15.752C288.97 274.65 330 244.021 368.5 215.248l70-52.312L438.754 301.043 439.007 439.15 458.754 438.825C476.726 438.529 478.859 438.306 482.5 436.342 487.18 433.816 491.027 429.899 493.636 425 495.433 421.626 495.5 415.562 495.5 256 495.5 96.438 495.433 90.374 493.636 87 488.565 77.48 482.099 73.799 469.397 73.202L460.293 72.774 454.397 77.337C439.883 88.566 256.423 221.935 255.772 221.73 254.976 221.479 78.972 93.309 62.177 80.75L51.812 73 44.156 73.086C39.945 73.133 35.372 73.515 33.994 73.934" stroke="none" fill="#d34c3c" fill-rule="evenodd"/><path d="M54.528 74.911C55.612 75.963 74.953 90.25 97.507 106.661c22.555 16.412 67.228 48.964 99.275 72.339s58.594 42.604 58.993 42.731C256.549 221.978 454.147 78.147 457.472 74.916 459.416 73.028 456.501 73 256 73 55.677 73 52.586 73.029 54.528 74.911M73 300.878V439H256 439V300.941C439 190.749 438.748 163.038 437.75 163.654 437.063 164.078 405.45 187.632 367.5 215.994c-37.95 28.363-78.528 58.655-90.173 67.316l-21.173 15.748-66.827-49.716C152.572 221.999 111.925 191.776 99 182.18s-24.062-17.892-24.75-18.436C73.251 162.954 73 190.519 73 300.878" stroke="none" fill="#e5e5e5" fill-rule="evenodd"/></svg></a></li><li><a href=https://nexus-security.github.io/index.xml target=_blank title=RSS rel=me><svg id="Layer_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><path style="fill:#f78c20" d="M78.333 355.334C35.14 355.334.0 390.474.0 433.667S35.14 512 78.333 512s78.333-35.14 78.333-78.333-35.14-78.333-78.333-78.333z"/><g><path style="fill:#ffa929" d="M78.333 381.445c-28.795.0-52.222 23.427-52.222 52.222s23.427 52.222 52.222 52.222 52.222-23.427 52.222-52.222-23.427-52.222-52.222-52.222z"/><path style="fill:#ffa929" d="M477.918 264.861c-21.843-51.641-53.111-98.019-92.936-137.842-39.824-39.824-86.201-71.093-137.843-92.935C193.669 11.468 136.874.0 78.333.0c-4.807.0-8.704 3.897-8.704 8.704v85.519c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h85.52c4.807.0 8.704-3.897 8.704-8.704C512 375.126 500.533 318.331 477.918 264.861z"/><path style="fill:#ffa929" d="M78.333 163.853c-4.807.0-8.704 3.897-8.704 8.704v95.74c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h95.74c4.807.0 8.704-3.897 8.704-8.704.0-72.07-28.065-139.826-79.027-190.787-50.961-50.961-118.717-79.027-190.787-79.027z"/></g><g><path style="fill:#f78c20" d="M78.333 242.186c-2.918.0-5.817.076-8.704.206v25.905c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h25.905c.129-2.886.206-5.786.206-8.704.0-105.752-85.729-191.481-191.481-191.481z"/><path style="fill:#f78c20" d="M78.333 68.113c-2.91.0-5.81.042-8.704.11v26.001c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h26.001c.067-2.894.11-5.793.11-8.704C443.887 231.777 280.223 68.113 78.333 68.113z"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://x.com/0x000216 target=_blank title=Twitter rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#03a9f4;fill-opacity:1" d="M150 33.179688c-5.640625 2.460937-11.609375 4.09375-17.71875 4.855468 6.4375-3.820312 11.25-9.867187 13.527344-16.996094-6.027344 3.574219-12.621094 6.089844-19.5 7.441407-8.628906-9.210938-22.007813-12.214844-33.746094-7.574219-11.738281 4.636719-19.449219 15.980469-19.445312 28.601562.0 2.4375.203124000000003 4.78125.710937000000001 7.015626C49.085938 55.308594 26.03125 43.609375 10.445312 24.355469 2.25 38.402344 6.386719 56.398438 19.894531 65.457031 15.027344 65.324219 10.261719 64.027344 6 61.667969V62.007812c.015625 14.636719 10.304688 27.25 24.636719 30.214844-2.628907.691406000000001-5.339844 1.03125-8.0625 1.011719C20.621094 93.269531 18.667969 93.09375 16.753906 92.710938c4.070313 12.507812 15.585938 21.089843 28.734375 21.421874-10.886719 8.511719-24.308593 13.128907-38.128906 13.113282C4.835938 127.246094 2.417969 127.132812.0 126.824219c14.0625 9.0625 30.445312 13.855469 47.175781 13.800781 56.585938.0 87.523438-46.875 87.523438-87.507812.0-1.359376-.046875-2.671876-.113281000000001-3.972657C140.652344 44.804688 145.875 39.394531 150 33.179688zm0 0"/></g></svg></a></li><li><a href=https://www.minds.com/0x000216/ target=_blank title=Minds rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><g><g><path style="fill:#ffe1b2" d="M256 33.085C245.078 13.38 224.079.0 2e2.0c-23.781.0-45.57 13.293-56.594 34.184C115.711 41.602 96 66.977 96 96c0 .059.0.113.0.172-9.977 7.512-16 19.301-16 31.828.0 1.316.078 2.637.234 3.992C60.211 145.266 48 167.758 48 192c0 14.07 4.039 27.543 11.719 39.262C57.273 236.512 56 242.207 56 248c0 2.738.281 5.445.828 8.098C36.672 267.308 24 288.539 24 312c0 27.973 18.305 52.34 44.109 60.785C65.398 378.828 64 385.324 64 392c0 21.098 13.805 39.508 33.539 45.727C103.891 466.746 129.828 488 160 488c4.617.0 9.227-.512 13.766-1.527C181.992 502 198.141 512 216 512c16.687.0 31.396-8.567 40-21.523V33.085z"/></g><g><g><path style="fill:#ffb980" d="M264 256c-4.422.0-8-3.582-8-8 0-22.055-17.945-40-40-40-8.008.0-15.734 2.355-22.336 6.812-3.023 2.043-7.055 1.781-9.797-.652-3.156-2.809-8.477-6.16-15.867-6.16-4.422.0-8-3.582-8-8s3.578-8 8-8c7.711.0 15.234 2.293 21.719 6.539C197.773 194.246 206.758 192 216 192c30.875.0 56 25.121 56 56C272 252.418 268.422 256 264 256z"/></g></g><g><g><path style="fill:#ffb980" d="M120 120c18.977.0 36.875 7.312 50.414 20.594 3.141 3.09 8.203 3.047 11.312-.109 3.094-3.152 3.047-8.219-.109-11.312C165.07 112.941 143.187 104 120 104c-13.046.0-25.395 2.93-36.542 8.046C81.253 117.019 80 122.423 80 128c0 1.316.078 2.637.234 3.992-.094.062-.173.139-.267.202C91.423 124.501 105.193 120 120 120z"/></g></g><g><g><path style="fill:#ffb980" d="M216 360c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32-14.211.0-26.82-9.648-30.664-23.465-.703-2.512-2.578-4.523-5.039-5.395-2.453-.871-5.188-.492-7.305 1.02C114.094 371.906 101.305 376 88 376c-6.948.0-13.625-1.149-19.894-3.207-2.214 4.939-3.501 10.19-3.916 15.586C71.714 390.73 79.711 392 88 392c13.297.0 26.187-3.266 37.773-9.52C133.969 397.894 150.141 408 168 408c26.469.0 48-21.531 48-48z"/></g></g><g><path style="fill:#fdc88e" d="M488 312c0-23.461-12.672-44.691-32.828-55.902.547-2.652.828-5.359.828-8.098.0-5.793-1.273-11.488-3.719-16.738C459.961 219.543 464 206.07 464 192c0-24.242-12.211-46.734-32.234-60.008.156-1.355.234-2.676.234-3.992.0-12.527-6.023-24.316-16-31.828.0-.059.0-.113.0-.172.0-29.023-19.711-54.398-47.406-61.816C357.57 13.293 335.781.0 312 0c-24.08.0-45.078 13.38-56 33.085v457.391C264.604 503.433 279.313 512 296 512c17.859.0 34.008-10 42.234-25.527C342.773 487.488 347.383 488 352 488c30.172.0 56.109-21.254 62.461-50.273C434.195 431.508 448 413.097 448 392c0-6.676-1.398-13.172-4.109-19.215C469.695 364.34 488 339.973 488 312z"/></g><g><path style="fill:#f8ab6b" d="M272.008 151.199C272 151.465 272 151.734 272 152c0 26.469 21.531 48 48 48s48-21.531 48-48c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32s-32-14.355-32-32c0-2.184.219-4.359.656-6.465.492-2.395-.133-4.883-1.703-6.754-1.57-1.871-4.016-3.066-6.352-2.859-.453.012-.891.059-.602.078-13.234.0-24-10.766-24-24v31.813C260.673 147.348 266.061 149.988 272.008 151.199z"/></g><g><path style="fill:#f8ab6b" d="M296 328c9.242.0 18.219-2.246 26.281-6.539C328.765 325.707 336.289 328 344 328c4.422.0 8-3.582 8-8s-3.578-8-8-8c-7.391.0-12.711-3.352-15.867-6.16-2.742-2.434-6.766-2.695-9.797-.656C311.726 309.644 304 312 296 312c-22.055.0-40-17.945-40-40v39.116C266.174 321.517 280.337 328 296 328z"/></g><g><g><path style="fill:#f8ab6b" d="M431.765 131.992c.156-1.355.234-2.676.234-3.992.0-5.577-1.253-10.981-3.458-15.954C417.395 106.93 405.046 104 392 104c-4.422.0-8 3.582-8 8s3.578 8 8 8c14.807.0 28.577 4.501 40.032 12.194C431.939 132.131 431.859 132.054 431.765 131.992z"/></g></g><g><g><path style="fill:#f8ab6b" d="M447.81 388.38c-.415-5.396-1.702-10.647-3.916-15.586C437.624 374.85 430.948 376 424 376c-13.578.0-26.594-4.266-37.641-12.332-2.07-1.5-4.719-1.93-7.133-1.168-2.43.77-4.344 2.648-5.164 5.059C369.101 382.176 355.414 392 340 392c-4.422.0-8 3.582-8 8s3.578 8 8 8c18.875.0 35.961-10.191 45.094-26.156C396.976 388.512 410.258 392 424 392 432.288 392 440.285 390.73 447.81 388.38z"/></g></g></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://www.buymeacoffee.com/0x000216 target=_blank title=Coffee rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 340 340" style="enable-background:new 0 0 340 340"><g id="XMLID_18_"><polygon id="XMLID_138_" style="fill:#dedde0" points="76.429,290 80,340 170,340 170,290"/><polygon id="XMLID_169_" style="fill:#dedde0" points="170,80 61.429,80 65,130 170,130"/><polygon id="XMLID_197_" style="fill:#acabb1" points="170,290 170,340 260,340 263.571,290"/><polygon id="XMLID_221_" style="fill:#acabb1" points="170,80 170,130 275,130 278.571,80"/><path id="XMLID_222_" style="fill:#ffda44" d="M170 260c-22.091.0-40-22.386-40-50s17.909-50 40-50v-30H65 50l10 160h16.429H170V260z"/><path id="XMLID_33_" style="fill:#ff9811" d="M170 130v30c22.091.0 40 22.386 40 50s-17.909 50-40 50v30h93.571H280l10-160h-15H170z"/><path id="XMLID_223_" style="fill:#50412e" d="M210 210c0-27.614-17.909-50-40-50v1e2c22.091.0 40-22.386 40-50z"/><path id="XMLID_224_" style="fill:#786145" d="M130 210c0 27.614 17.909 50 40 50V160c-22.091.0-40 22.386-40 50z"/><polygon id="XMLID_225_" style="fill:#50412e" points="278.571,80 300,80 300,40 260,40 260,0 80,0 80,40 40,40 40,80 61.429,80 170,80"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About Us</span></a></li><li><a href=/termsofservice/><svg class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4L18.5 9.5a1.5 1.5.0 00-4-4L4 16v4"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/></svg>
+<span>Terms Of Service</span></a></li><li><a href=/privacypolicy/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Privacy Policy</span></a></li><li><a href=/disclaimer/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Disclaimer</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/contact/><svg class="icon icon-tabler icon-tabler-mail" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+<span>Contact Us</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#why-opt-for-f-and-its-applications>Why Opt for F# and Its Applications?</a></li><li><a href=#the-concept-behind-our-f-tutorial>The Concept Behind Our F# Tutorial</a></li><li><a href=#building-the-back-end>Building the Back End</a><ol><li><a href=#web-server-setup>Web Server Setup</a></li><li><a href=#server-code-refactoring>Server Code Refactoring</a></li><li><a href=#obtaining-time-zones>Obtaining Time Zones</a></li><li><a href=#custom-type-creation-and-utilization>Custom Type Creation and Utilization</a></li><li><a href=#sorting-filtering-and-piping>Sorting, Filtering, and Piping</a></li><li><a href=#refactoring-the-time-zone-getter>Refactoring the Time Zone Getter</a></li><li><a href=#encoding-return-data-as-json>Encoding Return Data as JSON</a></li><li><a href=#connecting-time-zone-info-to-the-json-api>Connecting Time Zone Info to the JSON API</a></li><li><a href=#server-deployment>Server Deployment</a></li></ol></li><li><a href=#creating-the-front-end>Creating the Front End</a><ol><li><a href=#front-end-setup>Front-End Setup</a></li><li><a href=#adding-ui-elements>Adding UI Elements</a></li><li><a href=#parsing-json-data>Parsing JSON Data</a></li></ol></li><li><a href=#conclusion>Conclusion</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/tutorial-on-f%23-creating-a-full-stack-f%23-application/>Tutorial on F#: Creating a Full-stack F# Application</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Sep 12, 2023</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>17 minute read</time></div></footer></div></header><section class=article-content><p>Over the past few years, functional programming has earned a reputation for being a highly precise and efficient programming approach. Not only are functional programming languages gaining popularity among developers, but also, many major companies are adopting them to address business challenges.</p><p>For instance, Walmart has started utilizing <a class=link href=https://clojure.org/ target=_blank rel=noopener>Clojure</a>, a JVM-based functional Lisp dialect, for its checkout system. Jet.com, a major e-commerce platform (now acquired by Walmart), employs F# to develop most of its microservices. Similarly, Jane Street, a proprietary trading company, primarily relies on OCaml to build its algorithms.</p><p>This article will delve into F# programming. F# is experiencing growing adoption due to its adaptability, seamless .NET integration, and excellent tooling. In this F# tutorial, we will construct a straightforward web server and a corresponding mobile app, using solely F# for both the front end and back end.</p><h2 id=why-opt-for-f-and-its-applications>Why Opt for F# and Its Applications?</h2><p>We will exclusively utilize F# for today&rsquo;s project. There are several compelling reasons to choose F# as our preferred language:</p><ul><li><strong>.NET Integration</strong>: F# seamlessly integrates with the broader .NET ecosystem, providing ready access to a vast collection of well-supported and comprehensively documented libraries for tackling a wide array of programming tasks.</li><li><strong>Conciseness</strong>: F# is remarkably concise thanks to its robust type inference system and succinct syntax. It often provides more elegant solutions to programming challenges compared to C# or Java, resulting in streamlined code.</li><li><strong>Developer Tools</strong>: F# boasts excellent integration with Visual Studio, a leading IDE for the .NET ecosystem. For those working on non-Windows platforms, a plethora of plugins are available in Visual Studio Code. These tools make F# programming highly productive.</li></ul><p>While I could elaborate further on the advantages of using F#, let&rsquo;s dive right in!</p><h2 id=the-concept-behind-our-f-tutorial>The Concept Behind Our F# Tutorial</h2><p>A popular saying in the United States is: <em>&ldquo;It&rsquo;s five o&rsquo;clock somewhere&rdquo;</em>.</p><p>In certain parts of the world, 5:00 pm marks the earliest socially acceptable time to enjoy a drink or a customary cup of tea.</p><p>Building upon this concept, we will create an application that constantly scans different time zones, identifies where it&rsquo;s currently five o&rsquo;clock, and presents this information to the user.</p><h2 id=building-the-back-end>Building the Back End</h2><h3 id=web-server-setup>Web Server Setup</h3><p>We&rsquo;ll start by creating the back-end service responsible for the timezone search functionality. We will use Suave.IO to construct a JSON API.</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png" media="(min-width: 1920.1px)"><img alt="F# tutorial illustration: web server setup" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127767%2Ftoptal-blog-image-1544658850362-408c6377367a8eb829d250dcfd00e340.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p><a class=link href=https://suave.io/ target=_blank rel=noopener>Suave.IO</a> is an intuitive web framework featuring a lightweight web server, enabling rapid development of simple web applications.</p><p>To get started, open Visual Studio and initiate a new F# Console Application project. If this option isn&rsquo;t available, you might need to install F# functionality via the Visual Studio Installer. Name the project &ldquo;FivePM&rdquo;. Once your application is created, you should see something similar to this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;EntryPoint&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let main argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    printfn &#34;%A&#34; argv
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    0 // return an integer exit code
+</span></span></code></pre></td></tr></table></div></div><p>This is a basic starter code snippet that prints the argument and exits with a status code of 0. Feel free to modify the print statement and experiment with different code functions. The &ldquo;%A&rdquo; formatter is a special formatter that prints the string representation of any type you input, so experiment with printing integers, floats, or even complex types. Once you&rsquo;re comfortable with the fundamental syntax, it&rsquo;s time to install Suave.</p><p>Installing Suave is easiest through the NuGet package manager. Go to Project -> Manage NuGet packages, and click the browse tab. Search for Suave and click install. After accepting the packages for installation, you&rsquo;re all set! Return to your program.fs screen; we&rsquo;re ready to build the server.</p><p>To start using Suave, we first need to import the package. At the top of your program, add the following statements:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>open Suave
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>open Suave.Operators
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>open Suave.Filters
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>open Suave.Successful
+</span></span></code></pre></td></tr></table></div></div><p>This will import the necessary packages for constructing a basic web server. Now, substitute the code in the main function with the following, which defines a simple app and serves it on port 8080:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;EntryPoint&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let main argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // Define the port where you want to serve. We&#39;ll hardcode this for now.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let port = 8080
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // create an app config with the port
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let cfg =
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>          { defaultConfig with
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>              bindings = [ HttpBinding.createSimple HTTP &#34;0.0.0.0&#34; port]}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // We&#39;ll define a single GET route at the / endpoint that returns &#34;Hello World&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let app =
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>          choose
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            [ GET &gt;=&gt; choose
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                [ path &#34;/&#34; &gt;=&gt; request (fun _ -&gt; OK &#34;Hello World!&#34;)]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            ]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // Now we start the server
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    startWebServer cfg app
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    0
+</span></span></code></pre></td></tr></table></div></div><p>The code should be quite straightforward, even if you&rsquo;re unfamiliar with F# syntax or Suave&rsquo;s route handler definitions. In essence, the web app responds with a 200 status and the string &ldquo;Hello World!&rdquo; upon receiving a GET request at the &ldquo;/&rdquo; route. Proceed to run the application (F5 in Visual Studio) and navigate to localhost:8080 in your browser; you should see &ldquo;Hello World!&rdquo; displayed.</p><h3 id=server-code-refactoring>Server Code Refactoring</h3><p>We now have a web server! However, it doesn&rsquo;t do much – let&rsquo;s add some functionality! First, we&rsquo;ll relocate the web server functionality to build out features without concerning ourselves with the web server (we&rsquo;ll connect it later). Define a separate function like so:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// We&#39;ll use argv later :)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let runWebServer argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // Define the port where you want to serve. We&#39;ll hardcode this for now.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let port = 8080
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // create an app config with the port
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let cfg =
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>          { defaultConfig with
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>              bindings = [ HttpBinding.createSimple HTTP &#34;0.0.0.0&#34; port]}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // We&#39;ll define a single GET route at the / endpoint that returns &#34;Hello World&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let app =
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>          choose
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            [ GET &gt;=&gt; choose
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                [ path &#34;/&#34; &gt;=&gt; request (fun _ -&gt; OK &#34;Hello World!&#34;)]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            ]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // Now we start the server
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    startWebServer cfg app
+</span></span></code></pre></td></tr></table></div></div><p>Now, modify the main function as follows and ensure everything functions correctly:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;EntryPoint&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let main argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    runWebServer argv
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    0
+</span></span></code></pre></td></tr></table></div></div><p>Press F5, and our &ldquo;Hello World!&rdquo; server should operate as before.</p><h3 id=obtaining-time-zones>Obtaining Time Zones</h3><p>Next, let&rsquo;s build the functionality that determines the time zone where it&rsquo;s currently five o&rsquo;clock. We aim to write code that iterates through all time zones and pinpoints the one closest to 5:00 pm.</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png" media="(min-width: 1920.1px)"><img alt="Fetching time zones illustration" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127771%2Ftoptal-blog-image-1544699422161-9633d11b485dfc01b4cc90721df4001e.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>Moreover, we want to avoid returning a time zone extremely close to but slightly before 5:00 pm (e.g., 4:58 pm). For this demonstration, the premise is that it cannot be before 5:00 pm, regardless of how close.</p><p>Let&rsquo;s start by retrieving a list of time zones. This is very straightforward in F# due to its excellent C# integration. Add &ldquo;open System&rdquo; at the top and modify your F# application like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;EntryPoint&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let main argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // This gets all the time zones into a List-like object
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let tzs = TimeZoneInfo.GetSystemTimeZones()
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // Now we iterate through the list and print out the names of the timezones
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    for tz in tzs do
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        printfn &#34;%s&#34; tz.DisplayName
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    0
+</span></span></code></pre></td></tr></table></div></div><p>Run the application, and your console should display a list of all time zones, their offsets, and display names.</p><h3 id=custom-type-creation-and-utilization>Custom Type Creation and Utilization</h3><p>With the list of time zones, we can transform them into a custom data type that&rsquo;s more beneficial. We need something containing information like the UTC offset, local time, how far it is from 5:00 pm local time, etc. Let&rsquo;s define a custom type right above your main function:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>type TZInfo = {tzName: string; minDiff: float; localTime: string; utcOffset: float}
+</span></span></code></pre></td></tr></table></div></div><p>Now, we can transform the time zone information from the previous step into a list of these TZInfo objects. Adjust your main function accordingly:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;EntryPoint&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let main argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // This gets all the time zones into a List-like object
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let tzs = TimeZoneInfo.GetSystemTimeZones()
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // List comprehension + type inference allows us to easily perform conversions
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let tzList = [
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        for tz in tzs do
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // convert the current time to the local time zone
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let localTz = TimeZoneInfo.ConvertTime(DateTime.Now, tz) 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Get the datetime object if it was 5:00pm 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let fivePM = DateTime(localTz.Year, localTz.Month, localTz.Day, 17, 0, 0)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Get the difference between now local time and 5:00pm local time.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let minDifference = (localTz - fivePM).TotalMinutes
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        yield {
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                tzName=tz.StandardName;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                minDiff=minDifference;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                localTime=localTz.ToString(&#34;hh:mm tt&#34;);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                utcOffset=tz.BaseUtcOffset.TotalHours;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>             }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    ]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    printfn &#34;%A&#34; tzList.Head
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    0
+</span></span></code></pre></td></tr></table></div></div><p>You should now see the tzInfo object for Dateline Standard Time printed on your screen.</p><h3 id=sorting-filtering-and-piping>Sorting, Filtering, and Piping</h3><p>With a list of tzInfo objects, we can filter and sort them to find the time zone where it&rsquo;s 1) after 5:00 pm and 2) closest to 5:00 pm among those meeting condition 1. Modify your main function as follows:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;EntryPoint&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let main argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // This gets all the time zones into a List-like object
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let tzs = TimeZoneInfo.GetSystemTimeZones()
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // List comprehension + type inference allows us to easily perform conversions
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let tzList = [
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        for tz in tzs do
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // convert the current time to the local time zone
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let localTz = TimeZoneInfo.ConvertTime(DateTime.Now, tz) 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Get the datetime object if it was 5:00pm 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let fivePM = DateTime(localTz.Year, localTz.Month, localTz.Day, 17, 0, 0)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Get the difference between now local time and 5:00pm local time.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let minDifference = (localTz - fivePM).TotalMinutes
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        yield {
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                tzName=tz.StandardName;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                minDiff=minDifference;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                localTime=localTz.ToString(&#34;hh:mm tt&#34;);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                utcOffset=tz.BaseUtcOffset.TotalHours;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>             }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    ]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // We use the pipe operator to chain functiona calls together
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let closest = tzList 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    // filter so that we only get tz after 5pm
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    |&gt; List.filter (fun (i:TZInfo) -&gt; i.minDiff &gt;= 0.0) 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    // sort by minDiff
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    |&gt; List.sortBy (fun (i:TZInfo) -&gt; i.minDiff) 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    // Get the first item
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    |&gt; List.head
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    printfn &#34;%A&#34; closest
+</span></span></code></pre></td></tr></table></div></div><p>We should now have the desired time zone.</p><h3 id=refactoring-the-time-zone-getter>Refactoring the Time Zone Getter</h3><p>Let&rsquo;s refactor the code into its own function for later use. Define a function like so:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// the function takes uint as input, and we represent that as &#34;()&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let getClosest () = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // This gets all the time zones into a List-like object
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let tzs = TimeZoneInfo.GetSystemTimeZones()
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // List comprehension + type inference allows us to easily perform conversions
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let tzList = [
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        for tz in tzs do
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // convert the current time to the local time zone
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let localTz = TimeZoneInfo.ConvertTime(DateTime.Now, tz) 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Get the datetime object if it was 5:00pm 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let fivePM = DateTime(localTz.Year, localTz.Month, localTz.Day, 17, 0, 0)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Get the difference between now local time and 5:00pm local time.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let minDifference = (localTz - fivePM).TotalMinutes
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        yield {
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                tzName=tz.StandardName;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                minDiff=minDifference;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                localTime=localTz.ToString(&#34;hh:mm tt&#34;);
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                utcOffset=tz.BaseUtcOffset.TotalHours;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>             }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    ]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // We use the pipe operator to chain function calls together
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    tzList 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // filter so that we only get tz after 5pm
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        |&gt; List.filter (fun (i:TZInfo) -&gt; i.minDiff &gt;= 0.0) 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // sort by minDiff
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        |&gt; List.sortBy (fun (i:TZInfo) -&gt; i.minDiff) 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Get the first item
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        |&gt; List.head
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>And our main function can just be:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;EntryPoint&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let main argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    printfn &#34;%A&#34; &lt;| getClosest()
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    0
+</span></span></code></pre></td></tr></table></div></div><p>Run the code; the output should remain the same.</p><h3 id=encoding-return-data-as-json>Encoding Return Data as JSON</h3><p>Now that we can retrieve the time zone data, we can transform it into JSON format and serve it through our application. This is quite simple thanks to the JSON.NET package from Newtonsoft. Go back to your NuGet package manager, locate Newtonsoft.Json, and install the package. Return to Program.fs and make a minor change to your main function:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;EntryPoint&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let main argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    printfn &#34;%s&#34; &lt;| JsonConvert.SerializeObject(getClosest())
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    0
+</span></span></code></pre></td></tr></table></div></div><p>Running the code now should display the JSON representation of the TZInfo object in your console, instead of the object itself.</p><h3 id=connecting-time-zone-info-to-the-json-api>Connecting Time Zone Info to the JSON API</h3><p>Connecting this to our JSON API is very straightforward. Simply make the following changes to your runWebServer function:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>// We&#39;ll use argv later :)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let runWebServer argv = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // Define the port where you want to serve. We&#39;ll hardcode this for now.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let port = 8080
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // create an app config with the port
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let cfg =
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>          { defaultConfig with
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>              bindings = [ HttpBinding.createSimple HTTP &#34;0.0.0.0&#34; port]}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // We&#39;ll define a single GET route at the / endpoint that returns &#34;Hello World&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let app =
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>          choose
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            [ GET &gt;=&gt; choose
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                [ 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    // We are getting the closest time zone, converting it to JSON, then setting the MimeType
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                    path &#34;/&#34; &gt;=&gt; request (fun _ -&gt; OK &lt;| JsonConvert.SerializeObject(getClosest()))
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                                &gt;=&gt; setMimeType &#34;application/json; charset=utf-8&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                ]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            ]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    // Now we start the server
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    startWebServer cfg app
+</span></span></code></pre></td></tr></table></div></div><p>Run the application and navigate to localhost:8080 in your browser. You should see the JSON displayed.</p><h3 id=server-deployment>Server Deployment</h3><p>With our JSON API server functional, we can deploy it for internet accessibility. One of the simplest deployment methods is using Microsoft Azure&rsquo;s App Service – essentially a managed IIS service. To deploy to Azure App Service, navigate to the <a class=link href=https://portal.azure.com target=_blank rel=noopener>https://portal.azure.com</a> and go to App Service. Create a new app and go to the deployment center within your portal. The portal can be overwhelming for first-time users; consult one of the many available App Service tutorials if needed.</p><p>You&rsquo;ll see various deployment options; choose whichever you prefer. For simplicity, we&rsquo;ll use the FTP option.</p><p>The App Service relies on a web.config file at your application&rsquo;s root to understand how to run it. Since our web server is fundamentally a console application, we can publish the application and integrate it with the IIS server using HttpPlatformHandler. In Visual Studio, add an XML file to your project and name it web.config. Populate it with the following XML:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;configuration&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  &lt;system.webServer&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    &lt;handlers&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      &lt;remove name=&#34;httpplatformhandler&#34; /&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      &lt;add name=&#34;httpplatformhandler&#34; path=&#34;*&#34; verb=&#34;*&#34; modules=&#34;httpPlatformHandler&#34; resourceType=&#34;Unspecified&#34;/&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    &lt;/handlers&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    &lt;httpPlatform stdoutLogEnabled=&#34;true&#34; stdoutLogFile=&#34;suave.log&#34; startupTimeLimit=&#34;20&#34; processPath=&#34;.\publish\FivePM.exe&#34; arguments=&#34;%HTTP_PLATFORM_PORT%&#34;/&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  &lt;/system.webServer&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;/configuration&gt;
+</span></span></code></pre></td></tr></table></div></div><p>Connect to the FTP server using credentials obtained from the deployment center (you&rsquo;ll need to click the FTP option). Transfer the web.config file to the wwwroot folder of your app service FTP site.</p><p>We&rsquo;re ready to build and publish our application, but first, a small change to the server code is needed. Go to your runServer function and modify the first three lines as follows:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>let runWebServer (argv:string[]) = 
+</span></span><span class=line><span class=cl>    // Define the port where you want to serve. We&#39;ll hardcode this for now.
+</span></span><span class=line><span class=cl>    let port = if argv.Length = 0 then 8080 else (int argv.[0])
+</span></span></code></pre></td></tr></table></div></div><p>This allows the application to read the input argument and use the first one as the port number, rather than having port 8080 hard-coded. In the web.config file, we pass %HTTP_PLATFORM_PORT% as the first argument, so we&rsquo;re all set.</p><p>Build the application in release mode, publish it, and copy the published folder to the wwwroot directory. Restart the application, and you should see the JSON API result at the *.azurewebsites.net site.</p><p>Our application is now deployed!</p><h2 id=creating-the-front-end>Creating the Front End</h2><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png" media="(min-width: 1920.1px)"><img alt="F# front end illustration" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127768%2Ftoptal-blog-image-1544658894591-136cc7fe3628460c3376ce3d015afbd9.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>With the server up and running, we can build a front-end application. For this, we&rsquo;ll create an Android application using Xamarin and F#. This stack, like our back-end environment, boasts seamless integration with Visual Studio. Of course, the F# ecosystem supports various front-end development options (WebSharper, Fable/Elmish, Xamarin.iOS, DotLiquid, etc.), but for brevity, this post will focus solely on Xamarin.Android, leaving others for future exploration.</p><h3 id=front-end-setup>Front-End Setup</h3><p>To set up the Android app, initiate a new project and select the Xamarin Android option. Ensure you have Android development tools installed. Once the project is set up, your main code file should resemble this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>[&lt;Activity (Label = &#34;FivePMFinder&#34;, MainLauncher = true, Icon = &#34;@mipmap/icon&#34;)&gt;]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>type MainActivity () =
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    inherit Activity ()
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    let mutable count:int = 1
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    override this.OnCreate (bundle) =
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        base.OnCreate (bundle)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Set our view from the &#34;main&#34; layout resource
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        this.SetContentView (Resources.Layout.Main)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        // Get our button from the layout resource, and attach an event to it
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        let button = this.FindViewById&lt;Button&gt;(Resources.Id.myButton)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        button.Click.Add (fun args -&gt; 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            button.Text &lt;- sprintf &#34;%d clicks!&#34; count
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            count &lt;- count + 1
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        )
+</span></span></code></pre></td></tr></table></div></div><p>This is the starter code for F# Android Xamarin. It currently just tracks button clicks and displays the count. You can test it by pressing F5 to launch the emulator and starting the application in debug mode.</p><h3 id=adding-ui-elements>Adding UI Elements</h3><p>Let&rsquo;s incorporate some UI elements to enhance functionality. Open resources/layouts and navigate to Main.axml.</p><p>You&rsquo;ll see a visual representation of the main activity layout. Modify UI elements by clicking on them. Add elements from the toolbox by selecting the desired element. Rename the button and add a textView beneath it. Your AXML&rsquo;s XML representation should look similar to this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;LinearLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:orientation=&#34;vertical&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:layout_width=&#34;match_parent&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:layout_height=&#34;match_parent&#34;&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  &lt;Button android:id=&#34;@+id/myButton&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:layout_width=&#34;match_parent&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:layout_height=&#34;wrap_content&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:text=&#34;@string/fivePM&#34; /&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  &lt;TextView
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:text=&#34;&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:textAppearance=&#34;?android:attr/textAppearanceMedium&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:layout_width=&#34;match_parent&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:layout_height=&#34;wrap_content&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    android:id=&#34;@+id/textView1&#34; /&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;/LinearLayout&gt;
+</span></span></code></pre></td></tr></table></div></div><p>The AXML references the strings resource file, so open resources/values/strings.xml and make the following changes:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;resources&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  &lt;string name=&#34;fivePM&#34;&gt;It\&#39;s 5PM Somewhere!&lt;/string&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  &lt;string name=&#34;app_name&#34;&gt;5PM Finder&lt;/string&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>&lt;/resources&gt;
+</span></span></code></pre></td></tr></table></div></div><p>The front-end AXML is now ready. Let&rsquo;s connect it to some code. Go to MainActivity.fs and modify your onCreate function:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>base</span><span class=o>.</span><span class=n>OnCreate</span> <span class=p>(</span><span class=n>bundle</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>//</span> <span class=n>Set</span> <span class=n>our</span> <span class=n>view</span> <span class=n>from</span> <span class=n>the</span> <span class=s2>&#34;main&#34;</span> <span class=n>layout</span> <span class=n>resource</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>this</span><span class=o>.</span><span class=n>SetContentView</span> <span class=p>(</span><span class=n>Resources</span><span class=o>.</span><span class=n>Layout</span><span class=o>.</span><span class=n>Main</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=o>//</span> <span class=n>Get</span> <span class=n>our</span> <span class=n>button</span> <span class=n>from</span> <span class=n>the</span> <span class=n>layout</span> <span class=n>resource</span><span class=p>,</span> <span class=ow>and</span> <span class=n>attach</span> <span class=n>an</span> <span class=n>event</span> <span class=n>to</span> <span class=n>it</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>let</span> <span class=n>button</span> <span class=o>=</span> <span class=n>this</span><span class=o>.</span><span class=n>FindViewById</span><span class=o>&lt;</span><span class=ne>Button</span><span class=o>&gt;</span><span class=p>(</span><span class=n>Resources</span><span class=o>.</span><span class=n>Id</span><span class=o>.</span><span class=n>myButton</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>let</span> <span class=n>txtView</span> <span class=o>=</span> <span class=n>this</span><span class=o>.</span><span class=n>FindViewById</span><span class=o>&lt;</span><span class=n>TextView</span><span class=o>&gt;</span><span class=p>(</span><span class=n>Resources</span><span class=o>.</span><span class=n>Id</span><span class=o>.</span><span class=n>textView1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>button</span><span class=o>.</span><span class=n>Click</span><span class=o>.</span><span class=n>Add</span> <span class=p>(</span><span class=n>fun</span> <span class=n>args</span> <span class=o>-&gt;</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>let</span> <span class=n>webClient</span> <span class=o>=</span> <span class=n>new</span> <span class=n>WebClient</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>txtView</span><span class=o>.</span><span class=n>Text</span> <span class=o>&lt;-</span> <span class=n>webClient</span><span class=o>.</span><span class=n>DownloadString</span><span class=p>(</span><span class=s2>&#34;https://fivepm.azurewebsites.net/&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Replace fivepm.azurewebsites.net with your deployed JSON API&rsquo;s URL. Run the application and click the button in the emulator. Shortly, you should see the JSON API returning your API result.</p><h3 id=parsing-json-data>Parsing JSON Data</h3><p>We&rsquo;re almost there! Currently, the app displays raw, rather unreadable JSON. The next step is to parse this JSON and output a more user-friendly string. We&rsquo;ll use the Newtonsoft.JSON library from the server for JSON parsing.</p><p>Navigate to your NuGet package manager and search for Newtonsoft.JSON. Install it and return to the MainActivity.fs file. Import it by adding &ldquo;open Newtonsoft.Json&rdquo;.</p><p>Now, add the TZInfo type to the project. While we could reuse the server&rsquo;s TZInfo, we only need two fields; let&rsquo;s define a custom type here:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>type TZInfo = 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    {
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        tzName:string
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        localTime: string
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    }
+</span></span></code></pre></td></tr></table></div></div><p>Add this type definition above the main function, and modify the main function like so:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>button</span><span class=o>.</span><span class=n>Click</span><span class=o>.</span><span class=n>Add</span> <span class=p>(</span><span class=n>fun</span> <span class=n>args</span> <span class=o>-&gt;</span> 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>let</span> <span class=n>webClient</span> <span class=o>=</span> <span class=n>new</span> <span class=n>WebClient</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>let</span> <span class=n>tzi</span> <span class=o>=</span> <span class=n>JsonConvert</span><span class=o>.</span><span class=n>DeserializeObject</span><span class=o>&lt;</span><span class=n>TZInfo</span><span class=o>&gt;</span><span class=p>(</span><span class=n>webClient</span><span class=o>.</span><span class=n>DownloadString</span><span class=p>(</span><span class=s2>&#34;https://fivepm.azurewebsites.net/&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>txtView</span><span class=o>.</span><span class=n>Text</span> <span class=o>&lt;-</span> <span class=n>sprintf</span> <span class=s2>&#34;It&#39;s (about) 5PM in the</span><span class=se>\n\n</span><span class=si>%s</span><span class=s2> Timezone! </span><span class=se>\n\n</span><span class=s2>Specifically, it is </span><span class=si>%s</span><span class=s2> there&#34;</span> <span class=n>tzi</span><span class=o>.</span><span class=n>tzName</span> <span class=n>tzi</span><span class=o>.</span><span class=n>localTime</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now, the JSON API result is deserialized into the TZInfo object and used to construct a string. Run the app and click the button. You should see the formatted string appear on the screen.</p><p>While this application is basic and potentially unrefined, we&rsquo;ve successfully built a mobile app that consumes an F# JSON API, processes the data, and presents it to the user – all in F#. Feel free to experiment with various controls and enhance the design further.</p><p>There you have it! A simple F# mobile application and a corresponding F# JSON API that informs the user where it&rsquo;s currently five o&rsquo;clock.</p><h2 id=conclusion>Conclusion</h2><p>Today, we explored the creation of a basic web API and a simple Android application using solely F#, showcasing both the language&rsquo;s expressiveness and the robustness of the F# ecosystem. However, this merely scratches the surface of F# development. I&rsquo;ll be authoring additional posts to expand on the concepts discussed today. Hopefully, this post inspires you to embark on building your own F# applications!</p><p>You can find the complete code for this tutorial on <a class=link href=https://github.com/shanglun/fivepm target=_blank rel=noopener>GitHub</a>.</p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3987358164777632" crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-5X67X4Q4")</script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X67X4Q4" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,0 +1,684 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="As a skilled JavaScript developer, you aim for code that is clear, efficient, and easy to maintain. You tackle fascinating problems that, while distinct, don&rsquo;t always demand novel solutions. You&rsquo;ve probably written code resembling the answer to a completely different issue you&rsquo;ve solved before. Though you might not realize it, you&rsquo;ve employed JavaScript design patterns. These patterns are reusable solutions to recurring challenges in software development. Over a language&rsquo;s existence, numerous such reusable solutions are crafted and evaluated by a multitude of developers within that language&rsquo;s community."><title>JavaScript Design Patterns: A Complete Guide</title>
+<link rel=canonical href=https://Nexus-Security.github.io/javascript-design-patterns-a-complete-guide/><link rel=stylesheet href=/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css><meta property='og:title' content="JavaScript Design Patterns: A Complete Guide"><meta property='og:description' content="As a skilled JavaScript developer, you aim for code that is clear, efficient, and easy to maintain. You tackle fascinating problems that, while distinct, don&rsquo;t always demand novel solutions. You&rsquo;ve probably written code resembling the answer to a completely different issue you&rsquo;ve solved before. Though you might not realize it, you&rsquo;ve employed JavaScript design patterns. These patterns are reusable solutions to recurring challenges in software development. Over a language&rsquo;s existence, numerous such reusable solutions are crafted and evaluated by a multitude of developers within that language&rsquo;s community."><meta property='og:url' content='https://Nexus-Security.github.io/javascript-design-patterns-a-complete-guide/'><meta property='og:site_name' content='Nexus Security'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2023-03-16T00:00:00+00:00'><meta property='article:modified_time' content='2023-03-16T00:00:00+00:00'><meta name=twitter:title content="JavaScript Design Patterns: A Complete Guide"><meta name=twitter:description content="As a skilled JavaScript developer, you aim for code that is clear, efficient, and easy to maintain. You tackle fascinating problems that, while distinct, don&rsquo;t always demand novel solutions. You&rsquo;ve probably written code resembling the answer to a completely different issue you&rsquo;ve solved before. Though you might not realize it, you&rsquo;ve employed JavaScript design patterns. These patterns are reusable solutions to recurring challenges in software development. Over a language&rsquo;s existence, numerous such reusable solutions are crafted and evaluated by a multitude of developers within that language&rsquo;s community."><link rel="shortcut icon" href=/fav.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"light")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><ol class=menu-social><li><a href=https://github.com/Nexus-Security target=_blank title=GitHub rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><defs><filter id="alpha" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%"><feColorMatrix type="matrix" in="SourceGraphic" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/></filter><mask id="mask0"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.2;stroke:none"/></g></mask><clipPath id="clip1"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface5" clip-path="url(#clip1)"><path style="stroke:none;fill-rule:nonzero;fill:#fff;fill-opacity:1" d="M10.9375 83.867188c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C21.6875 48.125 21.40625 33.070312 26.488281 17.675781c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C58.9375 34.65625 59.957031 34.84375 60.894531 34.554688 64.824219 33.382812 71.851562 32.6875 79.6875 32.6875S94.550781 33.386719 98.476562 34.554688C99.417969 34.835938 100.433594 34.65625 101.226562 34.074219 113.96875 24.65625 124.011719 20.445312 129.8125 18.582031c-.476562000000001-1.882812-1.019531-3.746093-1.625-5.589843-4.78125 1.207031-16.300781 5.050781-31.648438 16.394531C95.746094 29.96875 94.730469 30.144531 93.789062 29.867188c-3.925781-1.171876-10.953124-1.875-18.789062-1.875-7.832031.0-14.855469.703124000000003-18.792969 1.871093C55.265625 30.144531 54.246094 29.964844 53.457031 29.382812c-15.355469-11.34375-26.875-15.1875-31.65625-16.402343C16.71875 28.382812 17 43.4375 17.726562 45.523438 18.101562 46.589844 17.890625 47.777344 17.175781 48.648438 9.71875 57.367188 6.25 67.070312 6.25 79.179688c0 23.515624 7.175781 37.921874 17.417969 46.550781C16.007812 116.851562 10.9375 103.582031 10.9375 83.867188zm0 0"/></g><mask id="mask1"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.101961;stroke:none"/></g></mask><clipPath id="clip2"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface8" clip-path="url(#clip2)"><path style="stroke:none;fill-rule:nonzero;fill:#000;fill-opacity:1" d="M32.34375 78.5c3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 73.425781 55.824219 73.730469 60.023438 74.054688c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 74.917969 85.210938 74.425781 89.976562 74.054688 102.070312 73.125 111.605469 72.367188 117.648438 78.492188c4.527343 4.601562 6.890624 10.328124 7.21875 16.945312C124.925781 94.398438 125 93.382812 125 92.261719c0-7.285157-2.476562-13.492188-7.351562-18.449219-6.042969-6.117188-15.578126-5.367188-27.671876-4.4375C85.210938 69.742188 80.34375 70.238281 74.867188 70.117188 69.914062 70.0625 64.960938 69.8125 60.023438 69.375 55.824219 69.050781 51.929688 68.742188 48.382812 68.742188c-6.65625.0-12.09375 1.070312-16.039062 5.078124C27.476562 78.769531 25 84.976562 25 92.261719 25 93.375 25.074219 94.398438 25.132812 95.445312 25.460938 88.820312 27.820312 83.101562 32.34375 78.5zm0 0"/></g><linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="10.768" y1="13.86" x2="18.633" y2="21.724" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear1" gradientUnits="userSpaceOnUse" x1="4.004" y1="18.529" x2="4.047" y2="18.573" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear2" gradientUnits="userSpaceOnUse" x1=".617" y1="5.771" x2="23.69" y2="16.53" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#fff;stop-opacity:.2"/><stop offset="1" style="stop-color:#fff;stop-opacity:0"/></linearGradient></defs><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#5c6671;fill-opacity:1" d="M88.539062 137.488281 75 137.5 61.457031 137.488281C36.273438 137.488281 6.25 127.367188 6.25 79.179688c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C17 43.4375 16.71875 28.382812 21.800781 12.988281c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C54.25 29.96875 55.269531 30.15625 56.207031 29.867188c3.9375-1.171876 10.960938-1.875 18.792969-1.875 7.835938.0 14.863281.703124000000003 18.789062 1.871093C94.730469 30.140625 95.746094 29.964844 96.539062 29.382812c15.347657-11.34375 26.867188-15.1875 31.648438-16.394531 5.082031 15.394531 4.804688 30.449219 4.082031 32.53125C131.867188 46.585938 132.078125 47.785156 132.820312 48.648438 140.273438 57.367188 143.75 67.070312 143.75 79.179688c0 48.1875-30.023438 58.308593-55.210938 58.308593zm0 0"/><use xlink:href="#surface5" mask="url(#mask0)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M89.488281 63.144531C84.886719 63.507812 80.125 63.875 75.226562 63.875H74.78125C69.875 63.875 65.117188 63.5 60.519531 63.144531 47.898438 62.164062 35.988281 61.230469 27.894531 69.429688 21.824219 75.59375 18.75 83.28125 18.75 92.261719 18.75 128.238281 46.429688 131.25 75.226562 131.25c28.34375.0 56.023438-3.011719 56.023438-38.988281.0-8.988281-3.074219-16.667969-9.144531-22.835938-8.085938-8.195312-20.003907-7.269531-32.617188-6.28125zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#d9cfcc;fill-opacity:1" d="M74.773438 125C42.492188 125 25 119.78125 25 92.261719c0-7.285157 2.476562-13.492188 7.34375-18.449219 3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 68.738281 55.824219 69.042969 60.023438 69.367188c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 70.230469 85.210938 69.738281 89.976562 69.367188c12.09375-.929687999999999 21.628907-1.6875 27.671876 4.4375C122.523438 78.769531 125 84.976562 125 92.261719 125 119.78125 107.507812 125 74.773438 125zm0 0"/><use xlink:href="#surface8" mask="url(#mask1)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M50 75c-7.125.0-12.5 9.40625-12.5 21.875S42.875 118.75 50 118.75s12.5-9.40625 12.5-21.875S57.125 75 50 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M50 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S47.449219 81.25 50 81.25s6.25 6.085938 6.25 15.625S52.550781 112.5 50 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M1e2 75c-7.125.0-12.5 9.40625-12.5 21.875S92.875 118.75 1e2 118.75s12.5-9.40625 12.5-21.875S107.125 75 1e2 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M1e2 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S97.449219 81.25 1e2 81.25s6.25 6.085938 6.25 15.625S102.550781 112.5 1e2 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M52.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M102.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear0)" d="M125 72.8125 124.894531 72.855469C129.039062 78.382812 131.25 84.851562 131.25 92.261719c0 35.976562-27.679688 38.988281-56.023438 38.988281-16.664062.0-32.914062-1.054688-43.683593-8.875l13.386719 13.386719c5.507812 1.207031 11.121093 1.71875 16.527343 1.71875L75 137.5 88.539062 137.488281c22.992188.0 49.941407-8.53125 54.472657-46.664062zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear1)" d="M25.070312 115.800781 25 115.832031 25.269531 116.101562zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear2)" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/></g></svg></a></li><li><a href=mailto:0x000216@gmail.com target=_blank title=Email rel=me><svg width="512" height="512" viewBox="0 0 512 512"><path d="M33.994 73.934C27.135 76.021 21.866 80.426 18.364 87 16.567 90.374 16.5 96.438 16.5 256V421.5l2.158 4C21.184 430.18 25.101 434.027 30 436.636 33.003 438.235 36.304 438.546 53.246 438.825L72.993 439.15l.253-137.978L73.5 163.194 90 175.45C99.075 182.191 140.17 212.762 181.321 243.386l74.821 55.68 21.179-15.752C288.97 274.65 330 244.021 368.5 215.248l70-52.312L438.754 301.043 439.007 439.15 458.754 438.825C476.726 438.529 478.859 438.306 482.5 436.342 487.18 433.816 491.027 429.899 493.636 425 495.433 421.626 495.5 415.562 495.5 256 495.5 96.438 495.433 90.374 493.636 87 488.565 77.48 482.099 73.799 469.397 73.202L460.293 72.774 454.397 77.337C439.883 88.566 256.423 221.935 255.772 221.73 254.976 221.479 78.972 93.309 62.177 80.75L51.812 73 44.156 73.086C39.945 73.133 35.372 73.515 33.994 73.934" stroke="none" fill="#d34c3c" fill-rule="evenodd"/><path d="M54.528 74.911C55.612 75.963 74.953 90.25 97.507 106.661c22.555 16.412 67.228 48.964 99.275 72.339s58.594 42.604 58.993 42.731C256.549 221.978 454.147 78.147 457.472 74.916 459.416 73.028 456.501 73 256 73 55.677 73 52.586 73.029 54.528 74.911M73 300.878V439H256 439V300.941C439 190.749 438.748 163.038 437.75 163.654 437.063 164.078 405.45 187.632 367.5 215.994c-37.95 28.363-78.528 58.655-90.173 67.316l-21.173 15.748-66.827-49.716C152.572 221.999 111.925 191.776 99 182.18s-24.062-17.892-24.75-18.436C73.251 162.954 73 190.519 73 300.878" stroke="none" fill="#e5e5e5" fill-rule="evenodd"/></svg></a></li><li><a href=https://nexus-security.github.io/index.xml target=_blank title=RSS rel=me><svg id="Layer_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><path style="fill:#f78c20" d="M78.333 355.334C35.14 355.334.0 390.474.0 433.667S35.14 512 78.333 512s78.333-35.14 78.333-78.333-35.14-78.333-78.333-78.333z"/><g><path style="fill:#ffa929" d="M78.333 381.445c-28.795.0-52.222 23.427-52.222 52.222s23.427 52.222 52.222 52.222 52.222-23.427 52.222-52.222-23.427-52.222-52.222-52.222z"/><path style="fill:#ffa929" d="M477.918 264.861c-21.843-51.641-53.111-98.019-92.936-137.842-39.824-39.824-86.201-71.093-137.843-92.935C193.669 11.468 136.874.0 78.333.0c-4.807.0-8.704 3.897-8.704 8.704v85.519c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h85.52c4.807.0 8.704-3.897 8.704-8.704C512 375.126 500.533 318.331 477.918 264.861z"/><path style="fill:#ffa929" d="M78.333 163.853c-4.807.0-8.704 3.897-8.704 8.704v95.74c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h95.74c4.807.0 8.704-3.897 8.704-8.704.0-72.07-28.065-139.826-79.027-190.787-50.961-50.961-118.717-79.027-190.787-79.027z"/></g><g><path style="fill:#f78c20" d="M78.333 242.186c-2.918.0-5.817.076-8.704.206v25.905c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h25.905c.129-2.886.206-5.786.206-8.704.0-105.752-85.729-191.481-191.481-191.481z"/><path style="fill:#f78c20" d="M78.333 68.113c-2.91.0-5.81.042-8.704.11v26.001c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h26.001c.067-2.894.11-5.793.11-8.704C443.887 231.777 280.223 68.113 78.333 68.113z"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://x.com/0x000216 target=_blank title=Twitter rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#03a9f4;fill-opacity:1" d="M150 33.179688c-5.640625 2.460937-11.609375 4.09375-17.71875 4.855468 6.4375-3.820312 11.25-9.867187 13.527344-16.996094-6.027344 3.574219-12.621094 6.089844-19.5 7.441407-8.628906-9.210938-22.007813-12.214844-33.746094-7.574219-11.738281 4.636719-19.449219 15.980469-19.445312 28.601562.0 2.4375.203124000000003 4.78125.710937000000001 7.015626C49.085938 55.308594 26.03125 43.609375 10.445312 24.355469 2.25 38.402344 6.386719 56.398438 19.894531 65.457031 15.027344 65.324219 10.261719 64.027344 6 61.667969V62.007812c.015625 14.636719 10.304688 27.25 24.636719 30.214844-2.628907.691406000000001-5.339844 1.03125-8.0625 1.011719C20.621094 93.269531 18.667969 93.09375 16.753906 92.710938c4.070313 12.507812 15.585938 21.089843 28.734375 21.421874-10.886719 8.511719-24.308593 13.128907-38.128906 13.113282C4.835938 127.246094 2.417969 127.132812.0 126.824219c14.0625 9.0625 30.445312 13.855469 47.175781 13.800781 56.585938.0 87.523438-46.875 87.523438-87.507812.0-1.359376-.046875-2.671876-.113281000000001-3.972657C140.652344 44.804688 145.875 39.394531 150 33.179688zm0 0"/></g></svg></a></li><li><a href=https://www.minds.com/0x000216/ target=_blank title=Minds rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><g><g><path style="fill:#ffe1b2" d="M256 33.085C245.078 13.38 224.079.0 2e2.0c-23.781.0-45.57 13.293-56.594 34.184C115.711 41.602 96 66.977 96 96c0 .059.0.113.0.172-9.977 7.512-16 19.301-16 31.828.0 1.316.078 2.637.234 3.992C60.211 145.266 48 167.758 48 192c0 14.07 4.039 27.543 11.719 39.262C57.273 236.512 56 242.207 56 248c0 2.738.281 5.445.828 8.098C36.672 267.308 24 288.539 24 312c0 27.973 18.305 52.34 44.109 60.785C65.398 378.828 64 385.324 64 392c0 21.098 13.805 39.508 33.539 45.727C103.891 466.746 129.828 488 160 488c4.617.0 9.227-.512 13.766-1.527C181.992 502 198.141 512 216 512c16.687.0 31.396-8.567 40-21.523V33.085z"/></g><g><g><path style="fill:#ffb980" d="M264 256c-4.422.0-8-3.582-8-8 0-22.055-17.945-40-40-40-8.008.0-15.734 2.355-22.336 6.812-3.023 2.043-7.055 1.781-9.797-.652-3.156-2.809-8.477-6.16-15.867-6.16-4.422.0-8-3.582-8-8s3.578-8 8-8c7.711.0 15.234 2.293 21.719 6.539C197.773 194.246 206.758 192 216 192c30.875.0 56 25.121 56 56C272 252.418 268.422 256 264 256z"/></g></g><g><g><path style="fill:#ffb980" d="M120 120c18.977.0 36.875 7.312 50.414 20.594 3.141 3.09 8.203 3.047 11.312-.109 3.094-3.152 3.047-8.219-.109-11.312C165.07 112.941 143.187 104 120 104c-13.046.0-25.395 2.93-36.542 8.046C81.253 117.019 80 122.423 80 128c0 1.316.078 2.637.234 3.992-.094.062-.173.139-.267.202C91.423 124.501 105.193 120 120 120z"/></g></g><g><g><path style="fill:#ffb980" d="M216 360c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32-14.211.0-26.82-9.648-30.664-23.465-.703-2.512-2.578-4.523-5.039-5.395-2.453-.871-5.188-.492-7.305 1.02C114.094 371.906 101.305 376 88 376c-6.948.0-13.625-1.149-19.894-3.207-2.214 4.939-3.501 10.19-3.916 15.586C71.714 390.73 79.711 392 88 392c13.297.0 26.187-3.266 37.773-9.52C133.969 397.894 150.141 408 168 408c26.469.0 48-21.531 48-48z"/></g></g><g><path style="fill:#fdc88e" d="M488 312c0-23.461-12.672-44.691-32.828-55.902.547-2.652.828-5.359.828-8.098.0-5.793-1.273-11.488-3.719-16.738C459.961 219.543 464 206.07 464 192c0-24.242-12.211-46.734-32.234-60.008.156-1.355.234-2.676.234-3.992.0-12.527-6.023-24.316-16-31.828.0-.059.0-.113.0-.172.0-29.023-19.711-54.398-47.406-61.816C357.57 13.293 335.781.0 312 0c-24.08.0-45.078 13.38-56 33.085v457.391C264.604 503.433 279.313 512 296 512c17.859.0 34.008-10 42.234-25.527C342.773 487.488 347.383 488 352 488c30.172.0 56.109-21.254 62.461-50.273C434.195 431.508 448 413.097 448 392c0-6.676-1.398-13.172-4.109-19.215C469.695 364.34 488 339.973 488 312z"/></g><g><path style="fill:#f8ab6b" d="M272.008 151.199C272 151.465 272 151.734 272 152c0 26.469 21.531 48 48 48s48-21.531 48-48c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32s-32-14.355-32-32c0-2.184.219-4.359.656-6.465.492-2.395-.133-4.883-1.703-6.754-1.57-1.871-4.016-3.066-6.352-2.859-.453.012-.891.059-.602.078-13.234.0-24-10.766-24-24v31.813C260.673 147.348 266.061 149.988 272.008 151.199z"/></g><g><path style="fill:#f8ab6b" d="M296 328c9.242.0 18.219-2.246 26.281-6.539C328.765 325.707 336.289 328 344 328c4.422.0 8-3.582 8-8s-3.578-8-8-8c-7.391.0-12.711-3.352-15.867-6.16-2.742-2.434-6.766-2.695-9.797-.656C311.726 309.644 304 312 296 312c-22.055.0-40-17.945-40-40v39.116C266.174 321.517 280.337 328 296 328z"/></g><g><g><path style="fill:#f8ab6b" d="M431.765 131.992c.156-1.355.234-2.676.234-3.992.0-5.577-1.253-10.981-3.458-15.954C417.395 106.93 405.046 104 392 104c-4.422.0-8 3.582-8 8s3.578 8 8 8c14.807.0 28.577 4.501 40.032 12.194C431.939 132.131 431.859 132.054 431.765 131.992z"/></g></g><g><g><path style="fill:#f8ab6b" d="M447.81 388.38c-.415-5.396-1.702-10.647-3.916-15.586C437.624 374.85 430.948 376 424 376c-13.578.0-26.594-4.266-37.641-12.332-2.07-1.5-4.719-1.93-7.133-1.168-2.43.77-4.344 2.648-5.164 5.059C369.101 382.176 355.414 392 340 392c-4.422.0-8 3.582-8 8s3.578 8 8 8c18.875.0 35.961-10.191 45.094-26.156C396.976 388.512 410.258 392 424 392 432.288 392 440.285 390.73 447.81 388.38z"/></g></g></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://www.buymeacoffee.com/0x000216 target=_blank title=Coffee rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 340 340" style="enable-background:new 0 0 340 340"><g id="XMLID_18_"><polygon id="XMLID_138_" style="fill:#dedde0" points="76.429,290 80,340 170,340 170,290"/><polygon id="XMLID_169_" style="fill:#dedde0" points="170,80 61.429,80 65,130 170,130"/><polygon id="XMLID_197_" style="fill:#acabb1" points="170,290 170,340 260,340 263.571,290"/><polygon id="XMLID_221_" style="fill:#acabb1" points="170,80 170,130 275,130 278.571,80"/><path id="XMLID_222_" style="fill:#ffda44" d="M170 260c-22.091.0-40-22.386-40-50s17.909-50 40-50v-30H65 50l10 160h16.429H170V260z"/><path id="XMLID_33_" style="fill:#ff9811" d="M170 130v30c22.091.0 40 22.386 40 50s-17.909 50-40 50v30h93.571H280l10-160h-15H170z"/><path id="XMLID_223_" style="fill:#50412e" d="M210 210c0-27.614-17.909-50-40-50v1e2c22.091.0 40-22.386 40-50z"/><path id="XMLID_224_" style="fill:#786145" d="M130 210c0 27.614 17.909 50 40 50V160c-22.091.0-40 22.386-40 50z"/><polygon id="XMLID_225_" style="fill:#50412e" points="278.571,80 300,80 300,40 260,40 260,0 80,0 80,40 40,40 40,80 61.429,80 170,80"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About Us</span></a></li><li><a href=/termsofservice/><svg class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4L18.5 9.5a1.5 1.5.0 00-4-4L4 16v4"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/></svg>
+<span>Terms Of Service</span></a></li><li><a href=/privacypolicy/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Privacy Policy</span></a></li><li><a href=/disclaimer/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Disclaimer</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/contact/><svg class="icon icon-tabler icon-tabler-mail" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+<span>Contact Us</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#a-concise-history-of-javascript>A Concise History of JavaScript</a></li><li><a href=#understanding-javascript>Understanding JavaScript</a><ol><li><a href=#first-class-functions-in-javascript>First-class Functions in JavaScript</a></li><li><a href=#javascripts-prototype-based-nature>JavaScript&rsquo;s Prototype-based Nature</a></li><li><a href=#javascript-event-loops>JavaScript Event Loops</a></li></ol></li><li><a href=#demystifying-design-patterns-in-javascript>Demystifying Design Patterns in JavaScript</a><ol><li><a href=#proto-patterns-the-budding-stage>Proto-patterns: The Budding Stage</a></li><li><a href=#anti-patterns-practices-to-avoid>Anti-patterns: Practices to Avoid</a></li></ol></li><li><a href=#categorizing-design-patterns>Categorizing Design Patterns</a><ol><li><a href=#creational-design-patterns>Creational Design Patterns</a></li><li><a href=#structural-design-patterns>Structural Design Patterns</a></li><li><a href=#behavioral-design-patterns>Behavioral Design Patterns</a></li><li><a href=#concurrency-design-patterns>Concurrency Design Patterns</a></li><li><a href=#architectural-design-patterns>Architectural Design Patterns</a></li></ol></li><li><a href=#illustrating-design-patterns-with-examples>Illustrating Design Patterns with Examples</a><ol><li><a href=#constructor-pattern>Constructor Pattern</a></li><li><a href=#module-pattern>Module Pattern</a></li><li><a href=#revealing-module-pattern>Revealing Module Pattern</a></li><li><a href=#singleton-pattern>Singleton Pattern</a></li><li><a href=#observer-pattern>Observer Pattern</a></li><li><a href=#mediator-pattern>Mediator Pattern</a></li><li><a href=#prototype-pattern>Prototype Pattern</a></li><li><a href=#command-pattern>Command Pattern</a></li><li><a href=#facade-pattern>Facade Pattern</a></li></ol></li><li><a href=#moving-forward>Moving Forward</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/javascript-design-patterns-a-complete-guide/>JavaScript Design Patterns: A Complete Guide</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 16, 2023</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>22 minute read</time></div></footer></div></header><section class=article-content><p>As a skilled JavaScript developer, you aim for code that is clear, efficient, and easy to maintain. You tackle fascinating problems that, while distinct, don&rsquo;t always demand novel solutions. You&rsquo;ve probably written code resembling the answer to a completely different issue you&rsquo;ve solved before. Though you might not realize it, you&rsquo;ve employed JavaScript design patterns. These patterns are reusable solutions to recurring challenges in software development.</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png" media="(min-width: 1920.1px)"><img alt="The Comprehensive Guide to JavaScript Design Patterns" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125783%2Ftoptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>Over a language&rsquo;s existence, numerous such reusable solutions are crafted and evaluated by a multitude of developers within that language&rsquo;s community. This collective wisdom is what makes these solutions so valuable. They guide us in writing streamlined code while effectively addressing the problem at hand.</p><p>Design patterns offer several key advantages:</p><ul><li><strong>Proven Solutions:</strong> Due to their widespread use, design patterns have a track record of success. They&rsquo;ve often undergone multiple revisions and optimizations.</li><li><strong>Easy Reusability:</strong> Design patterns provide adaptable solutions that can be tailored to address various specific problems. They&rsquo;re not confined to a single issue.</li><li><strong>Expressiveness:</strong> Design patterns offer elegant explanations for complex solutions.</li><li><strong>Enhanced Communication:</strong> When developers share a familiarity with design patterns, they can discuss potential solutions more effectively.</li><li><strong>Reduced Refactoring:</strong> Applications designed with patterns in mind often minimize the need for later refactoring, as the right pattern provides an optimal solution from the outset.</li><li><strong>Smaller Codebase:</strong> The elegance and efficiency of design patterns often lead to shorter, more concise code compared to alternative approaches.</li></ul><p>Before we delve into JavaScript design patterns, let&rsquo;s review some fundamental concepts.</p><h2 id=a-concise-history-of-javascript>A Concise History of JavaScript</h2><p>JavaScript is currently one of the most popular programming languages for web development. Originally conceived as a &ldquo;glue&rdquo; to connect various displayed HTML elements, it was known as a client-side scripting language for early web browsers like Netscape Navigator, which could only render static HTML. The concept of such a scripting language sparked browser wars among industry giants like Netscape Communications (now Mozilla), Microsoft, and others.</p><p>Each major player sought to establish its own implementation of this scripting language, leading to Netscape&rsquo;s JavaScript (created by Brendan Eich), Microsoft&rsquo;s JScript, and so on. These implementations differed significantly, resulting in browser-specific development and &ldquo;best viewed on&rdquo; stickers accompanying web pages. The need for a standard, a cross-browser solution to unify development and simplify web page creation, became evident. This led to the emergence of <a class=link href=https://www.ecma-international.org/publications-and-standards/standards/ecma-262/ target=_blank rel=noopener>ECMAScript</a>.</p><p>ECMAScript is a standardized scripting language specification that all modern browsers strive to support. It boasts multiple implementations (or dialects), with JavaScript being the most prominent, as covered in this article. Since its inception, ECMAScript has standardized numerous crucial aspects. For the detail-oriented, Wikipedia provides a comprehensive list of standardized elements for each ECMAScript version. Browser support for ECMAScript versions 6 (ES6) and above remains incomplete, requiring transpilation to ES5 for full compatibility.</p><h2 id=understanding-javascript>Understanding JavaScript</h2><p>To fully grasp this article&rsquo;s content, let&rsquo;s introduce some vital language characteristics essential for comprehending JavaScript patterns. If asked &ldquo;What is JavaScript?&rdquo;, you might respond along these lines:</p><blockquote><p>JavaScript is a lightweight, interpreted, object-oriented programming language with first-class functions, widely recognized as a scripting language for web pages.</p></blockquote><p>This definition implies that JavaScript code has minimal memory usage, is easy to implement and learn, and boasts a syntax akin to languages like C++ and Java. As an interpreted language, its code is executed without prior compilation. Its support for procedural, object-oriented, and functional programming styles provides developers with remarkable flexibility.</p><p>While these features might seem common to many languages, let&rsquo;s explore what distinguishes JavaScript. I&rsquo;ll highlight a few key characteristics and elaborate on their significance.</p><h3 id=first-class-functions-in-javascript>First-class Functions in JavaScript</h3><p>Coming from a C/C++ background, I initially struggled with this concept. JavaScript treats functions as first-class citizens, allowing you to pass them as arguments to other functions just like any other variable.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// we send in the function as an argument to be
+</span></span></span><span class=line><span class=cl><span class=c1>// executed from inside the calling function
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>function</span> <span class=nx>performOperation</span><span class=p>(</span><span class=nx>a</span><span class=p>,</span> <span class=nx>b</span><span class=p>,</span> <span class=nx>cb</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>var</span> <span class=nx>c</span> <span class=o>=</span> <span class=nx>a</span> <span class=o>+</span> <span class=nx>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nx>cb</span><span class=p>(</span><span class=nx>c</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>performOperation</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=kd>function</span><span class=p>(</span><span class=nx>result</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// prints out 5
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;The result of the operation is &#34;</span> <span class=o>+</span> <span class=nx>result</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>})</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=javascripts-prototype-based-nature>JavaScript&rsquo;s Prototype-based Nature</h3><p>Similar to many object-oriented languages, JavaScript supports objects. Classes and inheritance are often associated with objects. However, JavaScript deviates slightly by not directly supporting classes in its core syntax. Instead, it employs prototype-based or instance-based inheritance.</p><p>ES6 introduces the formal term &ldquo;class,&rdquo; but browsers still lack full support. Even with the introduction of &ldquo;class,&rdquo; JavaScript continues to utilize prototype-based inheritance behind the scenes.</p><p>Prototype-based programming is an object-oriented style where behavior reuse (inheritance) involves reusing existing objects through delegation, with these objects serving as prototypes. We&rsquo;ll delve deeper into this concept in the design patterns section, as many JS design patterns utilize this characteristic.</p><h3 id=javascript-event-loops>JavaScript Event Loops</h3><p>If you&rsquo;ve worked with JavaScript, you&rsquo;re likely familiar with &ldquo;callback functions.&rdquo; For the uninitiated, a callback function, passed as a parameter to another function (remembering that JavaScript treats functions as first-class citizens), executes after an event occurs. This mechanism is commonly used for subscribing to events like mouse clicks or key presses.</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png" media="(min-width: 1920.1px)"><img alt="Graphic depiction of the JavaScript event loop" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F125781%2Ftoptal-blog-image-1522333483007-ac9070c74c6ae7747cb2fa551667d8e5.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>Whenever an event with an attached listener is triggered (otherwise, the event is lost), a message is sent to a queue, processed synchronously in a FIFO (first-in-first-out) manner. This is known as the <strong>event loop</strong>.</p><p>Each queued message has an associated function. When a message is dequeued, the runtime fully executes the function before processing any other message. Even if a function contains other function calls, they are all completed before handling the next queued message. This is called run-to-completion.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=k>while</span> <span class=p>(</span><span class=nx>queue</span><span class=p>.</span><span class=nx>waitForMessage</span><span class=p>())</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>queue</span><span class=p>.</span><span class=nx>processNextMessage</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>queue.waitForMessage()</code> synchronously awaits new messages. Each message being processed has its own stack, which is processed until empty. Upon completion, a new message from the queue is processed, if available.</p><p>You may have heard that JavaScript is non-blocking. This means that during asynchronous operations, the program can handle other tasks, like user input, without halting the main execution thread while awaiting the asynchronous operation&rsquo;s completion. This valuable JavaScript feature deserves its own article, but it falls outside this article&rsquo;s scope.</p><h2 id=demystifying-design-patterns-in-javascript>Demystifying Design Patterns in JavaScript</h2><p>As previously mentioned, design patterns are reusable solutions to common software design problems. Let&rsquo;s explore some design pattern categories.</p><h3 id=proto-patterns-the-budding-stage>Proto-patterns: The Budding Stage</h3><p>How does a pattern come to be? Imagine identifying a recurring problem and devising your own unique, undocumented solution. You consistently apply this solution, believing it&rsquo;s reusable and beneficial to the developer community.</p><p>Does it instantly become a pattern? Fortunately, no. Developers with solid coding practices might mistake something resembling a pattern for an actual one.</p><p>So, how can you determine if what you&rsquo;ve recognized is a genuine design pattern?</p><p>It involves seeking feedback from fellow developers, understanding the pattern creation process, and familiarizing yourself with existing patterns. A pattern must undergo a testing phase before achieving full-fledged status. This stage is called a proto-pattern.</p><p>A proto-pattern represents a potential pattern if it withstands rigorous testing by various developers across diverse scenarios, demonstrating its utility and accuracy. Transitioning to a fully recognized pattern involves substantial effort and documentation, exceeding the scope of this article.</p><h3 id=anti-patterns-practices-to-avoid>Anti-patterns: Practices to Avoid</h3><p>While design patterns embody good practices, anti-patterns represent the opposite—practices to steer clear of.</p><p>Modifying the <code>Object</code> class prototype is a prime example of an anti-pattern. Nearly all JavaScript objects inherit from <code>Object</code> (due to JavaScript&rsquo;s prototype-based inheritance). Altering this prototype would affect all inheriting objects—a vast majority of JavaScript objects. This is a recipe for disaster.</p><p>Similarly, modifying objects you don&rsquo;t own, like overriding a function from an object used extensively throughout an application, is another anti-pattern. In a large team setting, this could lead to naming conflicts, incompatible implementations, and maintenance nightmares.</p><p>Just as understanding good practices and solutions is crucial, so is recognizing and avoiding bad ones.</p><h2 id=categorizing-design-patterns>Categorizing Design Patterns</h2><p>Design patterns can be categorized in various ways, with the most common being:</p><ul><li><strong>Creational</strong> design patterns</li><li><strong>Structural</strong> design patterns</li><li><strong>Behavioral</strong> design patterns</li><li><strong>Concurrency</strong> design patterns</li><li><strong>Architectural</strong> design patterns</li></ul><h3 id=creational-design-patterns>Creational Design Patterns</h3><p>These patterns focus on object creation mechanisms that optimize the process compared to basic approaches. The fundamental way of creating objects can lead to design flaws or increased complexity. Creational patterns address this by controlling object creation. Popular patterns in this category include:</p><ul><li>Factory method</li><li>Abstract factory</li><li>Builder</li><li>Prototype</li><li>Singleton</li></ul><h3 id=structural-design-patterns>Structural Design Patterns</h3><p>These patterns concern object relationships, ensuring that changes to one part of a system don&rsquo;t necessitate modifications throughout the entire system. Common patterns in this category include:</p><ul><li>Adapter</li><li>Bridge</li><li>Composite</li><li>Decorator</li><li>Facade</li><li>Flyweight</li><li>Proxy</li></ul><h3 id=behavioral-design-patterns>Behavioral Design Patterns</h3><p>Behavioral patterns focus on recognizing, implementing, and enhancing communication between different objects within a system. They help maintain synchronization among disparate system components. Well-known examples include:</p><ul><li>Chain of responsibility</li><li>Command</li><li>Iterator</li><li>Mediator</li><li>Memento</li><li>Observer</li><li>State</li><li>Strategy</li><li>Visitor</li></ul><h3 id=concurrency-design-patterns>Concurrency Design Patterns</h3><p>These patterns address multi-threaded programming paradigms. Some popular ones are:</p><ul><li>Active object</li><li>Nuclear reaction</li><li>Scheduler</li></ul><h3 id=architectural-design-patterns>Architectural Design Patterns</h3><p>As the name suggests, these patterns are employed for architectural purposes. Some of the most renowned ones include:</p><ul><li>MVC (Model-View-Controller)</li><li>MVP (Model-View-Presenter)</li><li>MVVM (Model-View-ViewModel)</li></ul><p>In the next section, we&rsquo;ll delve into some of these design patterns with illustrative examples for better comprehension.</p><h2 id=illustrating-design-patterns-with-examples>Illustrating Design Patterns with Examples</h2><p>Each design pattern offers a specific solution to a particular problem. There&rsquo;s no one-size-fits-all set of patterns. It&rsquo;s vital to understand when a pattern is beneficial and whether it adds value. Familiarity with patterns and their ideal use cases enables us to determine their suitability for a given problem.</p><p>Applying the wrong pattern can have detrimental effects, leading to unnecessary code complexity, performance overhead, or even new anti-patterns.</p><p>These are critical considerations when applying design patterns. Let&rsquo;s explore some JS design patterns every senior JavaScript developer should know.</p><h3 id=constructor-pattern>Constructor Pattern</h3><p>In classical object-oriented languages, a constructor is a special function within a class that initializes an object with default and/or provided values.</p><p>Common methods for creating objects in JavaScript include:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// either of the following ways can be used to create a new object
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>instance</span> <span class=o>=</span> <span class=p>{};</span>
+</span></span><span class=line><span class=cl><span class=c1>// or
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>instance</span> <span class=o>=</span> <span class=nb>Object</span><span class=p>.</span><span class=nx>create</span><span class=p>(</span><span class=nb>Object</span><span class=p>.</span><span class=nx>prototype</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// or
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>instance</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Object</span><span class=p>();</span>
+</span></span></code></pre></td></tr></table></div></div><p>Once an object is created, there are four ways (since ES3) to add properties:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// supported since ES3
+</span></span></span><span class=line><span class=cl><span class=c1>// the dot notation
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>instance</span><span class=p>.</span><span class=nx>key</span> <span class=o>=</span> <span class=s2>&#34;A key&#39;s value&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// the square brackets notation
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>instance</span><span class=p>[</span><span class=s2>&#34;key&#34;</span><span class=p>]</span> <span class=o>=</span> <span class=s2>&#34;A key&#39;s value&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// supported since ES5
+</span></span></span><span class=line><span class=cl><span class=c1>// setting a single property using Object.defineProperty
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nb>Object</span><span class=p>.</span><span class=nx>defineProperty</span><span class=p>(</span><span class=nx>instance</span><span class=p>,</span> <span class=s2>&#34;key&#34;</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>value</span><span class=o>:</span> <span class=s2>&#34;A key&#39;s value&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>writable</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>enumerable</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nx>configurable</span><span class=o>:</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// setting multiple properties using Object.defineProperties
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nb>Object</span><span class=p>.</span><span class=nx>defineProperties</span><span class=p>(</span><span class=nx>instance</span><span class=p>,</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;firstKey&#34;</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>value</span><span class=o>:</span> <span class=s2>&#34;First key&#39;s value&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>writable</span><span class=o>:</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;secondKey&#34;</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>value</span><span class=o>:</span> <span class=s2>&#34;Second key&#39;s value&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>writable</span><span class=o>:</span> <span class=kc>false</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span></code></pre></td></tr></table></div></div><p>Curly brackets are the most popular method for object creation, while dot notation or square brackets are commonly used for adding properties. These are familiar tools for anyone with JavaScript experience.</p><p>While JavaScript lacks native class support, it allows for constructors using the &ldquo;new&rdquo; keyword before a function call. This enables us to use the function as a constructor and initialize properties like in classical languages.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// we define a constructor for Person objects
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>function</span> <span class=nx>Person</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>age</span><span class=p>,</span> <span class=nx>isDeveloper</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>name</span> <span class=o>=</span> <span class=nx>name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>age</span> <span class=o>=</span> <span class=nx>age</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>isDeveloper</span> <span class=o>=</span> <span class=nx>isDeveloper</span> <span class=o>||</span> <span class=kc>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>writesCode</span> <span class=o>=</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>isDeveloper</span><span class=o>?</span> <span class=s2>&#34;This person does write code&#34;</span> <span class=o>:</span> <span class=s2>&#34;This person does not write code&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// creates a Person instance with properties name: Bob, age: 38, isDeveloper: true and a method writesCode
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>person1</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Person</span><span class=p>(</span><span class=s2>&#34;Bob&#34;</span><span class=p>,</span> <span class=mi>38</span><span class=p>,</span> <span class=kc>true</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// creates a Person instance with properties name: Alice, age: 32, isDeveloper: false and a method writesCode
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>person2</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Person</span><span class=p>(</span><span class=s2>&#34;Alice&#34;</span><span class=p>,</span> <span class=mi>32</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// prints out: This person does write code
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>person1</span><span class=p>.</span><span class=nx>writesCode</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints out: this person does not write code
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>person2</span><span class=p>.</span><span class=nx>writesCode</span><span class=p>();</span>
+</span></span></code></pre></td></tr></table></div></div><p>However, there&rsquo;s room for improvement. Recall that JavaScript employs prototype-based inheritance. The previous approach redefines the <code>writesCode</code> method for each instance of the <code>Person</code> constructor. To avoid this, we can assign the method to the function prototype:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// we define a constructor for Person objects
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>function</span> <span class=nx>Person</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>age</span><span class=p>,</span> <span class=nx>isDeveloper</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>name</span> <span class=o>=</span> <span class=nx>name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>age</span> <span class=o>=</span> <span class=nx>age</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>isDeveloper</span> <span class=o>=</span> <span class=nx>isDeveloper</span> <span class=o>||</span> <span class=kc>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// we extend the function&#39;s prototype
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>Person</span><span class=p>.</span><span class=nx>prototype</span><span class=p>.</span><span class=nx>writesCode</span> <span class=o>=</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>isDeveloper</span><span class=o>?</span> <span class=s2>&#34;This person does write code&#34;</span> <span class=o>:</span> <span class=s2>&#34;This person does not write code&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// creates a Person instance with properties name: Bob, age: 38, isDeveloper: true and a method writesCode
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>person1</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Person</span><span class=p>(</span><span class=s2>&#34;Bob&#34;</span><span class=p>,</span> <span class=mi>38</span><span class=p>,</span> <span class=kc>true</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// creates a Person instance with properties name: Alice, age: 32, isDeveloper: false and a method writesCode
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>person2</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Person</span><span class=p>(</span><span class=s2>&#34;Alice&#34;</span><span class=p>,</span> <span class=mi>32</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// prints out: This person does write code
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>person1</span><span class=p>.</span><span class=nx>writesCode</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints out: this person does not write code
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>person2</span><span class=p>.</span><span class=nx>writesCode</span><span class=p>();</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now, both <code>Person</code> constructor instances can access a shared instance of the <code>writesCode()</code> method.</p><h3 id=module-pattern>Module Pattern</h3><p>JavaScript never fails to surprise. Unlike many object-oriented languages, JavaScript doesn&rsquo;t support access modifiers. In classical OOP, developers define classes and specify access rights for their members. Since JavaScript lacks native support for both classes and access modifiers, developers devised a way to emulate this behavior when needed.</p><p>Before exploring the module pattern, let&rsquo;s discuss closures. A <strong>closure</strong> is a function that retains access to its parent scope even after the parent function completes execution. Closures help mimic access modifiers through scoping. Here&rsquo;s an example:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// we  used an immediately invoked function expression
+</span></span></span><span class=line><span class=cl><span class=c1>// to create a private variable, counter
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>counterIncrementer</span> <span class=o>=</span> <span class=p>(</span><span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>var</span> <span class=nx>counter</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=o>++</span><span class=nx>counter</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>})();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// prints out 1
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>counterIncrementer</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints out 2
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>counterIncrementer</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints out 3
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>counterIncrementer</span><span class=p>());</span>
+</span></span></code></pre></td></tr></table></div></div><p>The IIFE ties the <code>counter</code> variable to a function that has been invoked and closed. However, the child function, which increments the counter, can still access it. Since the <code>counter</code> variable is inaccessible from outside the function expression, we&rsquo;ve achieved privacy through scope manipulation.</p><p>Closures enable us to create objects with private and public components, known as <strong>modules</strong>. These are invaluable when we need to conceal specific object parts and expose only a necessary interface to the module&rsquo;s user. Consider this example:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// through the use of a closure we expose an object
+</span></span></span><span class=line><span class=cl><span class=c1>// as a public API which manages the private objects array
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>collection</span> <span class=o>=</span> <span class=p>(</span><span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// private members
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kd>var</span> <span class=nx>objects</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// public members
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>addObject</span><span class=o>:</span> <span class=kd>function</span><span class=p>(</span><span class=nx>object</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>objects</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=nx>object</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=nx>removeObject</span><span class=o>:</span> <span class=kd>function</span><span class=p>(</span><span class=nx>object</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kd>var</span> <span class=nx>index</span> <span class=o>=</span> <span class=nx>objects</span><span class=p>.</span><span class=nx>indexOf</span><span class=p>(</span><span class=nx>object</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=nx>index</span> <span class=o>&gt;=</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>objects</span><span class=p>.</span><span class=nx>splice</span><span class=p>(</span><span class=nx>index</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>},</span>
+</span></span><span class=line><span class=cl>        <span class=nx>getObjects</span><span class=o>:</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>parse</span><span class=p>(</span><span class=nx>JSON</span><span class=p>.</span><span class=nx>stringify</span><span class=p>(</span><span class=nx>objects</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>})();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>collection</span><span class=p>.</span><span class=nx>addObject</span><span class=p>(</span><span class=s2>&#34;Bob&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>collection</span><span class=p>.</span><span class=nx>addObject</span><span class=p>(</span><span class=s2>&#34;Alice&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>collection</span><span class=p>.</span><span class=nx>addObject</span><span class=p>(</span><span class=s2>&#34;Franck&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints [&#34;Bob&#34;, &#34;Alice&#34;, &#34;Franck&#34;]
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>collection</span><span class=p>.</span><span class=nx>getObjects</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=nx>collection</span><span class=p>.</span><span class=nx>removeObject</span><span class=p>(</span><span class=s2>&#34;Alice&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints [&#34;Bob&#34;, &#34;Franck&#34;]
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>collection</span><span class=p>.</span><span class=nx>getObjects</span><span class=p>());</span>
+</span></span></code></pre></td></tr></table></div></div><p>This pattern&rsquo;s key advantage is the clear separation of private and public object aspects, resonating with developers from classical object-oriented backgrounds.</p><p>However, there are drawbacks. Changing a member&rsquo;s visibility requires code modification wherever that member is used due to the different access methods for public and private parts. Additionally, methods added after object creation cannot access the object&rsquo;s private members.</p><h3 id=revealing-module-pattern>Revealing Module Pattern</h3><p>This pattern improves upon the module pattern described above. The primary distinction is that all object logic is written within the module&rsquo;s private scope, with desired public parts exposed by returning an anonymous object. We can also rename private members when mapping them to their public counterparts.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// we write the entire object logic as private members and
+</span></span></span><span class=line><span class=cl><span class=c1>// expose an anonymous object which maps members we wish to reveal
+</span></span></span><span class=line><span class=cl><span class=c1>// to their corresponding public members
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>namesCollection</span> <span class=o>=</span> <span class=p>(</span><span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// private members
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kd>var</span> <span class=nx>objects</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nx>addObject</span><span class=p>(</span><span class=nx>object</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>objects</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=nx>object</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nx>removeObject</span><span class=p>(</span><span class=nx>object</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kd>var</span> <span class=nx>index</span> <span class=o>=</span> <span class=nx>objects</span><span class=p>.</span><span class=nx>indexOf</span><span class=p>(</span><span class=nx>object</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>index</span> <span class=o>&gt;=</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>objects</span><span class=p>.</span><span class=nx>splice</span><span class=p>(</span><span class=nx>index</span><span class=p>,</span> <span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nx>getObjects</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>parse</span><span class=p>(</span><span class=nx>JSON</span><span class=p>.</span><span class=nx>stringify</span><span class=p>(</span><span class=nx>objects</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// public members
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>addName</span><span class=o>:</span> <span class=nx>addObject</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>removeName</span><span class=o>:</span> <span class=nx>removeObject</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>getNames</span><span class=o>:</span> <span class=nx>getObjects</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>})();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>namesCollection</span><span class=p>.</span><span class=nx>addName</span><span class=p>(</span><span class=s2>&#34;Bob&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>namesCollection</span><span class=p>.</span><span class=nx>addName</span><span class=p>(</span><span class=s2>&#34;Alice&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=nx>namesCollection</span><span class=p>.</span><span class=nx>addName</span><span class=p>(</span><span class=s2>&#34;Franck&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints [&#34;Bob&#34;, &#34;Alice&#34;, &#34;Franck&#34;]
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>namesCollection</span><span class=p>.</span><span class=nx>getNames</span><span class=p>());</span>
+</span></span><span class=line><span class=cl><span class=nx>namesCollection</span><span class=p>.</span><span class=nx>removeName</span><span class=p>(</span><span class=s2>&#34;Alice&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints [&#34;Bob&#34;, &#34;Franck&#34;]
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>namesCollection</span><span class=p>.</span><span class=nx>getNames</span><span class=p>());</span>
+</span></span></code></pre></td></tr></table></div></div><p>The revealing module pattern is one of at least three ways to implement a module pattern. The main differences lie in how public members are referenced. This makes the revealing module pattern easier to use and modify. However, it can be fragile in scenarios like using RMP objects as prototypes in inheritance chains. The problematic situations are:</p><ol><li>Private functions referencing public functions prevent overriding the public function, as the private function continues referencing the private implementation, introducing a bug.</li><li>Public members pointing to private variables, when overridden externally, can lead to other functions still referencing the private value, causing issues.</li></ol><h3 id=singleton-pattern>Singleton Pattern</h3><p>The singleton pattern is employed when a single instance of a class is required. For instance, you might need an object storing configuration settings. Creating a new object each time this configuration is needed throughout the system is unnecessary.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>singleton</span> <span class=o>=</span> <span class=p>(</span><span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// private singleton value which gets initialized only once
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kd>var</span> <span class=nx>config</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nx>initializeConfiguration</span><span class=p>(</span><span class=nx>values</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>randomNumber</span> <span class=o>=</span> <span class=nb>Math</span><span class=p>.</span><span class=nx>random</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>        <span class=nx>values</span> <span class=o>=</span> <span class=nx>values</span> <span class=o>||</span> <span class=p>{};</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>number</span> <span class=o>=</span> <span class=nx>values</span><span class=p>.</span><span class=nx>number</span> <span class=o>||</span> <span class=mi>5</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>size</span> <span class=o>=</span> <span class=nx>values</span><span class=p>.</span><span class=nx>size</span> <span class=o>||</span> <span class=mi>10</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// we export the centralized method for retrieving the singleton value
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>getConfig</span><span class=o>:</span> <span class=kd>function</span><span class=p>(</span><span class=nx>values</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// we initialize the singleton value only once
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=k>if</span> <span class=p>(</span><span class=nx>config</span> <span class=o>===</span> <span class=kc>undefined</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>config</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>initializeConfiguration</span><span class=p>(</span><span class=nx>values</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1>// and return the same config value wherever it is asked for
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=k>return</span> <span class=nx>config</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>})();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>configObject</span> <span class=o>=</span> <span class=nx>singleton</span><span class=p>.</span><span class=nx>getConfig</span><span class=p>({</span> <span class=s2>&#34;size&#34;</span><span class=o>:</span> <span class=mi>8</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints number: 5, size: 8, randomNumber: someRandomDecimalValue
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>configObject</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>configObject1</span> <span class=o>=</span> <span class=nx>singleton</span><span class=p>.</span><span class=nx>getConfig</span><span class=p>({</span> <span class=s2>&#34;number&#34;</span><span class=o>:</span> <span class=mi>8</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints number: 5, size: 8, randomNumber: same randomDecimalValue as in first config
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>configObject1</span><span class=p>);</span>
+</span></span></code></pre></td></tr></table></div></div><p>In this example, the generated random number and config values remain constant because they are tied to the single instance.</p><p>It&rsquo;s crucial that the access point for retrieving the singleton instance is unique and well-defined. Testing can be challenging with this pattern.</p><h3 id=observer-pattern>Observer Pattern</h3><p>The observer pattern is highly effective for optimizing communication between disparate system components, promoting loose coupling.</p><p>While variations exist, this pattern generally involves two primary components: subjects and observers.</p><p>A subject manages operations related to a specific topic that observers subscribe to. These operations include subscribing and unsubscribing observers from topics and notifying them about events related to those topics.</p><p>A variant, the publisher/subscriber pattern, will be illustrated here. The key difference is that publisher/subscriber promotes even looser coupling.</p><p>While the observer pattern&rsquo;s subject holds references to subscribed observers, directly calling their methods, the publisher/subscriber pattern utilizes channels as communication bridges between subscribers and publishers. The publisher triggers an event and executes the associated callback function.</p><p>A short publisher/subscriber example is provided below. For those interested, classic observer pattern examples are readily available online.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>publisherSubscriber</span> <span class=o>=</span> <span class=p>{};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// we send in a container object which will handle the subscriptions and publishings
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>(</span><span class=kd>function</span><span class=p>(</span><span class=nx>container</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// the id represents a unique subscription id to a topic
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kd>var</span> <span class=nx>id</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// we subscribe to a specific topic by sending in
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// a callback function to be executed on event firing
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>container</span><span class=p>.</span><span class=nx>subscribe</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(</span><span class=nx>topic</span><span class=p>,</span> <span class=nx>f</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=p>(</span><span class=nx>topic</span> <span class=k>in</span> <span class=nx>container</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>container</span><span class=p>[</span><span class=nx>topic</span><span class=p>]</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nx>container</span><span class=p>[</span><span class=nx>topic</span><span class=p>].</span><span class=nx>push</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;id&#34;</span><span class=o>:</span> <span class=o>++</span><span class=nx>id</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;callback&#34;</span><span class=o>:</span> <span class=nx>f</span>
+</span></span><span class=line><span class=cl>        <span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nx>id</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// each subscription has its own unique ID, which we use
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// to remove a subscriber from a certain topic
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>container</span><span class=p>.</span><span class=nx>unsubscribe</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(</span><span class=nx>topic</span><span class=p>,</span> <span class=nx>id</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kd>var</span> <span class=nx>subscribers</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=p>(</span><span class=kd>var</span> <span class=nx>subscriber</span> <span class=k>of</span> <span class=nx>container</span><span class=p>[</span><span class=nx>topic</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=nx>subscriber</span><span class=p>.</span><span class=nx>id</span> <span class=o>!==</span> <span class=nx>id</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nx>subscribers</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=nx>subscriber</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=nx>container</span><span class=p>[</span><span class=nx>topic</span><span class=p>]</span> <span class=o>=</span> <span class=nx>subscribers</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>container</span><span class=p>.</span><span class=nx>publish</span> <span class=o>=</span> <span class=kd>function</span><span class=p>(</span><span class=nx>topic</span><span class=p>,</span> <span class=nx>data</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=p>(</span><span class=kd>var</span> <span class=nx>subscriber</span> <span class=k>of</span> <span class=nx>container</span><span class=p>[</span><span class=nx>topic</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>// when executing a callback, it is usually helpful to read
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=c1>// the documentation to know which arguments will be
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=c1>// passed to our callbacks by the object firing the event
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=nx>subscriber</span><span class=p>.</span><span class=nx>callback</span><span class=p>(</span><span class=nx>data</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>})(</span><span class=nx>publisherSubscriber</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>subscriptionID1</span> <span class=o>=</span> <span class=nx>publisherSubscriber</span><span class=p>.</span><span class=nx>subscribe</span><span class=p>(</span><span class=s2>&#34;mouseClicked&#34;</span><span class=p>,</span> <span class=kd>function</span><span class=p>(</span><span class=nx>data</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;I am Bob&#39;s callback function for a mouse clicked event and this is my event data: &#34;</span> <span class=o>+</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>stringify</span><span class=p>(</span><span class=nx>data</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>subscriptionID2</span> <span class=o>=</span> <span class=nx>publisherSubscriber</span><span class=p>.</span><span class=nx>subscribe</span><span class=p>(</span><span class=s2>&#34;mouseHovered&#34;</span><span class=p>,</span> <span class=kd>function</span><span class=p>(</span><span class=nx>data</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;I am Bob&#39;s callback function for a hovered mouse event and this is my event data: &#34;</span> <span class=o>+</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>stringify</span><span class=p>(</span><span class=nx>data</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>subscriptionID3</span> <span class=o>=</span> <span class=nx>publisherSubscriber</span><span class=p>.</span><span class=nx>subscribe</span><span class=p>(</span><span class=s2>&#34;mouseClicked&#34;</span><span class=p>,</span> <span class=kd>function</span><span class=p>(</span><span class=nx>data</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;I am Alice&#39;s callback function for a mouse clicked event and this is my event data: &#34;</span> <span class=o>+</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>stringify</span><span class=p>(</span><span class=nx>data</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// NOTE: after publishing an event with its data, all of the
+</span></span></span><span class=line><span class=cl><span class=c1>// subscribed callbacks will execute and will receive
+</span></span></span><span class=line><span class=cl><span class=c1>// a data object from the object firing the event
+</span></span></span><span class=line><span class=cl><span class=c1>// there are 3 console.logs executed
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>publisherSubscriber</span><span class=p>.</span><span class=nx>publish</span><span class=p>(</span><span class=s2>&#34;mouseClicked&#34;</span><span class=p>,</span> <span class=p>{</span><span class=s2>&#34;data&#34;</span><span class=o>:</span> <span class=s2>&#34;data1&#34;</span><span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=nx>publisherSubscriber</span><span class=p>.</span><span class=nx>publish</span><span class=p>(</span><span class=s2>&#34;mouseHovered&#34;</span><span class=p>,</span> <span class=p>{</span><span class=s2>&#34;data&#34;</span><span class=o>:</span> <span class=s2>&#34;data2&#34;</span><span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// we unsubscribe from an event by removing the subscription ID
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>publisherSubscriber</span><span class=p>.</span><span class=nx>unsubscribe</span><span class=p>(</span><span class=s2>&#34;mouseClicked&#34;</span><span class=p>,</span> <span class=nx>subscriptionID3</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// there are 2 console.logs executed
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>publisherSubscriber</span><span class=p>.</span><span class=nx>publish</span><span class=p>(</span><span class=s2>&#34;mouseClicked&#34;</span><span class=p>,</span> <span class=p>{</span><span class=s2>&#34;data&#34;</span><span class=o>:</span> <span class=s2>&#34;data1&#34;</span><span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=nx>publisherSubscriber</span><span class=p>.</span><span class=nx>publish</span><span class=p>(</span><span class=s2>&#34;mouseHovered&#34;</span><span class=p>,</span> <span class=p>{</span><span class=s2>&#34;data&#34;</span><span class=o>:</span> <span class=s2>&#34;data2&#34;</span><span class=p>});</span>
+</span></span></code></pre></td></tr></table></div></div><p>This pattern is beneficial when multiple operations need to be performed based on a single event. Imagine making multiple AJAX calls to a backend service, with subsequent calls dependent on the results. Nesting these calls could lead to &ldquo;callback hell.&rdquo; The publisher/subscriber pattern offers a more elegant solution.</p><p>Testing various system components can be tricky with this pattern, as there&rsquo;s no easy way to verify the behavior of subscribing components.</p><h3 id=mediator-pattern>Mediator Pattern</h3><p>Let&rsquo;s touch upon a pattern valuable for decoupled systems. When numerous system components require coordination and communication, introducing a mediator can be an effective solution.</p><p>A mediator, acting as a central communication hub, handles the workflow between disparate system parts. The emphasis on &ldquo;workflow&rdquo; is crucial.</p><p>You might wonder: <em>Both this pattern and the publisher/subscriber enhance communication between objects. What sets them apart?</em></p><p>The distinction lies in the mediator&rsquo;s workflow management. The publisher/subscriber employs a &ldquo;fire and forget&rdquo; approach. As an event aggregator, it triggers events and notifies relevant subscribers, unconcerned with post-event actions. The mediator, in contrast, plays an active role in managing the workflow.</p><p>A wizard-like interface exemplifies a mediator. Imagine a lengthy registration process for a system. Breaking it down into multiple steps is often a good practice when extensive user information is required.</p><p>This approach leads to cleaner, maintainable code, and prevents overwhelming users with information. The mediator, in this case, would handle the registration steps, accommodating potential workflow variations, as each user might have a unique registration path.</p><p>This pattern fosters improved communication between system components, now channeled through the mediator, resulting in a cleaner codebase.</p><p>However, it introduces a single point of failure. If the mediator fails, the entire system could be compromised.</p><h3 id=prototype-pattern>Prototype Pattern</h3><p>As mentioned earlier, JavaScript doesn&rsquo;t inherently support classes. Inheritance between objects is achieved through prototype-based programming.</p><p>This approach allows us to create objects that serve as prototypes for new objects. The prototype acts as a blueprint.</p><p>Having touched upon this concept, let&rsquo;s illustrate its use with a simple example.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>personPrototype</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>sayHi</span><span class=o>:</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;Hello, my name is &#34;</span> <span class=o>+</span> <span class=k>this</span><span class=p>.</span><span class=nx>name</span> <span class=o>+</span> <span class=s2>&#34;, and I am &#34;</span> <span class=o>+</span> <span class=k>this</span><span class=p>.</span><span class=nx>age</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=nx>sayBye</span><span class=o>:</span> <span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;Bye Bye!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>Person</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>age</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>name</span> <span class=o>=</span> <span class=nx>name</span> <span class=o>||</span> <span class=s2>&#34;John Doe&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nx>age</span> <span class=o>=</span> <span class=nx>age</span> <span class=o>||</span> <span class=mi>26</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>function</span> <span class=nx>constructorFunction</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>age</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>name</span> <span class=o>=</span> <span class=nx>name</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>age</span> <span class=o>=</span> <span class=nx>age</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nx>constructorFunction</span><span class=p>.</span><span class=nx>prototype</span> <span class=o>=</span> <span class=nx>personPrototype</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>var</span> <span class=nx>instance</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>constructorFunction</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>age</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>instance</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>person1</span> <span class=o>=</span> <span class=nx>Person</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=kd>var</span> <span class=nx>person2</span> <span class=o>=</span> <span class=nx>Person</span><span class=p>(</span><span class=s2>&#34;Bob&#34;</span><span class=p>,</span> <span class=mi>38</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// prints out Hello, my name is John Doe, and I am 26
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>person1</span><span class=p>.</span><span class=nx>sayHi</span><span class=p>();</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints out Hello, my name is Bob, and I am 38
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>person2</span><span class=p>.</span><span class=nx>sayHi</span><span class=p>();</span>
+</span></span></code></pre></td></tr></table></div></div><p>Notice how prototype inheritance enhances performance. Both objects reference functions implemented within the prototype itself, rather than duplicating them within each object.</p><h3 id=command-pattern>Command Pattern</h3><p>The command pattern is valuable for decoupling objects that execute commands from those issuing them. Consider an application heavily reliant on API calls. If these APIs change, you&rsquo;d need to modify the code wherever the affected APIs are called.</p><p>This scenario calls for an abstraction layer to separate objects making API calls from those dictating when to make them. This eliminates the need to modify every instance where the service is invoked. Instead, only the objects making the call—a single location—require changes.</p><p>As with any pattern, it&rsquo;s crucial to recognize when it&rsquo;s truly necessary. We must weigh the tradeoffs. Adding an abstraction layer over API calls can impact performance but potentially save substantial time during modifications.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=c1>// the object which knows how to execute the command
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>invoker</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>add</span><span class=o>:</span> <span class=kd>function</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nx>x</span> <span class=o>+</span> <span class=nx>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>},</span>
+</span></span><span class=line><span class=cl>    <span class=nx>subtract</span><span class=o>:</span> <span class=kd>function</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=nx>x</span> <span class=o>-</span> <span class=nx>y</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// the object which is used as an abstraction layer when
+</span></span></span><span class=line><span class=cl><span class=c1>// executing commands; it represents an interface
+</span></span></span><span class=line><span class=cl><span class=c1>// toward the invoker object
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>manager</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>execute</span><span class=o>:</span> <span class=kd>function</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>args</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=nx>name</span> <span class=k>in</span> <span class=nx>invoker</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nx>invoker</span><span class=p>[</span><span class=nx>name</span><span class=p>].</span><span class=nx>apply</span><span class=p>(</span><span class=nx>invoker</span><span class=p>,</span> <span class=p>[].</span><span class=nx>slice</span><span class=p>.</span><span class=nx>call</span><span class=p>(</span><span class=nx>arguments</span><span class=p>,</span> <span class=mi>1</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>false</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// prints 8
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>manager</span><span class=p>.</span><span class=nx>execute</span><span class=p>(</span><span class=s2>&#34;add&#34;</span><span class=p>,</span> <span class=mi>3</span><span class=p>,</span> <span class=mi>5</span><span class=p>));</span>
+</span></span><span class=line><span class=cl><span class=c1>// prints 2
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>manager</span><span class=p>.</span><span class=nx>execute</span><span class=p>(</span><span class=s2>&#34;subtract&#34;</span><span class=p>,</span> <span class=mi>5</span><span class=p>,</span> <span class=mi>3</span><span class=p>));</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=facade-pattern>Facade Pattern</h3><p>The facade pattern creates an abstraction layer between the public interface and the underlying implementation. It&rsquo;s useful when a simpler or more user-friendly interface to a complex object is desired.</p><p>Selectors from DOM manipulation libraries like jQuery, Dojo, or D3 exemplify this pattern. These libraries boast powerful selector features, enabling complex queries like:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=nx>jQuery</span><span class=p>(</span><span class=s2>&#34;.parent .child div.span&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>This simplification hides the intricate logic operating behind the scenes.</p><p>The performance-simplicity tradeoff should always be considered. Avoid unnecessary complexity unless the benefits outweigh the drawbacks. In the case of these libraries, the tradeoff proved worthwhile, contributing to their success.</p><h2 id=moving-forward>Moving Forward</h2><p>Design patterns are indispensable tools for senior JavaScript developers. Understanding their intricacies can prove invaluable, saving time throughout a project&rsquo;s lifecycle, particularly during maintenance. Modifying and maintaining systems built with appropriate design patterns can be immensely beneficial.</p><p>To maintain brevity, we&rsquo;ll conclude the examples here. For further exploration, I highly recommend two sources that inspired this article: the Gang of Four&rsquo;s book <em>Design Patterns: Elements of Reusable Object-Oriented Software</em> and Addy Osmani&rsquo;s <em>Learning JavaScript Design Patterns</em>.</p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3987358164777632" crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-5X67X4Q4")</script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X67X4Q4" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

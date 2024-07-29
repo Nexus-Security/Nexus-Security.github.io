@@ -1,0 +1,993 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="With support across all modern web browsers, WebAssembly (Wasm) is revolutionizing web user experiences. It provides a streamlined binary format for running libraries, or entire programs, written in diverse programming languages directly within a web browser. Developers are always seeking ways to boost productivity, such as: Creating a single application codebase that performs seamlessly across multiple platforms Delivering a smooth and visually appealing user experience on both desktop and mobile devices Leveraging open-source libraries to prevent redundant development efforts WebAssembly empowers front-end developers with all three, offering a path to web app UIs that rival native mobile or desktop experiences."><title>Tutorial on WebAssembly and Rust: Flawless Audio Processing</title>
+<link rel=canonical href=https://Nexus-Security.github.io/tutorial-on-webassembly-and-rust-flawless-audio-processing/><link rel=stylesheet href=/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css><meta property='og:title' content="Tutorial on WebAssembly and Rust: Flawless Audio Processing"><meta property='og:description' content="With support across all modern web browsers, WebAssembly (Wasm) is revolutionizing web user experiences. It provides a streamlined binary format for running libraries, or entire programs, written in diverse programming languages directly within a web browser. Developers are always seeking ways to boost productivity, such as: Creating a single application codebase that performs seamlessly across multiple platforms Delivering a smooth and visually appealing user experience on both desktop and mobile devices Leveraging open-source libraries to prevent redundant development efforts WebAssembly empowers front-end developers with all three, offering a path to web app UIs that rival native mobile or desktop experiences."><meta property='og:url' content='https://Nexus-Security.github.io/tutorial-on-webassembly-and-rust-flawless-audio-processing/'><meta property='og:site_name' content='Nexus Security'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2023-03-26T00:00:00+00:00'><meta property='article:modified_time' content='2023-03-26T00:00:00+00:00'><meta name=twitter:title content="Tutorial on WebAssembly and Rust: Flawless Audio Processing"><meta name=twitter:description content="With support across all modern web browsers, WebAssembly (Wasm) is revolutionizing web user experiences. It provides a streamlined binary format for running libraries, or entire programs, written in diverse programming languages directly within a web browser. Developers are always seeking ways to boost productivity, such as: Creating a single application codebase that performs seamlessly across multiple platforms Delivering a smooth and visually appealing user experience on both desktop and mobile devices Leveraging open-source libraries to prevent redundant development efforts WebAssembly empowers front-end developers with all three, offering a path to web app UIs that rival native mobile or desktop experiences."><link rel="shortcut icon" href=/fav.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"light")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><ol class=menu-social><li><a href=https://github.com/Nexus-Security target=_blank title=GitHub rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><defs><filter id="alpha" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%"><feColorMatrix type="matrix" in="SourceGraphic" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/></filter><mask id="mask0"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.2;stroke:none"/></g></mask><clipPath id="clip1"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface5" clip-path="url(#clip1)"><path style="stroke:none;fill-rule:nonzero;fill:#fff;fill-opacity:1" d="M10.9375 83.867188c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C21.6875 48.125 21.40625 33.070312 26.488281 17.675781c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C58.9375 34.65625 59.957031 34.84375 60.894531 34.554688 64.824219 33.382812 71.851562 32.6875 79.6875 32.6875S94.550781 33.386719 98.476562 34.554688C99.417969 34.835938 100.433594 34.65625 101.226562 34.074219 113.96875 24.65625 124.011719 20.445312 129.8125 18.582031c-.476562000000001-1.882812-1.019531-3.746093-1.625-5.589843-4.78125 1.207031-16.300781 5.050781-31.648438 16.394531C95.746094 29.96875 94.730469 30.144531 93.789062 29.867188c-3.925781-1.171876-10.953124-1.875-18.789062-1.875-7.832031.0-14.855469.703124000000003-18.792969 1.871093C55.265625 30.144531 54.246094 29.964844 53.457031 29.382812c-15.355469-11.34375-26.875-15.1875-31.65625-16.402343C16.71875 28.382812 17 43.4375 17.726562 45.523438 18.101562 46.589844 17.890625 47.777344 17.175781 48.648438 9.71875 57.367188 6.25 67.070312 6.25 79.179688c0 23.515624 7.175781 37.921874 17.417969 46.550781C16.007812 116.851562 10.9375 103.582031 10.9375 83.867188zm0 0"/></g><mask id="mask1"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.101961;stroke:none"/></g></mask><clipPath id="clip2"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface8" clip-path="url(#clip2)"><path style="stroke:none;fill-rule:nonzero;fill:#000;fill-opacity:1" d="M32.34375 78.5c3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 73.425781 55.824219 73.730469 60.023438 74.054688c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 74.917969 85.210938 74.425781 89.976562 74.054688 102.070312 73.125 111.605469 72.367188 117.648438 78.492188c4.527343 4.601562 6.890624 10.328124 7.21875 16.945312C124.925781 94.398438 125 93.382812 125 92.261719c0-7.285157-2.476562-13.492188-7.351562-18.449219-6.042969-6.117188-15.578126-5.367188-27.671876-4.4375C85.210938 69.742188 80.34375 70.238281 74.867188 70.117188 69.914062 70.0625 64.960938 69.8125 60.023438 69.375 55.824219 69.050781 51.929688 68.742188 48.382812 68.742188c-6.65625.0-12.09375 1.070312-16.039062 5.078124C27.476562 78.769531 25 84.976562 25 92.261719 25 93.375 25.074219 94.398438 25.132812 95.445312 25.460938 88.820312 27.820312 83.101562 32.34375 78.5zm0 0"/></g><linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="10.768" y1="13.86" x2="18.633" y2="21.724" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear1" gradientUnits="userSpaceOnUse" x1="4.004" y1="18.529" x2="4.047" y2="18.573" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear2" gradientUnits="userSpaceOnUse" x1=".617" y1="5.771" x2="23.69" y2="16.53" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#fff;stop-opacity:.2"/><stop offset="1" style="stop-color:#fff;stop-opacity:0"/></linearGradient></defs><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#5c6671;fill-opacity:1" d="M88.539062 137.488281 75 137.5 61.457031 137.488281C36.273438 137.488281 6.25 127.367188 6.25 79.179688c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C17 43.4375 16.71875 28.382812 21.800781 12.988281c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C54.25 29.96875 55.269531 30.15625 56.207031 29.867188c3.9375-1.171876 10.960938-1.875 18.792969-1.875 7.835938.0 14.863281.703124000000003 18.789062 1.871093C94.730469 30.140625 95.746094 29.964844 96.539062 29.382812c15.347657-11.34375 26.867188-15.1875 31.648438-16.394531 5.082031 15.394531 4.804688 30.449219 4.082031 32.53125C131.867188 46.585938 132.078125 47.785156 132.820312 48.648438 140.273438 57.367188 143.75 67.070312 143.75 79.179688c0 48.1875-30.023438 58.308593-55.210938 58.308593zm0 0"/><use xlink:href="#surface5" mask="url(#mask0)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M89.488281 63.144531C84.886719 63.507812 80.125 63.875 75.226562 63.875H74.78125C69.875 63.875 65.117188 63.5 60.519531 63.144531 47.898438 62.164062 35.988281 61.230469 27.894531 69.429688 21.824219 75.59375 18.75 83.28125 18.75 92.261719 18.75 128.238281 46.429688 131.25 75.226562 131.25c28.34375.0 56.023438-3.011719 56.023438-38.988281.0-8.988281-3.074219-16.667969-9.144531-22.835938-8.085938-8.195312-20.003907-7.269531-32.617188-6.28125zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#d9cfcc;fill-opacity:1" d="M74.773438 125C42.492188 125 25 119.78125 25 92.261719c0-7.285157 2.476562-13.492188 7.34375-18.449219 3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 68.738281 55.824219 69.042969 60.023438 69.367188c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 70.230469 85.210938 69.738281 89.976562 69.367188c12.09375-.929687999999999 21.628907-1.6875 27.671876 4.4375C122.523438 78.769531 125 84.976562 125 92.261719 125 119.78125 107.507812 125 74.773438 125zm0 0"/><use xlink:href="#surface8" mask="url(#mask1)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M50 75c-7.125.0-12.5 9.40625-12.5 21.875S42.875 118.75 50 118.75s12.5-9.40625 12.5-21.875S57.125 75 50 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M50 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S47.449219 81.25 50 81.25s6.25 6.085938 6.25 15.625S52.550781 112.5 50 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M1e2 75c-7.125.0-12.5 9.40625-12.5 21.875S92.875 118.75 1e2 118.75s12.5-9.40625 12.5-21.875S107.125 75 1e2 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M1e2 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S97.449219 81.25 1e2 81.25s6.25 6.085938 6.25 15.625S102.550781 112.5 1e2 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M52.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M102.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear0)" d="M125 72.8125 124.894531 72.855469C129.039062 78.382812 131.25 84.851562 131.25 92.261719c0 35.976562-27.679688 38.988281-56.023438 38.988281-16.664062.0-32.914062-1.054688-43.683593-8.875l13.386719 13.386719c5.507812 1.207031 11.121093 1.71875 16.527343 1.71875L75 137.5 88.539062 137.488281c22.992188.0 49.941407-8.53125 54.472657-46.664062zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear1)" d="M25.070312 115.800781 25 115.832031 25.269531 116.101562zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear2)" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/></g></svg></a></li><li><a href=mailto:0x000216@gmail.com target=_blank title=Email rel=me><svg width="512" height="512" viewBox="0 0 512 512"><path d="M33.994 73.934C27.135 76.021 21.866 80.426 18.364 87 16.567 90.374 16.5 96.438 16.5 256V421.5l2.158 4C21.184 430.18 25.101 434.027 30 436.636 33.003 438.235 36.304 438.546 53.246 438.825L72.993 439.15l.253-137.978L73.5 163.194 90 175.45C99.075 182.191 140.17 212.762 181.321 243.386l74.821 55.68 21.179-15.752C288.97 274.65 330 244.021 368.5 215.248l70-52.312L438.754 301.043 439.007 439.15 458.754 438.825C476.726 438.529 478.859 438.306 482.5 436.342 487.18 433.816 491.027 429.899 493.636 425 495.433 421.626 495.5 415.562 495.5 256 495.5 96.438 495.433 90.374 493.636 87 488.565 77.48 482.099 73.799 469.397 73.202L460.293 72.774 454.397 77.337C439.883 88.566 256.423 221.935 255.772 221.73 254.976 221.479 78.972 93.309 62.177 80.75L51.812 73 44.156 73.086C39.945 73.133 35.372 73.515 33.994 73.934" stroke="none" fill="#d34c3c" fill-rule="evenodd"/><path d="M54.528 74.911C55.612 75.963 74.953 90.25 97.507 106.661c22.555 16.412 67.228 48.964 99.275 72.339s58.594 42.604 58.993 42.731C256.549 221.978 454.147 78.147 457.472 74.916 459.416 73.028 456.501 73 256 73 55.677 73 52.586 73.029 54.528 74.911M73 300.878V439H256 439V300.941C439 190.749 438.748 163.038 437.75 163.654 437.063 164.078 405.45 187.632 367.5 215.994c-37.95 28.363-78.528 58.655-90.173 67.316l-21.173 15.748-66.827-49.716C152.572 221.999 111.925 191.776 99 182.18s-24.062-17.892-24.75-18.436C73.251 162.954 73 190.519 73 300.878" stroke="none" fill="#e5e5e5" fill-rule="evenodd"/></svg></a></li><li><a href=https://nexus-security.github.io/index.xml target=_blank title=RSS rel=me><svg id="Layer_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><path style="fill:#f78c20" d="M78.333 355.334C35.14 355.334.0 390.474.0 433.667S35.14 512 78.333 512s78.333-35.14 78.333-78.333-35.14-78.333-78.333-78.333z"/><g><path style="fill:#ffa929" d="M78.333 381.445c-28.795.0-52.222 23.427-52.222 52.222s23.427 52.222 52.222 52.222 52.222-23.427 52.222-52.222-23.427-52.222-52.222-52.222z"/><path style="fill:#ffa929" d="M477.918 264.861c-21.843-51.641-53.111-98.019-92.936-137.842-39.824-39.824-86.201-71.093-137.843-92.935C193.669 11.468 136.874.0 78.333.0c-4.807.0-8.704 3.897-8.704 8.704v85.519c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h85.52c4.807.0 8.704-3.897 8.704-8.704C512 375.126 500.533 318.331 477.918 264.861z"/><path style="fill:#ffa929" d="M78.333 163.853c-4.807.0-8.704 3.897-8.704 8.704v95.74c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h95.74c4.807.0 8.704-3.897 8.704-8.704.0-72.07-28.065-139.826-79.027-190.787-50.961-50.961-118.717-79.027-190.787-79.027z"/></g><g><path style="fill:#f78c20" d="M78.333 242.186c-2.918.0-5.817.076-8.704.206v25.905c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h25.905c.129-2.886.206-5.786.206-8.704.0-105.752-85.729-191.481-191.481-191.481z"/><path style="fill:#f78c20" d="M78.333 68.113c-2.91.0-5.81.042-8.704.11v26.001c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h26.001c.067-2.894.11-5.793.11-8.704C443.887 231.777 280.223 68.113 78.333 68.113z"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://x.com/0x000216 target=_blank title=Twitter rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#03a9f4;fill-opacity:1" d="M150 33.179688c-5.640625 2.460937-11.609375 4.09375-17.71875 4.855468 6.4375-3.820312 11.25-9.867187 13.527344-16.996094-6.027344 3.574219-12.621094 6.089844-19.5 7.441407-8.628906-9.210938-22.007813-12.214844-33.746094-7.574219-11.738281 4.636719-19.449219 15.980469-19.445312 28.601562.0 2.4375.203124000000003 4.78125.710937000000001 7.015626C49.085938 55.308594 26.03125 43.609375 10.445312 24.355469 2.25 38.402344 6.386719 56.398438 19.894531 65.457031 15.027344 65.324219 10.261719 64.027344 6 61.667969V62.007812c.015625 14.636719 10.304688 27.25 24.636719 30.214844-2.628907.691406000000001-5.339844 1.03125-8.0625 1.011719C20.621094 93.269531 18.667969 93.09375 16.753906 92.710938c4.070313 12.507812 15.585938 21.089843 28.734375 21.421874-10.886719 8.511719-24.308593 13.128907-38.128906 13.113282C4.835938 127.246094 2.417969 127.132812.0 126.824219c14.0625 9.0625 30.445312 13.855469 47.175781 13.800781 56.585938.0 87.523438-46.875 87.523438-87.507812.0-1.359376-.046875-2.671876-.113281000000001-3.972657C140.652344 44.804688 145.875 39.394531 150 33.179688zm0 0"/></g></svg></a></li><li><a href=https://www.minds.com/0x000216/ target=_blank title=Minds rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><g><g><path style="fill:#ffe1b2" d="M256 33.085C245.078 13.38 224.079.0 2e2.0c-23.781.0-45.57 13.293-56.594 34.184C115.711 41.602 96 66.977 96 96c0 .059.0.113.0.172-9.977 7.512-16 19.301-16 31.828.0 1.316.078 2.637.234 3.992C60.211 145.266 48 167.758 48 192c0 14.07 4.039 27.543 11.719 39.262C57.273 236.512 56 242.207 56 248c0 2.738.281 5.445.828 8.098C36.672 267.308 24 288.539 24 312c0 27.973 18.305 52.34 44.109 60.785C65.398 378.828 64 385.324 64 392c0 21.098 13.805 39.508 33.539 45.727C103.891 466.746 129.828 488 160 488c4.617.0 9.227-.512 13.766-1.527C181.992 502 198.141 512 216 512c16.687.0 31.396-8.567 40-21.523V33.085z"/></g><g><g><path style="fill:#ffb980" d="M264 256c-4.422.0-8-3.582-8-8 0-22.055-17.945-40-40-40-8.008.0-15.734 2.355-22.336 6.812-3.023 2.043-7.055 1.781-9.797-.652-3.156-2.809-8.477-6.16-15.867-6.16-4.422.0-8-3.582-8-8s3.578-8 8-8c7.711.0 15.234 2.293 21.719 6.539C197.773 194.246 206.758 192 216 192c30.875.0 56 25.121 56 56C272 252.418 268.422 256 264 256z"/></g></g><g><g><path style="fill:#ffb980" d="M120 120c18.977.0 36.875 7.312 50.414 20.594 3.141 3.09 8.203 3.047 11.312-.109 3.094-3.152 3.047-8.219-.109-11.312C165.07 112.941 143.187 104 120 104c-13.046.0-25.395 2.93-36.542 8.046C81.253 117.019 80 122.423 80 128c0 1.316.078 2.637.234 3.992-.094.062-.173.139-.267.202C91.423 124.501 105.193 120 120 120z"/></g></g><g><g><path style="fill:#ffb980" d="M216 360c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32-14.211.0-26.82-9.648-30.664-23.465-.703-2.512-2.578-4.523-5.039-5.395-2.453-.871-5.188-.492-7.305 1.02C114.094 371.906 101.305 376 88 376c-6.948.0-13.625-1.149-19.894-3.207-2.214 4.939-3.501 10.19-3.916 15.586C71.714 390.73 79.711 392 88 392c13.297.0 26.187-3.266 37.773-9.52C133.969 397.894 150.141 408 168 408c26.469.0 48-21.531 48-48z"/></g></g><g><path style="fill:#fdc88e" d="M488 312c0-23.461-12.672-44.691-32.828-55.902.547-2.652.828-5.359.828-8.098.0-5.793-1.273-11.488-3.719-16.738C459.961 219.543 464 206.07 464 192c0-24.242-12.211-46.734-32.234-60.008.156-1.355.234-2.676.234-3.992.0-12.527-6.023-24.316-16-31.828.0-.059.0-.113.0-.172.0-29.023-19.711-54.398-47.406-61.816C357.57 13.293 335.781.0 312 0c-24.08.0-45.078 13.38-56 33.085v457.391C264.604 503.433 279.313 512 296 512c17.859.0 34.008-10 42.234-25.527C342.773 487.488 347.383 488 352 488c30.172.0 56.109-21.254 62.461-50.273C434.195 431.508 448 413.097 448 392c0-6.676-1.398-13.172-4.109-19.215C469.695 364.34 488 339.973 488 312z"/></g><g><path style="fill:#f8ab6b" d="M272.008 151.199C272 151.465 272 151.734 272 152c0 26.469 21.531 48 48 48s48-21.531 48-48c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32s-32-14.355-32-32c0-2.184.219-4.359.656-6.465.492-2.395-.133-4.883-1.703-6.754-1.57-1.871-4.016-3.066-6.352-2.859-.453.012-.891.059-.602.078-13.234.0-24-10.766-24-24v31.813C260.673 147.348 266.061 149.988 272.008 151.199z"/></g><g><path style="fill:#f8ab6b" d="M296 328c9.242.0 18.219-2.246 26.281-6.539C328.765 325.707 336.289 328 344 328c4.422.0 8-3.582 8-8s-3.578-8-8-8c-7.391.0-12.711-3.352-15.867-6.16-2.742-2.434-6.766-2.695-9.797-.656C311.726 309.644 304 312 296 312c-22.055.0-40-17.945-40-40v39.116C266.174 321.517 280.337 328 296 328z"/></g><g><g><path style="fill:#f8ab6b" d="M431.765 131.992c.156-1.355.234-2.676.234-3.992.0-5.577-1.253-10.981-3.458-15.954C417.395 106.93 405.046 104 392 104c-4.422.0-8 3.582-8 8s3.578 8 8 8c14.807.0 28.577 4.501 40.032 12.194C431.939 132.131 431.859 132.054 431.765 131.992z"/></g></g><g><g><path style="fill:#f8ab6b" d="M447.81 388.38c-.415-5.396-1.702-10.647-3.916-15.586C437.624 374.85 430.948 376 424 376c-13.578.0-26.594-4.266-37.641-12.332-2.07-1.5-4.719-1.93-7.133-1.168-2.43.77-4.344 2.648-5.164 5.059C369.101 382.176 355.414 392 340 392c-4.422.0-8 3.582-8 8s3.578 8 8 8c18.875.0 35.961-10.191 45.094-26.156C396.976 388.512 410.258 392 424 392 432.288 392 440.285 390.73 447.81 388.38z"/></g></g></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://www.buymeacoffee.com/0x000216 target=_blank title=Coffee rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 340 340" style="enable-background:new 0 0 340 340"><g id="XMLID_18_"><polygon id="XMLID_138_" style="fill:#dedde0" points="76.429,290 80,340 170,340 170,290"/><polygon id="XMLID_169_" style="fill:#dedde0" points="170,80 61.429,80 65,130 170,130"/><polygon id="XMLID_197_" style="fill:#acabb1" points="170,290 170,340 260,340 263.571,290"/><polygon id="XMLID_221_" style="fill:#acabb1" points="170,80 170,130 275,130 278.571,80"/><path id="XMLID_222_" style="fill:#ffda44" d="M170 260c-22.091.0-40-22.386-40-50s17.909-50 40-50v-30H65 50l10 160h16.429H170V260z"/><path id="XMLID_33_" style="fill:#ff9811" d="M170 130v30c22.091.0 40 22.386 40 50s-17.909 50-40 50v30h93.571H280l10-160h-15H170z"/><path id="XMLID_223_" style="fill:#50412e" d="M210 210c0-27.614-17.909-50-40-50v1e2c22.091.0 40-22.386 40-50z"/><path id="XMLID_224_" style="fill:#786145" d="M130 210c0 27.614 17.909 50 40 50V160c-22.091.0-40 22.386-40 50z"/><polygon id="XMLID_225_" style="fill:#50412e" points="278.571,80 300,80 300,40 260,40 260,0 80,0 80,40 40,40 40,80 61.429,80 170,80"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About Us</span></a></li><li><a href=/termsofservice/><svg class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4L18.5 9.5a1.5 1.5.0 00-4-4L4 16v4"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/></svg>
+<span>Terms Of Service</span></a></li><li><a href=/privacypolicy/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Privacy Policy</span></a></li><li><a href=/disclaimer/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Disclaimer</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/contact/><svg class="icon icon-tabler icon-tabler-mail" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+<span>Contact Us</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#exploring-this-webassemblyrust-tutorial>Exploring This WebAssembly/Rust Tutorial</a></li><li><a href=#why-choose-wasm>Why Choose Wasm?</a><ol><li><a href=#when-wasm-might-not-be-the-best-fit>When Wasm Might Not Be the Best Fit</a></li></ol></li><li><a href=#why-this-wasmrust-tutorial>Why This Wasm/Rust Tutorial?</a></li><li><a href=#maintaining-smooth-web-apps-with-webassembly>Maintaining Smooth Web Apps with WebAssembly</a></li><li><a href=#understanding-web-audio-fundamentals>Understanding Web Audio Fundamentals</a></li><li><a href=#webassemblyrust-tutorial-getting-started>WebAssembly/Rust Tutorial: Getting Started</a><ol><li><a href=#setting-up-our-web-app>Setting Up Our Web App</a></li><li><a href=#application-structure-overview>Application Structure Overview</a></li></ol></li><li><a href=#1-implementing-pitch-detection-with-rust-and-webassembly>1. Implementing Pitch Detection with Rust and WebAssembly</a><ol><li><a href=#obtaining-rust>Obtaining Rust</a></li><li><a href=#installing-tools-for-webassembly-development-in-rust>Installing Tools for WebAssembly Development in Rust</a></li><li><a href=#creating-the-webassembly-module>Creating the WebAssembly Module</a></li><li><a href=#pitch-detection-in-rust>Pitch Detection in Rust</a></li><li><a href=#creating-a-javascript-callable-pitch-detector-in-rust>Creating a JavaScript-Callable Pitch Detector in Rust</a></li><li><a href=#building-webassembly-applications>Building WebAssembly Applications</a></li></ol></li><li><a href=#2-implementing-the-pitchprocessor-class-extending-native-audioworkletprocessor>2. Implementing the <code>PitchProcessor</code> Class (Extending Native <code>AudioWorkletProcessor</code>)</a></li><li><a href=#3-integrating-web-audio-worklet-code>3. Integrating Web Audio Worklet Code</a></li><li><a href=#4-setting-up-web-audio>4. Setting Up Web Audio</a></li><li><a href=#5-creating-the-application-ui>5. Creating the Application UI</a></li><li><a href=#webassemblyrust-tutorial-addressing-a-final-hurdle>WebAssembly/Rust Tutorial: Addressing a Final Hurdle</a></li><li><a href=#our-completed-application>Our Completed Application</a></li><li><a href=#programming-with-webassembly-and-rust-a-real-time-web-audio-solution>Programming with WebAssembly and Rust: A Real-time Web Audio Solution</a></li><li><a href=#key-takeaways-wasmrust-and-web-audio>Key Takeaways: Wasm/Rust and Web Audio</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/tutorial-on-webassembly-and-rust-flawless-audio-processing/>Tutorial on WebAssembly and Rust: Flawless Audio Processing</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Mar 26, 2023</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>27 minute read</time></div></footer></div></header><section class=article-content><p>With support across all modern web browsers, WebAssembly (Wasm) is revolutionizing web user experiences. It provides a streamlined binary format for running libraries, or entire programs, written in diverse programming languages directly within a web browser.</p><p>Developers are always seeking ways to boost productivity, such as:</p><ul><li>Creating a single application codebase that performs seamlessly across multiple platforms</li><li>Delivering a smooth and visually appealing user experience on both desktop and mobile devices</li><li>Leveraging open-source libraries to prevent redundant development efforts</li></ul><p>WebAssembly empowers front-end developers with all three, offering a path to web app UIs that rival native mobile or desktop experiences. It even enables the use of libraries written in languages beyond JavaScript, including C++ or Go!</p><p>This Wasm/Rust tutorial guides you through building a simple pitch-detector application, similar to a guitar tuner. This application utilizes the inherent audio capabilities of web browsers and <strong>maintains a consistent 60 frames per second (FPS) performance, even on mobile devices.</strong> Familiarity with JavaScript is assumed, but prior knowledge of the Web Audio API or Rust is not required.</p><p><em>Note: Currently, the Web Audio API technique employed in this article is not compatible with Firefox. Therefore, Chrome, Chromium, or Edge are recommended for this tutorial, despite Firefox&rsquo;s strong Wasm and Web Audio API support.</em></p><h2 id=exploring-this-webassemblyrust-tutorial>Exploring This WebAssembly/Rust Tutorial</h2><ul><li>Learn to create a basic function in Rust and invoke it from JavaScript through WebAssembly</li><li>Utilize the browser&rsquo;s modern <code>AudioWorklet</code> API for high-performance audio processing</li><li>Establish communication channels between JavaScript workers</li><li>Combine these elements within a minimal React application</li></ul><p><em>Note: If you&rsquo;re more interested in the practical implementation, feel free to skip ahead to <a class=link href=#webassemblyrust-tutorial-getting-started>the tutorial</a>.</em></p><h2 id=why-choose-wasm>Why Choose Wasm?</h2><p>Several compelling reasons justify incorporating WebAssembly into your projects:</p><ul><li>Execute code within the browser that was written in <strong>virtually any programming language</strong>.<ul><li>This includes <strong>integrating existing libraries</strong> (numerical, audio processing, machine learning, etc.) written in languages other than JavaScript.</li></ul></li><li>Depending on the language, Wasm can achieve near-native execution speeds. This has the potential to bring web application performance <a class=link href="https://youtu.be/aC_QLLilwso?t=1440" target=_blank rel=noopener>much closer</a> to <strong>native experiences for both mobile and desktop</strong>.</li></ul><h3 id=when-wasm-might-not-be-the-best-fit>When Wasm Might Not Be the Best Fit</h3><p>While WebAssembly&rsquo;s popularity is undeniable, it&rsquo;s not a one-size-fits-all solution for every web development scenario:</p><ul><li>For simple projects, sticking with JavaScript, HTML, and CSS is likely to be faster.</li><li>Older browsers like Internet Explorer lack native Wasm support.</li><li>Using WebAssembly typically introduces additional tools, such as language compilers, into your development workflow. This might not align with teams prioritizing simplicity in their development and CI/CD processes.</li></ul><h2 id=why-this-wasmrust-tutorial>Why This Wasm/Rust Tutorial?</h2><p>Among the many languages that compile to Wasm, Rust was chosen for this example. Created by Mozilla in 2010, Rust&rsquo;s popularity is steadily increasing. In Stack Overflow&rsquo;s 2020 developer survey, Rust secured the <a class=link href=https://insights.stackoverflow.com/survey/2020#technology-most-loved-dreaded-and-wanted-languages-loved target=_blank rel=noopener>top spot</a> spot for “most-loved language.” However, its appeal for this Wasm tutorial extends beyond mere trends:</p><ul><li>Rust&rsquo;s small runtime minimizes the code transmitted to the browser, resulting in a smaller website footprint.</li><li>Excellent Wasm support in Rust ensures seamless interoperability with JavaScript.</li><li>Rust delivers near <strong>C/C++-level performance</strong> while maintaining a <strong>highly secure memory model</strong>. Unlike some languages, Rust&rsquo;s compiler performs rigorous safety checks during compilation, greatly reducing the risk of crashes due to empty or uninitialized variables. This often translates to simpler error handling and a higher likelihood of preserving a positive UX, even when unexpected issues arise.</li><li>Rust is <strong>not garbage-collected</strong>. This grants Rust code full control over memory allocation and deallocation, leading to <em>consistent</em> performance—a crucial aspect in real-time applications.</li></ul><p>Despite its benefits, Rust has a steep learning curve. Selecting the right programming language ultimately hinges on various factors, including the expertise and preferences of the development team responsible for maintaining the codebase.</p><h2 id=maintaining-smooth-web-apps-with-webassembly>Maintaining Smooth Web Apps with WebAssembly</h2><p>Since we&rsquo;re working with WebAssembly and Rust, how can we leverage Rust&rsquo;s capabilities to achieve the performance gains that initially drew us to Wasm? For an application with a dynamic, frequently updating GUI to feel &ldquo;smooth,&rdquo; it needs to refresh the display in sync with the screen&rsquo;s refresh rate. Typically, this is 60 FPS, meaning our application must redraw its user interface within approximately 16.7 ms (1,000 ms / 60 FPS).</p><p>Our application needs to detect and display the current pitch in real time, implying that the combined computation for detection and drawing should ideally remain within this 16.7 ms per-frame budget. In the upcoming section, we&rsquo;ll explore how to leverage browser support for offloading audio analysis to a separate thread, allowing the main thread to proceed with its tasks. This separation is a significant performance win, as both computation and drawing then have the full 16.7 ms timeframe available.</p><h2 id=understanding-web-audio-fundamentals>Understanding Web Audio Fundamentals</h2><p>Our application will utilize a high-performance WebAssembly audio module for pitch detection, ensuring this computation doesn&rsquo;t burden the main thread.</p><p>Why not simplify things and perform pitch detection on the main thread?</p><ul><li>Audio processing tends to be computationally intensive due to the sheer volume of samples processed each second. Reliable audio pitch detection, for instance, often involves analyzing the spectra of 44,100 samples per second.</li><li>JavaScript&rsquo;s JIT compilation and garbage collection occur on the main thread, and we aim to prevent these from impacting the audio processing code to maintain consistent performance.</li><li>If audio frame processing consumes a significant portion of the 16.7 ms frame budget, the UX will suffer, resulting in choppy animations.</li><li>We want our app to run without hiccups, even on less powerful mobile devices.</li></ul><p>Web Audio worklets enable applications to maintain a smooth 60 FPS because audio processing is offloaded and cannot impede the main thread. If audio processing lags, it might lead to audio delays, but the UX will remain responsive.</p><h2 id=webassemblyrust-tutorial-getting-started>WebAssembly/Rust Tutorial: Getting Started</h2><p>This tutorial requires Node.js and <code>npx</code> to be installed. If you don&rsquo;t have <code>npx</code>, use <code>npm</code> (included with Node.js) to install it:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>npm install -g npx
+</span></span></code></pre></td></tr></table></div></div><h3 id=setting-up-our-web-app>Setting Up Our Web App</h3><p>We&rsquo;ll use React for this Wasm/Rust tutorial.</p><p>In your terminal, execute the following commands:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>npx create-react-app wasm-audio-app
+</span></span><span class=line><span class=cl><span class=nb>cd</span> wasm-audio-app
+</span></span></code></pre></td></tr></table></div></div><p>This utilizes <code>npx</code> to run the <code>create-react-app</code> command (provided by Facebook&rsquo;s corresponding package) to set up a new React application in the <code>wasm-audio-app</code> directory.</p><p>The <code>create-react-app</code> CLI simplifies the process of generating React-based single-page applications (SPAs), making it easy to initiate new React projects. However, the generated project includes boilerplate code that needs modification.</p><p>While unit testing throughout development is recommended, it falls outside this tutorial&rsquo;s scope. Therefore, we&rsquo;ll remove <code>src/App.test.js</code> and <code>src/setupTests.js</code>.</p><h3 id=application-structure-overview>Application Structure Overview</h3><p>Our application will consist of five primary JavaScript components:</p><ul><li><code>public/wasm-audio/wasm-audio.js</code>: Houses JavaScript bindings for the Wasm module responsible for pitch detection.</li><li><code>public/PitchProcessor.js</code>: This is where audio processing happens. It executes in the Web Audio rendering thread and interacts with the Wasm API.</li><li><code>src/PitchNode.js</code>: Implements a Web Audio node, which connects to the Web Audio graph and runs on the main thread.</li><li><code>src/setupAudio.js</code>: Uses web browser APIs to obtain access to an available audio recording device.</li><li><code>src/App.js</code> and <code>src/App.css</code>: These files constitute the user interface of the application.</li></ul><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><a href=https://bs-uploads.toptal.io/blackfish-uploads/uploaded_file/file/468546/image-1607584581099-66f80488c21950320e343514242353a6.png target=_blank rel="noopener noreferrer" class=_5xZOBTsv><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png" media="(min-width: 1920.1px)"><img alt="A flowchart for the pitch detection app. Blocks 1 and 2 run on the Web Audio thread. Block 1 is the Wasm (Rust) Pitch Detector, in the file wasm-audio/lib.rs. Block 2 is Web Audio Detection + Communication, in the file PitchProcessor.js. It asks the detector to initialize, and the detector sends detected pitches back to the Web Audio interface. Blocks 3, 4, and 5 run on the main thread. Block 3 is the Web Audio Controller, in the file PitchNode.js. It sends the Wasm module to PitchProcessor.js, and receives detected pitches from it. Block 4 is Web Audio Setup, in setupAudio.js. It creates a PitchNode object. Block 5 is the Web Application UI, comprised of App.js and App.css.  It calls setupAudio.js at startup. It also pauses or resumes audio recording by sending a message to PitchNode, from which it receives detected pitches to display to the user." src="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F468546%2Fimage-1607584581099-66f80488c21950320e343514242353a6.png" loading=lazy decoding=async class=Djd3YO_2></picture></a><figcaption class=_2tKCaBqq>Wasm audio app overview.</figcaption></figure></div><p>Let&rsquo;s dive directly into the core of our application and define the Rust code for the Wasm module. We&rsquo;ll then proceed to code the different Web Audio-related JavaScript components and conclude with the UI.</p><h2 id=1-implementing-pitch-detection-with-rust-and-webassembly>1. Implementing Pitch Detection with Rust and WebAssembly</h2><p>Our Rust code will determine the musical pitch from an array of audio samples.</p><h3 id=obtaining-rust>Obtaining Rust</h3><p>Follow the instructions on the <a class=link href=https://www.rust-lang.org/tools/install target=_blank rel=noopener>these instructions</a> to set up the Rust development environment.</p><h3 id=installing-tools-for-webassembly-development-in-rust>Installing Tools for WebAssembly Development in Rust</h3><p><code>wasm-pack</code> enables building, testing, and publishing Rust-generated WebAssembly components. If you haven&rsquo;t already, <a class=link href=https://rustwasm.github.io/wasm-pack/installer/ target=_blank rel=noopener>install wasm-pack</a>.</p><p>We&rsquo;ll utilize <code>cargo-generate</code> to bootstrap a basic audio analyzer in Rust, accessible through WebAssembly in the browser. <code>cargo-generate</code> streamlines creating new Rust projects by using existing Git repositories as templates.</p><p>Use the <code>cargo</code> tool that comes with your Rust installation to install <code>cargo-generate</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>cargo install cargo-generate
+</span></span></code></pre></td></tr></table></div></div><p>Once the installation completes (which may take a while), you&rsquo;re ready to create the Rust project.</p><h3 id=creating-the-webassembly-module>Creating the WebAssembly Module</h3><p>From your app&rsquo;s root directory, clone the project template:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>$ cargo generate --git https://github.com/rustwasm/wasm-pack-template
+</span></span></code></pre></td></tr></table></div></div><p>When prompted for a project name, enter <code>wasm-audio</code>.</p><p>A <code>Cargo.toml</code> file should now be present in the <code>wasm-audio</code> directory, containing:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=line><span class=cl><span class=p>[</span><span class=nx>package</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nx>name</span> <span class=p>=</span> <span class=s2>&#34;wasm-audio&#34;</span>
+</span></span><span class=line><span class=cl><span class=nx>version</span> <span class=p>=</span> <span class=s2>&#34;0.1.0&#34;</span>
+</span></span><span class=line><span class=cl><span class=nx>authors</span> <span class=p>=</span> <span class=p>[</span><span class=s2>&#34;Your Name &lt;you@example.com&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nx>edition</span> <span class=p>=</span> <span class=s2>&#34;2018&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>[</span><span class=nx>lib</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nx>crate-type</span> <span class=p>=</span> <span class=p>[</span><span class=s2>&#34;cdylib&#34;</span><span class=p>,</span> <span class=s2>&#34;rlib&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>[</span><span class=nx>features</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nx>default</span> <span class=p>=</span> <span class=p>[</span><span class=s2>&#34;console_error_panic_hook&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>[</span><span class=nx>dependencies</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nx>wasm-bindgen</span> <span class=p>=</span> <span class=s2>&#34;0.2.63&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>...</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>Cargo.toml</code> defines a Rust package (or &ldquo;crate&rdquo; in Rust terminology), similar to what <code>package.json</code> does for JavaScript applications.</p><p>The <code>[package]</code> section defines metadata that is used when publishing the package to the official <a class=link href=https://crates.io/ target=_blank rel=noopener>package registry</a> of Rust.</p><p>The <code>[lib]</code> section specifies the output format for the Rust compilation process. &ldquo;cdylib&rdquo; instructs Rust to generate a dynamic system library loadable from other languages (JavaScript in this case), while &ldquo;rlib&rdquo; includes a static library with metadata about the generated library. Although not strictly necessary for our purpose, &ldquo;rlib&rdquo; can be helpful when developing additional Rust modules that depend on this crate.</p><p>The <code>[features]</code> section enables the optional <code>console_error_panic_hook</code> feature, which translates Rust&rsquo;s unhandled error mechanism (<code>panic</code>) into console errors viewable in browser developer tools for easier debugging.</p><p>Finally, <code>[dependencies]</code> lists the crates this package depends on. The only dependency initially present is <code>wasm-bindgen</code>, which automates generating JavaScript bindings for our Wasm module.</p><h3 id=pitch-detection-in-rust>Pitch Detection in Rust</h3><p>Our app aims to detect a musician&rsquo;s voice or an instrument&rsquo;s pitch in real time. To maximize speed, we&rsquo;ll offload the pitch calculation to a WebAssembly module. We&rsquo;ll use the &ldquo;McLeod&rdquo; pitch method, implemented in the existing Rust <a class=link href=https://lib.rs/crates/pitch-detection target=_blank rel=noopener><code>pitch-detection</code></a> library, for single-voice pitch detection.</p><p>Similar to Node.js&rsquo;s npm, Rust has its own package manager called Cargo. This simplifies installing packages from the Rust crate registry.</p><p>Add the <code>pitch-detection</code> dependency by modifying the <code>Cargo.toml</code> file, adding the relevant line to the dependencies section:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=line><span class=cl><span class=p>[</span><span class=nx>dependencies</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nx>wasm-bindgen</span> <span class=p>=</span> <span class=s2>&#34;0.2.63&#34;</span>
+</span></span><span class=line><span class=cl><span class=nx>pitch-detection</span> <span class=p>=</span> <span class=s2>&#34;0.1&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>This tells Cargo to download and install the <code>pitch-detection</code> dependency during the next <code>cargo build</code>, or in our case, the next <code>wasm-pack</code> build since we&rsquo;re targeting WebAssembly.</p><h3 id=creating-a-javascript-callable-pitch-detector-in-rust>Creating a JavaScript-Callable Pitch Detector in Rust</h3><p>First, let&rsquo;s add a file containing a utility function that will be useful later:</p><p>Create <code>wasm-audio/src/utils.rs</code> and paste the contents of <a class=link href=https://github.com/peter-suggate/wasm-audio-app/blob/master/wasm-audio/src/utils.rs target=_blank rel=noopener>the contents of this file</a> into it.</p><p>Replace the generated code in <code>wasm-audio/lib.rs</code> with the following code, which performs pitch detection using a fast Fourier transform (FFT) algorithm:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>use</span><span class=w> </span><span class=n>pitch_detection</span>::<span class=p>{</span><span class=n>McLeodDetector</span><span class=p>,</span><span class=w> </span><span class=n>PitchDetector</span><span class=p>};</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>use</span><span class=w> </span><span class=n>wasm_bindgen</span>::<span class=n>prelude</span>::<span class=o>*</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>mod</span> <span class=nn>utils</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=cp>#[wasm_bindgen]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>pub</span><span class=w> </span><span class=k>struct</span> <span class=nc>WasmPitchDetector</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=n>sample_rate</span>: <span class=kt>usize</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=n>fft_size</span>: <span class=kt>usize</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=n>detector</span>: <span class=nc>McLeodDetector</span><span class=o>&lt;</span><span class=kt>f32</span><span class=o>&gt;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=cp>#[wasm_bindgen]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>impl</span><span class=w> </span><span class=n>WasmPitchDetector</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=k>pub</span><span class=w> </span><span class=k>fn</span> <span class=nf>new</span><span class=p>(</span><span class=n>sample_rate</span>: <span class=kt>usize</span><span class=p>,</span><span class=w> </span><span class=n>fft_size</span>: <span class=kt>usize</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>WasmPitchDetector</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>utils</span>::<span class=n>set_panic_hook</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>fft_pad</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>fft_size</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mi>2</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>WasmPitchDetector</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=n>sample_rate</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=n>fft_size</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=n>detector</span>: <span class=nc>McLeodDetector</span>::<span class=o>&lt;</span><span class=kt>f32</span><span class=o>&gt;</span>::<span class=n>new</span><span class=p>(</span><span class=n>fft_size</span><span class=p>,</span><span class=w> </span><span class=n>fft_pad</span><span class=p>),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=k>pub</span><span class=w> </span><span class=k>fn</span> <span class=nf>detect_pitch</span><span class=p>(</span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=bp>self</span><span class=p>,</span><span class=w> </span><span class=n>audio_samples</span>: <span class=nb>Vec</span><span class=o>&lt;</span><span class=kt>f32</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>f32</span> <span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=n>audio_samples</span><span class=p>.</span><span class=n>len</span><span class=p>()</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=bp>self</span><span class=p>.</span><span class=n>fft_size</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=fm>panic!</span><span class=p>(</span><span class=s>&#34;Insufficient samples passed to detect_pitch(). Expected an array containing </span><span class=si>{}</span><span class=s> elements but got </span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=bp>self</span><span class=p>.</span><span class=n>fft_size</span><span class=p>,</span><span class=w> </span><span class=n>audio_samples</span><span class=p>.</span><span class=n>len</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// Include only notes that exceed a power threshold which relates to the
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=c1>// amplitude of frequencies in the signal. Use the suggested default
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=c1>// value of 5.0 from the library.
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=k>const</span><span class=w> </span><span class=no>POWER_THRESHOLD</span>: <span class=kt>f32</span> <span class=o>=</span><span class=w> </span><span class=mf>5.0</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// The clarity measure describes how coherent the sound of a note is. For
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=c1>// example, the background sound in a crowded room would typically be would
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=c1>// have low clarity and a ringing tuning fork would have high clarity.
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=c1>// This threshold is used to accept detect notes that are clear enough
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=c1>// (valid values are in the range 0-1).
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=w>    </span><span class=k>const</span><span class=w> </span><span class=no>CLARITY_THRESHOLD</span>: <span class=kt>f32</span> <span class=o>=</span><span class=w> </span><span class=mf>0.6</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>let</span><span class=w> </span><span class=n>optional_pitch</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=bp>self</span><span class=p>.</span><span class=n>detector</span><span class=p>.</span><span class=n>get_pitch</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=o>&amp;</span><span class=n>audio_samples</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=bp>self</span><span class=p>.</span><span class=n>sample_rate</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=no>POWER_THRESHOLD</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=no>CLARITY_THRESHOLD</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>match</span><span class=w> </span><span class=n>optional_pitch</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nb>Some</span><span class=p>(</span><span class=n>pitch</span><span class=p>)</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=n>pitch</span><span class=p>.</span><span class=n>frequency</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nb>None</span><span class=w> </span><span class=o>=&gt;</span><span class=w> </span><span class=mf>0.0</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>Let&rsquo;s break down the code:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=cp>#[wasm_bindgen]</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><code>wasm_bindgen</code> is a Rust macro that facilitates binding between JavaScript and Rust. When compiled to WebAssembly, this macro instructs the compiler to generate JavaScript bindings that act as lightweight wrappers for calling into and out of the Wasm module. This minimal abstraction layer, coupled with the shared memory between JavaScript and Wasm, contributes to Wasm&rsquo;s impressive performance.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=cp>#[wasm_bindgen]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>pub</span><span class=w> </span><span class=k>struct</span> <span class=nc>WasmPitchDetector</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=n>sample_rate</span>: <span class=kt>usize</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=n>fft_size</span>: <span class=kt>usize</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=n>detector</span>: <span class=nc>McLeodDetector</span><span class=o>&lt;</span><span class=kt>f32</span><span class=o>&gt;</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=cp>#[wasm_bindgen]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>impl</span><span class=w> </span><span class=n>WasmPitchDetector</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>..</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>Rust doesn&rsquo;t have the concept of classes. Instead, an object&rsquo;s <a class=link href=https://github.com/learning-rust/site/blob/master/source/docs/b2.structs.md target=_blank rel=noopener>the data of an object</a> is defined using a <code>struct</code>, and its <a class=link href=https://github.com/rust-lang/impl-trait-initiative/blob/master/CHARTER.md target=_blank rel=noopener>its behaviour</a> are defined through <code>impl</code> blocks or <code>trait</code>s.</p><p>We expose the pitch-detection functionality through an object rather than a simple function to initialize the internal data structures of the <code>McLeodDetector</code> only once during the <code>WasmPitchDetector</code> creation. This approach avoids costly memory allocation during operation, ensuring the <code>detect_pitch</code> function remains fast.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>pub</span><span class=w> </span><span class=k>fn</span> <span class=nf>new</span><span class=p>(</span><span class=n>sample_rate</span>: <span class=kt>usize</span><span class=p>,</span><span class=w> </span><span class=n>fft_size</span>: <span class=kt>usize</span><span class=p>)</span><span class=w> </span>-&gt; <span class=nc>WasmPitchDetector</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=n>utils</span>::<span class=n>set_panic_hook</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=kd>let</span><span class=w> </span><span class=n>fft_pad</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>fft_size</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=mi>2</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=n>WasmPitchDetector</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>sample_rate</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>fft_size</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>detector</span>: <span class=nc>McLeodDetector</span>::<span class=o>&lt;</span><span class=kt>f32</span><span class=o>&gt;</span>::<span class=n>new</span><span class=p>(</span><span class=n>fft_size</span><span class=p>,</span><span class=w> </span><span class=n>fft_pad</span><span class=p>),</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>The <code>panic!</code> macro in Rust signals an unrecoverable error, prompting Rust to report the error and terminate the application. Using <code>panic!</code> can be particularly beneficial during early development before error handling is fully implemented, as it helps identify incorrect assumptions quickly.</p><p>Calling <code>utils::set_panic_hook()</code> once during setup guarantees that panic messages appear in the browser&rsquo;s developer tools.</p><p>Next, we define <code>fft_pad</code>, representing the zero-padding applied to each analysis FFT. Padding, along with the windowing function employed by the algorithm, helps smooth the results as the analysis moves across the incoming audio samples. A pad length equal to half the FFT length is suitable for many instruments.</p><p>Finally, Rust automatically returns the result of the last statement. Consequently, the <code>WasmPitchDetector</code> struct statement serves as the return value for <code>new()</code>.</p><p>The remaining Rust code in the <code>impl WasmPitchDetector</code> block defines the API for pitch detection:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>pub</span><span class=w> </span><span class=k>fn</span> <span class=nf>detect_pitch</span><span class=p>(</span><span class=o>&amp;</span><span class=k>mut</span><span class=w> </span><span class=bp>self</span><span class=p>,</span><span class=w> </span><span class=n>audio_samples</span>: <span class=nb>Vec</span><span class=o>&lt;</span><span class=kt>f32</span><span class=o>&gt;</span><span class=p>)</span><span class=w> </span>-&gt; <span class=kt>f32</span> <span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=o>..</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>This snippet demonstrates a member function definition in Rust. It adds a public <code>detect_pitch</code> member function to <code>WasmPitchDetector</code>. The first argument is a mutable reference (<code>&amp;mut</code>) to an instance of the same type, automatically passed when the function is called.</p><p>Additionally, our member function accepts an array of 32-bit floating-point numbers of arbitrary size and returns a single number representing the calculated pitch in Hz.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=k>if</span><span class=w> </span><span class=n>audio_samples</span><span class=p>.</span><span class=n>len</span><span class=p>()</span><span class=w> </span><span class=o>&lt;</span><span class=w> </span><span class=bp>self</span><span class=p>.</span><span class=n>fft_size</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=fm>panic!</span><span class=p>(</span><span class=s>&#34;Insufficient samples passed to detect_pitch(). Expected an array containing </span><span class=si>{}</span><span class=s> elements but got </span><span class=si>{}</span><span class=s>&#34;</span><span class=p>,</span><span class=w> </span><span class=bp>self</span><span class=p>.</span><span class=n>fft_size</span><span class=p>,</span><span class=w> </span><span class=n>audio_samples</span><span class=p>.</span><span class=n>len</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>This part checks if enough samples are provided for a valid pitch analysis. If not, the <code>panic!</code> macro is invoked, terminating Wasm execution and logging the error message to the browser console.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-rust data-lang=rust><span class=line><span class=cl><span class=kd>let</span><span class=w> </span><span class=n>optional_pitch</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=bp>self</span><span class=p>.</span><span class=n>detector</span><span class=p>.</span><span class=n>get_pitch</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=o>&amp;</span><span class=n>audio_samples</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=bp>self</span><span class=p>.</span><span class=n>sample_rate</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=no>POWER_THRESHOLD</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=no>CLARITY_THRESHOLD</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>This invokes the third-party library to calculate the pitch from the provided audio samples. You can adjust <code>POWER_THRESHOLD</code> and <code>CLARITY_THRESHOLD</code> to fine-tune the algorithm&rsquo;s sensitivity.</p><p>The function implicitly returns a floating-point value using the <code>match</code> keyword, which functions similarly to a <code>switch</code> statement in other languages. <code>Some()</code> and <code>None</code> allow us to gracefully handle cases without encountering null pointer exceptions.</p><h3 id=building-webassembly-applications>Building WebAssembly Applications</h3><p>While <code>cargo build</code> is typically used to build Rust applications, we&rsquo;ll use <code>wasm-pack</code> for generating our Wasm module as it offers a more convenient syntax for targeting Wasm. Additionally, it allows publishing the resulting JavaScript bindings to the npm registry, which is beyond the scope of this tutorial.</p><p><code>wasm-pack</code> supports various build targets. We&rsquo;ll use the <code>web</code> target since we&rsquo;re consuming the module directly from a Web Audio worklet. Other targets include bundlers like webpack or Node.js environments. Execute the following command from the <code>wasm-audio/</code> subdirectory:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>wasm-pack build --target web
+</span></span></code></pre></td></tr></table></div></div><p>If successful, this creates an npm module under <code>./pkg</code>.</p><p>This newly generated module comes with its own auto-generated <code>package.json</code> file. You could publish this to the npm registry. For simplicity, we&rsquo;ll directly copy this <code>pkg</code> directory into our project under the <code>public/wasm-audio</code> folder:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>cp -R ./wasm-audio/pkg ./public/wasm-audio
+</span></span></code></pre></td></tr></table></div></div><p>This completes our Rust Wasm module, which is now ready to be used by our web application, specifically by <code>PitchProcessor</code>.</p><h2 id=2-implementing-the-pitchprocessor-class-extending-native-audioworkletprocessor>2. Implementing the <code>PitchProcessor</code> Class (Extending Native <code>AudioWorkletProcessor</code>)</h2><p>This application leverages a recently standardized audio-processing approach with broad browser support: the Web Audio API. We&rsquo;ll perform computationally intensive tasks within a custom <a class=link href=https://developer.mozilla.org/en-US/docs/Web/API/AudioWorkletProcessor target=_blank rel=noopener><code>AudioWorkletProcessor</code></a> and create a corresponding custom <code>AudioWorkletNode</code> class (named <code>PitchNode</code>) to bridge back to the main thread.</p><p>Create a new file called <code>public/PitchProcessor.js</code> and add the following code:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=nx>init</span><span class=p>,</span> <span class=p>{</span> <span class=nx>WasmPitchDetector</span> <span class=p>}</span> <span class=nx>from</span> <span class=s2>&#34;./wasm-audio/wasm_audio.js&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>class</span> <span class=nx>PitchProcessor</span> <span class=kr>extends</span> <span class=nx>AudioWorkletProcessor</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nx>constructor</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>super</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Initialized to an array holding a buffer of samples for analysis later -
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// once we know how many samples need to be stored. Meanwhile, an empty
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// array is used, so that early calls to process() with empty channels
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// do not break initialization.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>this</span><span class=p>.</span><span class=nx>samples</span> <span class=o>=</span> <span class=p>[];</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>totalSamples</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Listen to events from the PitchNode running on the main thread.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>this</span><span class=p>.</span><span class=nx>port</span><span class=p>.</span><span class=nx>onmessage</span> <span class=o>=</span> <span class=p>(</span><span class=nx>event</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>onmessage</span><span class=p>(</span><span class=nx>event</span><span class=p>.</span><span class=nx>data</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>detector</span> <span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nx>onmessage</span><span class=p>(</span><span class=nx>event</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>event</span><span class=p>.</span><span class=nx>type</span> <span class=o>===</span> <span class=s2>&#34;send-wasm-module&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// PitchNode has sent us a message containing the Wasm library to load into
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// our context as well as information about the audio device used for
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// recording.
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=nx>init</span><span class=p>(</span><span class=nx>WebAssembly</span><span class=p>.</span><span class=nx>compile</span><span class=p>(</span><span class=nx>event</span><span class=p>.</span><span class=nx>wasmBytes</span><span class=p>)).</span><span class=nx>then</span><span class=p>(()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>port</span><span class=p>.</span><span class=nx>postMessage</span><span class=p>({</span> <span class=nx>type</span><span class=o>:</span> <span class=s1>&#39;wasm-module-loaded&#39;</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>      <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>event</span><span class=p>.</span><span class=nx>type</span> <span class=o>===</span> <span class=s1>&#39;init-detector&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=p>{</span> <span class=nx>sampleRate</span><span class=p>,</span> <span class=nx>numAudioSamplesPerAnalysis</span> <span class=p>}</span> <span class=o>=</span> <span class=nx>event</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      <span class=c1>// Store this because we use it later to detect when we have enough recorded
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// audio samples for our first analysis.
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>this</span><span class=p>.</span><span class=nx>numAudioSamplesPerAnalysis</span> <span class=o>=</span> <span class=nx>numAudioSamplesPerAnalysis</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>detector</span> <span class=o>=</span> <span class=nx>WasmPitchDetector</span><span class=p>.</span><span class=k>new</span><span class=p>(</span><span class=nx>sampleRate</span><span class=p>,</span> <span class=nx>numAudioSamplesPerAnalysis</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      <span class=c1>// Holds a buffer of audio sample values that we&#39;ll send to the Wasm module
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// for analysis at regular intervals.
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>this</span><span class=p>.</span><span class=nx>samples</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>Array</span><span class=p>(</span><span class=nx>numAudioSamplesPerAnalysis</span><span class=p>).</span><span class=nx>fill</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>totalSamples</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nx>process</span><span class=p>(</span><span class=nx>inputs</span><span class=p>,</span> <span class=nx>outputs</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// inputs contains incoming audio samples for further processing. outputs
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// contains the audio samples resulting from any processing performed by us.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// Here, we are performing analysis only to detect pitches so do not modify
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// outputs.
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>    <span class=c1>// inputs holds one or more &#34;channels&#34; of samples. For example, a microphone
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// that records &#34;in stereo&#34; would provide two channels. For this simple app,
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// we use assume either &#34;mono&#34; input or the &#34;left&#34; channel if microphone is
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// stereo.
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>inputChannels</span> <span class=o>=</span> <span class=nx>inputs</span><span class=p>[</span><span class=mi>0</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// inputSamples holds an array of new samples to process.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=nx>inputSamples</span> <span class=o>=</span> <span class=nx>inputChannels</span><span class=p>[</span><span class=mi>0</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// In the AudioWorklet spec, process() is called whenever exactly 128 new
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// audio samples have arrived. We simplify the logic for filling up the
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// buffer by making an assumption that the analysis size is 128 samples or
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// larger and is a power of 2.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>totalSamples</span> <span class=o>&lt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>numAudioSamplesPerAnalysis</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>for</span> <span class=p>(</span><span class=kr>const</span> <span class=nx>sampleValue</span> <span class=k>of</span> <span class=nx>inputSamples</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>samples</span><span class=p>[</span><span class=k>this</span><span class=p>.</span><span class=nx>totalSamples</span><span class=o>++</span><span class=p>]</span> <span class=o>=</span> <span class=nx>sampleValue</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// Buffer is already full. We do not want the buffer to grow continually,
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// so instead will &#34;cycle&#34; the samples through it so that it always
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// holds the latest ordered samples of length equal to
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// numAudioSamplesPerAnalysis.
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>      <span class=c1>// Shift the existing samples left by the length of new samples (128).
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=kr>const</span> <span class=nx>numNewSamples</span> <span class=o>=</span> <span class=nx>inputSamples</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>numExistingSamples</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>samples</span><span class=p>.</span><span class=nx>length</span> <span class=o>-</span> <span class=nx>numNewSamples</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>for</span> <span class=p>(</span><span class=kd>let</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=nx>numExistingSamples</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>samples</span><span class=p>[</span><span class=nx>i</span><span class=p>]</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>samples</span><span class=p>[</span><span class=nx>i</span> <span class=o>+</span> <span class=nx>numNewSamples</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// Add the new samples onto the end, into the 128-wide slot vacated by
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// the previous copy.
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>for</span> <span class=p>(</span><span class=kd>let</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=nx>numNewSamples</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>samples</span><span class=p>[</span><span class=nx>numExistingSamples</span> <span class=o>+</span> <span class=nx>i</span><span class=p>]</span> <span class=o>=</span> <span class=nx>inputSamples</span><span class=p>[</span><span class=nx>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>this</span><span class=p>.</span><span class=nx>totalSamples</span> <span class=o>+=</span> <span class=nx>inputSamples</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Once our buffer has enough samples, pass them to the Wasm pitch detector.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>if</span> <span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>totalSamples</span> <span class=o>&gt;=</span> <span class=k>this</span><span class=p>.</span><span class=nx>numAudioSamplesPerAnalysis</span> <span class=o>&amp;&amp;</span> <span class=k>this</span><span class=p>.</span><span class=nx>detector</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=kr>const</span> <span class=nx>result</span> <span class=o>=</span> <span class=k>this</span><span class=p>.</span><span class=nx>detector</span><span class=p>.</span><span class=nx>detect_pitch</span><span class=p>(</span><span class=k>this</span><span class=p>.</span><span class=nx>samples</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span><span class=nx>result</span> <span class=o>!==</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>this</span><span class=p>.</span><span class=nx>port</span><span class=p>.</span><span class=nx>postMessage</span><span class=p>({</span> <span class=nx>type</span><span class=o>:</span> <span class=s2>&#34;pitch&#34;</span><span class=p>,</span> <span class=nx>pitch</span><span class=o>:</span> <span class=nx>result</span> <span class=p>});</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Returning true tells the Audio system to keep going.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=kc>true</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nx>registerProcessor</span><span class=p>(</span><span class=s2>&#34;PitchProcessor&#34;</span><span class=p>,</span> <span class=nx>PitchProcessor</span><span class=p>);</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>PitchProcessor</code> works in tandem with <code>PitchNode</code> but operates on a separate thread to avoid blocking the main thread during audio processing.</p><p>Here are the <code>PitchProcessor</code>&rsquo;s primary responsibilities:</p><ul><li>Handles the <code>"send-wasm-module"</code> event from <code>PitchNode</code> by compiling and loading the Wasm module within the worklet. It then notifies <code>PitchNode</code> of completion by sending a <code>"wasm-module-loaded"</code> event. This asynchronous callback-based communication is necessary due to the thread boundary between <code>PitchNode</code> and <code>PitchProcessor</code>.</li><li>Responds to the <code>"init-detector"</code> event from <code>PitchNode</code> by configuring the <code>WasmPitchDetector</code>.</li><li>Processes audio samples received from the browser&rsquo;s audio graph, delegates pitch detection to the Wasm module, and sends back any detected pitch to <code>PitchNode</code>, which then forwards it to the React layer through its <code>onPitchDetectedCallback</code>.</li><li><a class=link href=https://developer.mozilla.org/en-US/docs/Web/API/AudioWorkletGlobalScope/registerProcessor target=_blank rel=noopener>Registers itself</a> under a unique name. This allows the browser to identify and instantiate our <code>PitchProcessor</code> later when <code>PitchNode</code> is constructed, guided by <code>PitchNode</code>&rsquo;s base class, the native <code>AudioWorkletNode</code>. This process is further illustrated in <code>setupAudio.js</code>.</li></ul><p>The following diagram illustrates the event flow between <code>PitchNode</code> and <code>PitchProcessor</code>:</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><a href=https://bs-uploads.toptal.io/blackfish-uploads/uploaded_file/file/467897/image-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png target=_blank rel="noopener noreferrer" class=_5xZOBTsv><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png" media="(min-width: 1920.1px)"><img alt="A more detailed flowchart comparing the interactions between the PitchNode and PitchProcess objects at runtime. During initial setup, PitchNode sends the Wasm module as an array of bytes to PitchProcessor, which compiles them and sends them back to PitchNode, which finally responds with an event message requesting that PitchProcessor initialize itself. While recording audio, PitchNode sends nothing, and receives two types of event messages from PitchProcessor: A detected pitch or an error, if one occurs from either Wasm or the worklet." src="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467897%2Fimage-1607523422293-af0da8535dc766cd7f0082b6f075e9dd.png" loading=lazy decoding=async class=Djd3YO_2></picture></a><figcaption class=_2tKCaBqq>Runtime event messages.</figcaption></figure></div><h2 id=3-integrating-web-audio-worklet-code>3. Integrating Web Audio Worklet Code</h2><p>The <code>PitchNode.js</code> file provides an interface to our custom pitch-detection audio processing. The <code>PitchNode</code> object facilitates the delivery of detected pitches from the WebAssembly module operating within the <code>AudioWorklet</code> thread to the main thread and subsequently to React for rendering.</p><p>In <code>src/PitchNode.js</code>, we&rsquo;ll subclass the built-in <a class=link href=https://developer.mozilla.org/en-US/docs/Web/API/AudioWorkletNode target=_blank rel=noopener><code>AudioWorkletNode</code></a> from the Web Audio API:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=kr>class</span> <span class=nx>PitchNode</span> <span class=kr>extends</span> <span class=nx>AudioWorkletNode</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>   * Initialize the Audio processor by sending the fetched WebAssembly module to
+</span></span></span><span class=line><span class=cl><span class=cm>   * the processor worklet.
+</span></span></span><span class=line><span class=cl><span class=cm>   *
+</span></span></span><span class=line><span class=cl><span class=cm>   * @param {ArrayBuffer} wasmBytes Sequence of bytes representing the entire
+</span></span></span><span class=line><span class=cl><span class=cm>   * WASM module that will handle pitch detection.
+</span></span></span><span class=line><span class=cl><span class=cm>   * @param {number} numAudioSamplesPerAnalysis Number of audio samples used
+</span></span></span><span class=line><span class=cl><span class=cm>   * for each analysis. Must be a power of 2.
+</span></span></span><span class=line><span class=cl><span class=cm>   */</span>
+</span></span><span class=line><span class=cl>  <span class=nx>init</span><span class=p>(</span><span class=nx>wasmBytes</span><span class=p>,</span> <span class=nx>onPitchDetectedCallback</span><span class=p>,</span> <span class=nx>numAudioSamplesPerAnalysis</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>onPitchDetectedCallback</span> <span class=o>=</span> <span class=nx>onPitchDetectedCallback</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>numAudioSamplesPerAnalysis</span> <span class=o>=</span> <span class=nx>numAudioSamplesPerAnalysis</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Listen to messages sent from the audio processor.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>this</span><span class=p>.</span><span class=nx>port</span><span class=p>.</span><span class=nx>onmessage</span> <span class=o>=</span> <span class=p>(</span><span class=nx>event</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=k>this</span><span class=p>.</span><span class=nx>onmessage</span><span class=p>(</span><span class=nx>event</span><span class=p>.</span><span class=nx>data</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>this</span><span class=p>.</span><span class=nx>port</span><span class=p>.</span><span class=nx>postMessage</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>      <span class=nx>type</span><span class=o>:</span> <span class=s2>&#34;send-wasm-module&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nx>wasmBytes</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// Handle an uncaught exception thrown in the PitchProcessor.
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=nx>onprocessorerror</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=sb>`An error from AudioWorkletProcessor.process() occurred: </span><span class=si>${</span><span class=nx>err</span><span class=si>}</span><span class=sb>`</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nx>onmessage</span><span class=p>(</span><span class=nx>event</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=nx>event</span><span class=p>.</span><span class=nx>type</span> <span class=o>===</span> <span class=s1>&#39;wasm-module-loaded&#39;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// The Wasm module was successfully sent to the PitchProcessor running on the
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// AudioWorklet thread and compiled. This is our cue to configure the pitch
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=c1>// detector.
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>this</span><span class=p>.</span><span class=nx>port</span><span class=p>.</span><span class=nx>postMessage</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>        <span class=nx>type</span><span class=o>:</span> <span class=s2>&#34;init-detector&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>sampleRate</span><span class=o>:</span> <span class=k>this</span><span class=p>.</span><span class=nx>context</span><span class=p>.</span><span class=nx>sampleRate</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=nx>numAudioSamplesPerAnalysis</span><span class=o>:</span> <span class=k>this</span><span class=p>.</span><span class=nx>numAudioSamplesPerAnalysis</span>
+</span></span><span class=line><span class=cl>      <span class=p>});</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>event</span><span class=p>.</span><span class=nx>type</span> <span class=o>===</span> <span class=s2>&#34;pitch&#34;</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// A pitch was detected. Invoke our callback which will result in the UI updating.
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>this</span><span class=p>.</span><span class=nx>onPitchDetectedCallback</span><span class=p>(</span><span class=nx>event</span><span class=p>.</span><span class=nx>pitch</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>PitchNode</code> performs the following crucial tasks:</p><ul><li>Sends the WebAssembly module as a byte stream, received from <code>setupAudio.js</code>, to the <code>PitchProcessor</code> running in the <code>AudioWorklet</code> thread. This allows the <code>PitchProcessor</code> to load the pitch-detection Wasm module.</li><li>Handles the event emitted by <code>PitchProcessor</code> upon successful Wasm compilation and sends another event to configure pitch detection.</li><li>Receives detected pitches from the <code>PitchProcessor</code> and forwards them to the UI function <code>setLatestPitch()</code> via <code>onPitchDetectedCallback()</code>.</li></ul><p><em>Note: This code executes on the main thread, so refrain from performing extensive processing on detected pitches within this object to prevent frame rate drops.</em></p><h2 id=4-setting-up-web-audio>4. Setting Up Web Audio</h2><p>To enable our web application to access and process live microphone input from the client machine, we need to:</p><ol><li>Obtain user permission for browser microphone access</li><li>Access the microphone output as an audio stream object</li><li>Attach code to process the incoming audio stream, producing a sequence of detected pitches</li></ol><p>We&rsquo;ll accomplish these steps in <code>src/setupAudio.js</code>. Additionally, we&rsquo;ll asynchronously load the Wasm module to initialize our <code>PitchNode</code> before attaching it:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=nx>PitchNode</span> <span class=nx>from</span> <span class=s2>&#34;./PitchNode&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>async</span> <span class=kd>function</span> <span class=nx>getWebAudioMediaStream</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nb>window</span><span class=p>.</span><span class=nx>navigator</span><span class=p>.</span><span class=nx>mediaDevices</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=s2>&#34;This browser does not support web audio or it is not enabled.&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>result</span> <span class=o>=</span> <span class=kr>await</span> <span class=nb>window</span><span class=p>.</span><span class=nx>navigator</span><span class=p>.</span><span class=nx>mediaDevices</span><span class=p>.</span><span class=nx>getUserMedia</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>      <span class=nx>audio</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>      <span class=nx>video</span><span class=o>:</span> <span class=kc>false</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=nx>result</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>switch</span> <span class=p>(</span><span class=nx>e</span><span class=p>.</span><span class=nx>name</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=s2>&#34;NotAllowedError&#34;</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>          <span class=s2>&#34;A recording device was found but has been disallowed for this application. Enable the device in the browser settings.&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=s2>&#34;NotFoundError&#34;</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>          <span class=s2>&#34;No recording device was found. Please attach a microphone and click Retry.&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      <span class=k>default</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>throw</span> <span class=nx>e</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=kr>async</span> <span class=kd>function</span> <span class=nx>setupAudio</span><span class=p>(</span><span class=nx>onPitchDetectedCallback</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=c1>// Get the browser audio. Awaits user &#34;allowing&#34; it for the current tab.
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kr>const</span> <span class=nx>mediaStream</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>getWebAudioMediaStream</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=nx>context</span> <span class=o>=</span> <span class=k>new</span> <span class=nb>window</span><span class=p>.</span><span class=nx>AudioContext</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=kr>const</span> <span class=nx>audioSource</span> <span class=o>=</span> <span class=nx>context</span><span class=p>.</span><span class=nx>createMediaStreamSource</span><span class=p>(</span><span class=nx>mediaStream</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=kd>let</span> <span class=nx>node</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Fetch the WebAssembly module that performs pitch detection.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=nx>response</span> <span class=o>=</span> <span class=kr>await</span> <span class=nb>window</span><span class=p>.</span><span class=nx>fetch</span><span class=p>(</span><span class=s2>&#34;wasm-audio/wasm_audio_bg.wasm&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=kr>const</span> <span class=nx>wasmBytes</span> <span class=o>=</span> <span class=kr>await</span> <span class=nx>response</span><span class=p>.</span><span class=nx>arrayBuffer</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Add our audio processor worklet to the context.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=nx>processorUrl</span> <span class=o>=</span> <span class=s2>&#34;PitchProcessor.js&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=kr>await</span> <span class=nx>context</span><span class=p>.</span><span class=nx>audioWorklet</span><span class=p>.</span><span class=nx>addModule</span><span class=p>(</span><span class=nx>processorUrl</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>        <span class=sb>`Failed to load audio analyzer worklet at url: </span><span class=si>${</span><span class=nx>processorUrl</span><span class=si>}</span><span class=sb>. Further info: </span><span class=si>${</span><span class=nx>e</span><span class=p>.</span><span class=nx>message</span><span class=si>}</span><span class=sb>`</span>
+</span></span><span class=line><span class=cl>      <span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Create the AudioWorkletNode which enables the main JavaScript thread to
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// communicate with the audio processor (which runs in a Worklet).
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>node</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>PitchNode</span><span class=p>(</span><span class=nx>context</span><span class=p>,</span> <span class=s2>&#34;PitchProcessor&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// numAudioSamplesPerAnalysis specifies the number of consecutive audio samples that
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// the pitch detection algorithm calculates for each unit of work. Larger values tend
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// to produce slightly more accurate results but are more expensive to compute and
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// can lead to notes being missed in faster passages i.e. where the music note is
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// changing rapidly. 1024 is usually a good balance between efficiency and accuracy
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// for music analysis.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kr>const</span> <span class=nx>numAudioSamplesPerAnalysis</span> <span class=o>=</span> <span class=mi>1024</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Send the Wasm module to the audio node which in turn passes it to the
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// processor running in the Worklet thread. Also, pass any configuration
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// parameters for the Wasm detection algorithm.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>node</span><span class=p>.</span><span class=nx>init</span><span class=p>(</span><span class=nx>wasmBytes</span><span class=p>,</span> <span class=nx>onPitchDetectedCallback</span><span class=p>,</span> <span class=nx>numAudioSamplesPerAnalysis</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Connect the audio source (microphone output) to our analysis node.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>audioSource</span><span class=p>.</span><span class=nx>connect</span><span class=p>(</span><span class=nx>node</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>// Connect our analysis node to the output. Required even though we do not
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// output any audio. Allows further downstream audio processing or output to
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// occur.
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>node</span><span class=p>.</span><span class=nx>connect</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nx>destination</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>err</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>throw</span> <span class=k>new</span> <span class=nb>Error</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=sb>`Failed to load audio analyzer WASM module. Further info: </span><span class=si>${</span><span class=nx>err</span><span class=p>.</span><span class=nx>message</span><span class=si>}</span><span class=sb>`</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>{</span> <span class=nx>context</span><span class=p>,</span> <span class=nx>node</span> <span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>This assumes the WebAssembly module is located at <code>public/wasm-audio</code>, which we set up earlier in the Rust section.</p><h2 id=5-creating-the-application-ui>5. Creating the Application UI</h2><p>Let&rsquo;s define a basic user interface for our pitch detector. Replace the contents of <code>src/App.js</code> with the following code:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=nx>React</span> <span class=nx>from</span> <span class=s2>&#34;react&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=s2>&#34;./App.css&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=kr>import</span> <span class=p>{</span> <span class=nx>setupAudio</span> <span class=p>}</span> <span class=nx>from</span> <span class=s2>&#34;./setupAudio&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>PitchReadout</span><span class=p>({</span> <span class=nx>running</span><span class=p>,</span> <span class=nx>latestPitch</span> <span class=p>})</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=nx>div</span> <span class=nx>className</span><span class=o>=</span><span class=s2>&#34;Pitch-readout&#34;</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=p>{</span><span class=nx>latestPitch</span>
+</span></span><span class=line><span class=cl>        <span class=o>?</span> <span class=sb>`Latest pitch: </span><span class=si>${</span><span class=nx>latestPitch</span><span class=p>.</span><span class=nx>toFixed</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span><span class=si>}</span><span class=sb> Hz`</span>
+</span></span><span class=line><span class=cl>        <span class=o>:</span> <span class=nx>running</span>
+</span></span><span class=line><span class=cl>        <span class=o>?</span> <span class=s2>&#34;Listening...&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=o>:</span> <span class=s2>&#34;Paused&#34;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=err>/div&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>AudioRecorderControl</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=c1>// Ensure the latest state of the audio module is reflected in the UI
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>// by defining some variables (and a setter function for updating them)
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>// that are managed by React, passing their initial values to useState.
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=c1>// 1. audio is the object returned from the initial audio setup that
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>//    will be used to start/stop the audio based on user input. While
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>//    this is initialized once in our simple application, it is good
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>//    practice to let React know about any state that _could_ change
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>//    again.
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kr>const</span> <span class=p>[</span><span class=nx>audio</span><span class=p>,</span> <span class=nx>setAudio</span><span class=p>]</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>useState</span><span class=p>(</span><span class=kc>undefined</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// 2. running holds whether the application is currently recording and
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>//    processing audio and is used to provide button text (Start vs Stop).
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kr>const</span> <span class=p>[</span><span class=nx>running</span><span class=p>,</span> <span class=nx>setRunning</span><span class=p>]</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>useState</span><span class=p>(</span><span class=kc>false</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// 3. latestPitch holds the latest detected pitch to be displayed in
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>//    the UI.
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kr>const</span> <span class=p>[</span><span class=nx>latestPitch</span><span class=p>,</span> <span class=nx>setLatestPitch</span><span class=p>]</span> <span class=o>=</span> <span class=nx>React</span><span class=p>.</span><span class=nx>useState</span><span class=p>(</span><span class=kc>undefined</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// Initial state. Initialize the web audio once a user gesture on the page
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=c1>// has been registered.
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>audio</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=nx>button</span>
+</span></span><span class=line><span class=cl>        <span class=nx>onClick</span><span class=o>=</span><span class=p>{</span><span class=kr>async</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=nx>setAudio</span><span class=p>(</span><span class=kr>await</span> <span class=nx>setupAudio</span><span class=p>(</span><span class=nx>setLatestPitch</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>          <span class=nx>setRunning</span><span class=p>(</span><span class=kc>true</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}}</span>
+</span></span><span class=line><span class=cl>      <span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nx>Start</span> <span class=nx>listening</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=err>/button&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>// Audio already initialized. Suspend / resume based on its current state.
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kr>const</span> <span class=p>{</span> <span class=nx>context</span> <span class=p>}</span> <span class=o>=</span> <span class=nx>audio</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=nx>div</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=nx>button</span>
+</span></span><span class=line><span class=cl>        <span class=nx>onClick</span><span class=o>=</span><span class=p>{</span><span class=kr>async</span> <span class=p>()</span> <span class=p>=&gt;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>if</span> <span class=p>(</span><span class=nx>running</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>await</span> <span class=nx>context</span><span class=p>.</span><span class=nx>suspend</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=nx>setRunning</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nx>state</span> <span class=o>===</span> <span class=s2>&#34;running&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>          <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kr>await</span> <span class=nx>context</span><span class=p>.</span><span class=nx>resume</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=nx>setRunning</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nx>state</span> <span class=o>===</span> <span class=s2>&#34;running&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>          <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}}</span>
+</span></span><span class=line><span class=cl>        <span class=nx>disabled</span><span class=o>=</span><span class=p>{</span><span class=nx>context</span><span class=p>.</span><span class=nx>state</span> <span class=o>!==</span> <span class=s2>&#34;running&#34;</span> <span class=o>&amp;&amp;</span> <span class=nx>context</span><span class=p>.</span><span class=nx>state</span> <span class=o>!==</span> <span class=s2>&#34;suspended&#34;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span><span class=nx>running</span> <span class=o>?</span> <span class=s2>&#34;Pause&#34;</span> <span class=o>:</span> <span class=s2>&#34;Resume&#34;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=err>/button&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=nx>PitchReadout</span> <span class=nx>running</span><span class=o>=</span><span class=p>{</span><span class=nx>running</span><span class=p>}</span> <span class=nx>latestPitch</span><span class=o>=</span><span class=p>{</span><span class=nx>latestPitch</span><span class=p>}</span> <span class=o>/&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=err>/div&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>function</span> <span class=nx>App</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=nx>div</span> <span class=nx>className</span><span class=o>=</span><span class=s2>&#34;App&#34;</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=nx>header</span> <span class=nx>className</span><span class=o>=</span><span class=s2>&#34;App-header&#34;</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nx>Wasm</span> <span class=nx>Audio</span> <span class=nx>Tutorial</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=err>/header&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=nx>div</span> <span class=nx>className</span><span class=o>=</span><span class=s2>&#34;App-content&#34;</span><span class=o>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=o>&lt;</span><span class=nx>AudioRecorderControl</span> <span class=o>/&gt;</span>
+</span></span><span class=line><span class=cl>      <span class=o>&lt;</span><span class=err>/div&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=o>&lt;</span><span class=err>/div&gt;</span>
+</span></span><span class=line><span class=cl>  <span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kr>export</span> <span class=k>default</span> <span class=nx>App</span><span class=p>;</span>
+</span></span></code></pre></td></tr></table></div></div><p>And replace <code>App.css</code> with some basic styles:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-css data-lang=css><span class=line><span class=cl><span class=p>.</span><span class=nc>App</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>display</span><span class=p>:</span> <span class=kc>flex</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>flex-direction</span><span class=p>:</span> <span class=kc>column</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>align-items</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>text-align</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>background-color</span><span class=p>:</span> <span class=mh>#282c34</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>min-height</span><span class=p>:</span> <span class=mi>100</span><span class=kt>vh</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>color</span><span class=p>:</span> <span class=kc>white</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>justify-content</span><span class=p>:</span> <span class=kc>center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>App-header</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>font-size</span><span class=p>:</span> <span class=mf>1.5</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>margin</span><span class=p>:</span> <span class=mi>10</span><span class=kt>%</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>App-content</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>margin-top</span><span class=p>:</span> <span class=mi>15</span><span class=kt>vh</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>height</span><span class=p>:</span> <span class=mi>85</span><span class=kt>vh</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=p>.</span><span class=nc>Pitch-readout</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>margin-top</span><span class=p>:</span> <span class=mi>5</span><span class=kt>vh</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>font-size</span><span class=p>:</span> <span class=mi>3</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>button</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>background-color</span><span class=p>:</span> <span class=nb>rgb</span><span class=p>(</span><span class=mi>26</span><span class=p>,</span> <span class=mi>115</span><span class=p>,</span> <span class=mi>232</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>border</span><span class=p>:</span> <span class=kc>none</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>outline</span><span class=p>:</span> <span class=kc>none</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>color</span><span class=p>:</span> <span class=kc>white</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>margin</span><span class=p>:</span> <span class=mi>1</span><span class=kt>em</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>padding</span><span class=p>:</span> <span class=mi>10</span><span class=kt>px</span> <span class=mi>14</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>border-radius</span><span class=p>:</span> <span class=mi>4</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>width</span><span class=p>:</span> <span class=mi>190</span><span class=kt>px</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>text-transform</span><span class=p>:</span> <span class=kc>capitalize</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>cursor</span><span class=p>:</span> <span class=kc>pointer</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>font-size</span><span class=p>:</span> <span class=mf>1.5</span><span class=kt>rem</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>button</span><span class=p>:</span><span class=nd>hover</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=k>background-color</span><span class=p>:</span> <span class=nb>rgb</span><span class=p>(</span><span class=mi>45</span><span class=p>,</span> <span class=mi>125</span><span class=p>,</span> <span class=mi>252</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>With that, our app should be ready to run, but there&rsquo;s a potential issue we need to address first.</p><h2 id=webassemblyrust-tutorial-addressing-a-final-hurdle>WebAssembly/Rust Tutorial: Addressing a Final Hurdle</h2><p>Upon running <code>yarn</code> followed by <code>yarn start</code>, switching to the browser (using Chrome or Chromium with developer tools open), and attempting to record audio, we encounter errors:</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><a href=https://bs-uploads.toptal.io/blackfish-uploads/uploaded_file/file/467896/image-1607523422294-412d788b1208a65d23ee2b4424f75302.png target=_blank rel="noopener noreferrer" class=_5xZOBTsv><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png" media="(min-width: 1920.1px)"><img alt="At wasm_audio.js line 24 there's the error, &#34;Uncaught ReferenceError: TextDecoder is not defined,&#34; followed by one at setupAudio.js line 84 triggered by the async onClick from App.js line 43, which reads, &#34;Uncaught (in promise) Error: Failed to load audio analyzer WASM module. Further info: Failed to construct 'AudioWorkletNode': AudioWorkletNode cannot be created: The node name 'PitchProcessor' is not defined in AudioWorkletGlobalScope.&#34;" src="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467896%2Fimage-1607523422294-412d788b1208a65d23ee2b4424f75302.png" loading=lazy decoding=async class=Djd3YO_2></picture></a><figcaption class=_2tKCaBqq>Wasm requirements have wide support—just not yet in the Worklet spec.</figcaption></figure></div><p>The first error, <code>TextDecoder is not defined</code>, arises when the browser attempts to execute <code>wasm_audio.js</code>. This, in turn, prevents the Wasm JavaScript wrapper from loading, leading to the second error in the console.</p><p>The root cause is that the Wasm package generator in Rust expects <code>TextDecoder</code> (and <code>TextEncoder</code>) to be globally available. This assumption holds true for modern browsers when the Wasm module runs on the main thread or even a worker thread. However, worklets (like the <code>AudioWorklet</code> context used here) don&rsquo;t yet include <code>TextDecoder</code> and <code>TextEncoder</code> in their specification and are therefore unavailable.</p><p>The Rust Wasm code generator relies on <code>TextDecoder</code> to convert the flat, packed, shared-memory representation of Rust strings into the string format JavaScript uses. In essence, to handle strings produced by the Wasm code generator, we need to <a class=link href=https://github.com/rustwasm/wasm-pack/issues/689 target=_blank rel=noopener><code>TextEncoder</code> and <code>TextDecoder</code> must be defined</a>.</p><p>This issue highlights the relative novelty of WebAssembly. As browser support matures and common WebAssembly patterns are natively supported, such issues are likely to disappear.</p><p>For now, we can work around this by providing a polyfill for <code>TextDecoder</code>.</p><p>Create a new file named <code>public/TextEncoder.js</code> and import it into <code>public/PitchProcessor.js</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-js data-lang=js><span class=line><span class=cl><span class=kr>import</span> <span class=s2>&#34;./TextEncoder.js&#34;</span><span class=p>;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Ensure this <code>import</code> statement precedes the <code>wasm_audio</code> import.</p><p>Finally, paste the contents of <a class=link href=https://github.com/peter-suggate/wasm-audio-app/blob/master/public/TextEncoder.js target=_blank rel=noopener>this implementation</a> into <code>TextEncoder.js</code> (code courtesy of <a class=link href=https://gist.github.com/Yaffle/5458286 target=_blank rel=noopener>@Yaffle</a> on GitHub).</p><div class=blog-body-sidenote><h3 id=the-firefox-question>The Firefox Question</h3><p>As mentioned earlier, the way we combine Wasm with Web Audio worklets in our app will not work in Firefox. Even with the above shim, clicking the “Start Listening” button will result in this:</p><pre><code>Unhandled Rejection (Error): Failed to load audio analyzer WASM module. Further info: Failed to load audio analyzer worklet at url: PitchProcessor.js. Further info: The operation was aborted.
+    </code></pre><p>That’s because Firefox <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1572644" target=_blank rel="noopener noreferrer">doesn’t yet support</a> importing modules from <code>AudioWorklets</code>—for us, that’s <code>PitchProcessor.js</code> running in the <code>AudioWorklet</code> thread.</p></div><h2 id=our-completed-application>Our Completed Application</h2><p>Reload the page. The app should now load without errors. Click &ldquo;Start Listening&rdquo; and grant browser permission to access your microphone. You&rsquo;ll now have a functional, albeit basic, pitch detector written in JavaScript using Wasm:</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><a href=https://bs-uploads.toptal.io/blackfish-uploads/uploaded_file/file/467895/image-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png target=_blank rel="noopener noreferrer" class=_5xZOBTsv><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png" media="(min-width: 1920.1px)"><img alt='A screenshot of the app showing its title, "Wasm Audio Tutorial," a blue button with the word Pause on it, and the text "Latest pitch: 1380.1 Hz" underneath that.' src="https://assets.toptal.io/images?url=https%3A%2F%2Fbs-uploads.toptal.io%2Fblackfish-uploads%2Fuploaded_file%2Ffile%2F467895%2Fimage-1607523422297-56a49d2ac12ad3afcd129c8868a7f39e.png" loading=lazy decoding=async class=Djd3YO_2></picture></a><figcaption class=_2tKCaBqq>Real-time pitch detection.</figcaption></figure></div><h2 id=programming-with-webassembly-and-rust-a-real-time-web-audio-solution>Programming with WebAssembly and Rust: A Real-time Web Audio Solution</h2><p>This tutorial guided you through building a web application from scratch that performs computationally demanding audio processing using WebAssembly. WebAssembly allowed us to leverage Rust&rsquo;s near-native performance for pitch detection. Furthermore, this processing was offloaded to a separate thread, freeing the main JavaScript thread to concentrate on rendering and ensuring smooth frame rates, even on mobile devices.</p><h2 id=key-takeaways-wasmrust-and-web-audio>Key Takeaways: Wasm/Rust and Web Audio</h2><ul><li>Modern browsers provide high-performance APIs for capturing and processing audio (and video) within web applications.</li><li>Rust&rsquo;s combination of performance, safety, and <a class=link href=https://rustwasm.github.io/docs/book/ target=_blank rel=noopener>great tooling for Wasm</a> makes it a strong contender for projects integrating WebAssembly.</li><li>Wasm enables efficient execution of compute-intensive tasks within the browser.</li></ul><p>While advantageous, Wasm also presents a couple of challenges:</p><ul><li>Tooling for Wasm within worklets is still under development. As seen in our example, we had to implement our own versions of <code>TextEncoder</code> and <code>TextDecoder</code> for communication between JavaScript and Wasm within the <code>AudioWorklet</code> context. Additionally, importing JavaScript bindings for Wasm modules within an <code>AudioWorklet</code> is not yet supported in Firefox.</li><li>Although our application was relatively simple, setting up and loading the WebAssembly module from the <code>AudioWorklet</code> involved a fair amount of configuration. Integrating Wasm into projects does introduce additional tooling complexity, which is crucial to consider.</li></ul><p>For your convenience, <a class=link href=https://github.com/peter-suggate/wasm-audio-app target=_blank rel=noopener>this GitHub repo</a> contains the complete project code. If you&rsquo;re interested in back-end development, you might also find it valuable to explore using Rust with WebAssembly <a class=link href=https://developer.ibm.com/technologies/web-development/articles/why-webassembly-and-rust-together-improve-nodejs-performance/ target=_blank rel=noopener>within Node.js</a>.</p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3987358164777632" crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-5X67X4Q4")</script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X67X4Q4" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

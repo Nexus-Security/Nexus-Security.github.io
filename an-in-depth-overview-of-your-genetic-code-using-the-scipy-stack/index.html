@@ -1,0 +1,798 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Bioinformatics involves creating methods and software to help us understand biological data. It&rsquo;s like data science, but for biology. Genomics data, especially from next-generation DNA sequencing (NGS), is increasing rapidly. Stephens, Zachary D et al. shows that we&rsquo;re now gathering genomics data at an exabyte-per-year rate. SciPy gathers many Python modules for scientific computing, which is ideal for many bioinformatic needs. This post demonstrates how to analyze human genome data in a GFF3 file using the SciPy Stack."><title>An in-depth overview of your genetic code using the SciPy Stack</title>
+<link rel=canonical href=https://Nexus-Security.github.io/an-in-depth-overview-of-your-genetic-code-using-the-scipy-stack/><link rel=stylesheet href=/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css><meta property='og:title' content="An in-depth overview of your genetic code using the SciPy Stack"><meta property='og:description' content="Bioinformatics involves creating methods and software to help us understand biological data. It&rsquo;s like data science, but for biology. Genomics data, especially from next-generation DNA sequencing (NGS), is increasing rapidly. Stephens, Zachary D et al. shows that we&rsquo;re now gathering genomics data at an exabyte-per-year rate. SciPy gathers many Python modules for scientific computing, which is ideal for many bioinformatic needs. This post demonstrates how to analyze human genome data in a GFF3 file using the SciPy Stack."><meta property='og:url' content='https://Nexus-Security.github.io/an-in-depth-overview-of-your-genetic-code-using-the-scipy-stack/'><meta property='og:site_name' content='Nexus Security'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2023-08-25T00:00:00+00:00'><meta property='article:modified_time' content='2023-08-25T00:00:00+00:00'><meta name=twitter:title content="An in-depth overview of your genetic code using the SciPy Stack"><meta name=twitter:description content="Bioinformatics involves creating methods and software to help us understand biological data. It&rsquo;s like data science, but for biology. Genomics data, especially from next-generation DNA sequencing (NGS), is increasing rapidly. Stephens, Zachary D et al. shows that we&rsquo;re now gathering genomics data at an exabyte-per-year rate. SciPy gathers many Python modules for scientific computing, which is ideal for many bioinformatic needs. This post demonstrates how to analyze human genome data in a GFF3 file using the SciPy Stack."><link rel="shortcut icon" href=/fav.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"light")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><ol class=menu-social><li><a href=https://github.com/Nexus-Security target=_blank title=GitHub rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><defs><filter id="alpha" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%"><feColorMatrix type="matrix" in="SourceGraphic" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/></filter><mask id="mask0"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.2;stroke:none"/></g></mask><clipPath id="clip1"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface5" clip-path="url(#clip1)"><path style="stroke:none;fill-rule:nonzero;fill:#fff;fill-opacity:1" d="M10.9375 83.867188c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C21.6875 48.125 21.40625 33.070312 26.488281 17.675781c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C58.9375 34.65625 59.957031 34.84375 60.894531 34.554688 64.824219 33.382812 71.851562 32.6875 79.6875 32.6875S94.550781 33.386719 98.476562 34.554688C99.417969 34.835938 100.433594 34.65625 101.226562 34.074219 113.96875 24.65625 124.011719 20.445312 129.8125 18.582031c-.476562000000001-1.882812-1.019531-3.746093-1.625-5.589843-4.78125 1.207031-16.300781 5.050781-31.648438 16.394531C95.746094 29.96875 94.730469 30.144531 93.789062 29.867188c-3.925781-1.171876-10.953124-1.875-18.789062-1.875-7.832031.0-14.855469.703124000000003-18.792969 1.871093C55.265625 30.144531 54.246094 29.964844 53.457031 29.382812c-15.355469-11.34375-26.875-15.1875-31.65625-16.402343C16.71875 28.382812 17 43.4375 17.726562 45.523438 18.101562 46.589844 17.890625 47.777344 17.175781 48.648438 9.71875 57.367188 6.25 67.070312 6.25 79.179688c0 23.515624 7.175781 37.921874 17.417969 46.550781C16.007812 116.851562 10.9375 103.582031 10.9375 83.867188zm0 0"/></g><mask id="mask1"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.101961;stroke:none"/></g></mask><clipPath id="clip2"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface8" clip-path="url(#clip2)"><path style="stroke:none;fill-rule:nonzero;fill:#000;fill-opacity:1" d="M32.34375 78.5c3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 73.425781 55.824219 73.730469 60.023438 74.054688c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 74.917969 85.210938 74.425781 89.976562 74.054688 102.070312 73.125 111.605469 72.367188 117.648438 78.492188c4.527343 4.601562 6.890624 10.328124 7.21875 16.945312C124.925781 94.398438 125 93.382812 125 92.261719c0-7.285157-2.476562-13.492188-7.351562-18.449219-6.042969-6.117188-15.578126-5.367188-27.671876-4.4375C85.210938 69.742188 80.34375 70.238281 74.867188 70.117188 69.914062 70.0625 64.960938 69.8125 60.023438 69.375 55.824219 69.050781 51.929688 68.742188 48.382812 68.742188c-6.65625.0-12.09375 1.070312-16.039062 5.078124C27.476562 78.769531 25 84.976562 25 92.261719 25 93.375 25.074219 94.398438 25.132812 95.445312 25.460938 88.820312 27.820312 83.101562 32.34375 78.5zm0 0"/></g><linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="10.768" y1="13.86" x2="18.633" y2="21.724" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear1" gradientUnits="userSpaceOnUse" x1="4.004" y1="18.529" x2="4.047" y2="18.573" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear2" gradientUnits="userSpaceOnUse" x1=".617" y1="5.771" x2="23.69" y2="16.53" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#fff;stop-opacity:.2"/><stop offset="1" style="stop-color:#fff;stop-opacity:0"/></linearGradient></defs><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#5c6671;fill-opacity:1" d="M88.539062 137.488281 75 137.5 61.457031 137.488281C36.273438 137.488281 6.25 127.367188 6.25 79.179688c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C17 43.4375 16.71875 28.382812 21.800781 12.988281c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C54.25 29.96875 55.269531 30.15625 56.207031 29.867188c3.9375-1.171876 10.960938-1.875 18.792969-1.875 7.835938.0 14.863281.703124000000003 18.789062 1.871093C94.730469 30.140625 95.746094 29.964844 96.539062 29.382812c15.347657-11.34375 26.867188-15.1875 31.648438-16.394531 5.082031 15.394531 4.804688 30.449219 4.082031 32.53125C131.867188 46.585938 132.078125 47.785156 132.820312 48.648438 140.273438 57.367188 143.75 67.070312 143.75 79.179688c0 48.1875-30.023438 58.308593-55.210938 58.308593zm0 0"/><use xlink:href="#surface5" mask="url(#mask0)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M89.488281 63.144531C84.886719 63.507812 80.125 63.875 75.226562 63.875H74.78125C69.875 63.875 65.117188 63.5 60.519531 63.144531 47.898438 62.164062 35.988281 61.230469 27.894531 69.429688 21.824219 75.59375 18.75 83.28125 18.75 92.261719 18.75 128.238281 46.429688 131.25 75.226562 131.25c28.34375.0 56.023438-3.011719 56.023438-38.988281.0-8.988281-3.074219-16.667969-9.144531-22.835938-8.085938-8.195312-20.003907-7.269531-32.617188-6.28125zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#d9cfcc;fill-opacity:1" d="M74.773438 125C42.492188 125 25 119.78125 25 92.261719c0-7.285157 2.476562-13.492188 7.34375-18.449219 3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 68.738281 55.824219 69.042969 60.023438 69.367188c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 70.230469 85.210938 69.738281 89.976562 69.367188c12.09375-.929687999999999 21.628907-1.6875 27.671876 4.4375C122.523438 78.769531 125 84.976562 125 92.261719 125 119.78125 107.507812 125 74.773438 125zm0 0"/><use xlink:href="#surface8" mask="url(#mask1)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M50 75c-7.125.0-12.5 9.40625-12.5 21.875S42.875 118.75 50 118.75s12.5-9.40625 12.5-21.875S57.125 75 50 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M50 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S47.449219 81.25 50 81.25s6.25 6.085938 6.25 15.625S52.550781 112.5 50 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M1e2 75c-7.125.0-12.5 9.40625-12.5 21.875S92.875 118.75 1e2 118.75s12.5-9.40625 12.5-21.875S107.125 75 1e2 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M1e2 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S97.449219 81.25 1e2 81.25s6.25 6.085938 6.25 15.625S102.550781 112.5 1e2 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M52.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M102.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear0)" d="M125 72.8125 124.894531 72.855469C129.039062 78.382812 131.25 84.851562 131.25 92.261719c0 35.976562-27.679688 38.988281-56.023438 38.988281-16.664062.0-32.914062-1.054688-43.683593-8.875l13.386719 13.386719c5.507812 1.207031 11.121093 1.71875 16.527343 1.71875L75 137.5 88.539062 137.488281c22.992188.0 49.941407-8.53125 54.472657-46.664062zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear1)" d="M25.070312 115.800781 25 115.832031 25.269531 116.101562zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear2)" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/></g></svg></a></li><li><a href=mailto:0x000216@gmail.com target=_blank title=Email rel=me><svg width="512" height="512" viewBox="0 0 512 512"><path d="M33.994 73.934C27.135 76.021 21.866 80.426 18.364 87 16.567 90.374 16.5 96.438 16.5 256V421.5l2.158 4C21.184 430.18 25.101 434.027 30 436.636 33.003 438.235 36.304 438.546 53.246 438.825L72.993 439.15l.253-137.978L73.5 163.194 90 175.45C99.075 182.191 140.17 212.762 181.321 243.386l74.821 55.68 21.179-15.752C288.97 274.65 330 244.021 368.5 215.248l70-52.312L438.754 301.043 439.007 439.15 458.754 438.825C476.726 438.529 478.859 438.306 482.5 436.342 487.18 433.816 491.027 429.899 493.636 425 495.433 421.626 495.5 415.562 495.5 256 495.5 96.438 495.433 90.374 493.636 87 488.565 77.48 482.099 73.799 469.397 73.202L460.293 72.774 454.397 77.337C439.883 88.566 256.423 221.935 255.772 221.73 254.976 221.479 78.972 93.309 62.177 80.75L51.812 73 44.156 73.086C39.945 73.133 35.372 73.515 33.994 73.934" stroke="none" fill="#d34c3c" fill-rule="evenodd"/><path d="M54.528 74.911C55.612 75.963 74.953 90.25 97.507 106.661c22.555 16.412 67.228 48.964 99.275 72.339s58.594 42.604 58.993 42.731C256.549 221.978 454.147 78.147 457.472 74.916 459.416 73.028 456.501 73 256 73 55.677 73 52.586 73.029 54.528 74.911M73 300.878V439H256 439V300.941C439 190.749 438.748 163.038 437.75 163.654 437.063 164.078 405.45 187.632 367.5 215.994c-37.95 28.363-78.528 58.655-90.173 67.316l-21.173 15.748-66.827-49.716C152.572 221.999 111.925 191.776 99 182.18s-24.062-17.892-24.75-18.436C73.251 162.954 73 190.519 73 300.878" stroke="none" fill="#e5e5e5" fill-rule="evenodd"/></svg></a></li><li><a href=https://nexus-security.github.io/index.xml target=_blank title=RSS rel=me><svg id="Layer_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><path style="fill:#f78c20" d="M78.333 355.334C35.14 355.334.0 390.474.0 433.667S35.14 512 78.333 512s78.333-35.14 78.333-78.333-35.14-78.333-78.333-78.333z"/><g><path style="fill:#ffa929" d="M78.333 381.445c-28.795.0-52.222 23.427-52.222 52.222s23.427 52.222 52.222 52.222 52.222-23.427 52.222-52.222-23.427-52.222-52.222-52.222z"/><path style="fill:#ffa929" d="M477.918 264.861c-21.843-51.641-53.111-98.019-92.936-137.842-39.824-39.824-86.201-71.093-137.843-92.935C193.669 11.468 136.874.0 78.333.0c-4.807.0-8.704 3.897-8.704 8.704v85.519c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h85.52c4.807.0 8.704-3.897 8.704-8.704C512 375.126 500.533 318.331 477.918 264.861z"/><path style="fill:#ffa929" d="M78.333 163.853c-4.807.0-8.704 3.897-8.704 8.704v95.74c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h95.74c4.807.0 8.704-3.897 8.704-8.704.0-72.07-28.065-139.826-79.027-190.787-50.961-50.961-118.717-79.027-190.787-79.027z"/></g><g><path style="fill:#f78c20" d="M78.333 242.186c-2.918.0-5.817.076-8.704.206v25.905c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h25.905c.129-2.886.206-5.786.206-8.704.0-105.752-85.729-191.481-191.481-191.481z"/><path style="fill:#f78c20" d="M78.333 68.113c-2.91.0-5.81.042-8.704.11v26.001c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h26.001c.067-2.894.11-5.793.11-8.704C443.887 231.777 280.223 68.113 78.333 68.113z"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://x.com/0x000216 target=_blank title=Twitter rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#03a9f4;fill-opacity:1" d="M150 33.179688c-5.640625 2.460937-11.609375 4.09375-17.71875 4.855468 6.4375-3.820312 11.25-9.867187 13.527344-16.996094-6.027344 3.574219-12.621094 6.089844-19.5 7.441407-8.628906-9.210938-22.007813-12.214844-33.746094-7.574219-11.738281 4.636719-19.449219 15.980469-19.445312 28.601562.0 2.4375.203124000000003 4.78125.710937000000001 7.015626C49.085938 55.308594 26.03125 43.609375 10.445312 24.355469 2.25 38.402344 6.386719 56.398438 19.894531 65.457031 15.027344 65.324219 10.261719 64.027344 6 61.667969V62.007812c.015625 14.636719 10.304688 27.25 24.636719 30.214844-2.628907.691406000000001-5.339844 1.03125-8.0625 1.011719C20.621094 93.269531 18.667969 93.09375 16.753906 92.710938c4.070313 12.507812 15.585938 21.089843 28.734375 21.421874-10.886719 8.511719-24.308593 13.128907-38.128906 13.113282C4.835938 127.246094 2.417969 127.132812.0 126.824219c14.0625 9.0625 30.445312 13.855469 47.175781 13.800781 56.585938.0 87.523438-46.875 87.523438-87.507812.0-1.359376-.046875-2.671876-.113281000000001-3.972657C140.652344 44.804688 145.875 39.394531 150 33.179688zm0 0"/></g></svg></a></li><li><a href=https://www.minds.com/0x000216/ target=_blank title=Minds rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><g><g><path style="fill:#ffe1b2" d="M256 33.085C245.078 13.38 224.079.0 2e2.0c-23.781.0-45.57 13.293-56.594 34.184C115.711 41.602 96 66.977 96 96c0 .059.0.113.0.172-9.977 7.512-16 19.301-16 31.828.0 1.316.078 2.637.234 3.992C60.211 145.266 48 167.758 48 192c0 14.07 4.039 27.543 11.719 39.262C57.273 236.512 56 242.207 56 248c0 2.738.281 5.445.828 8.098C36.672 267.308 24 288.539 24 312c0 27.973 18.305 52.34 44.109 60.785C65.398 378.828 64 385.324 64 392c0 21.098 13.805 39.508 33.539 45.727C103.891 466.746 129.828 488 160 488c4.617.0 9.227-.512 13.766-1.527C181.992 502 198.141 512 216 512c16.687.0 31.396-8.567 40-21.523V33.085z"/></g><g><g><path style="fill:#ffb980" d="M264 256c-4.422.0-8-3.582-8-8 0-22.055-17.945-40-40-40-8.008.0-15.734 2.355-22.336 6.812-3.023 2.043-7.055 1.781-9.797-.652-3.156-2.809-8.477-6.16-15.867-6.16-4.422.0-8-3.582-8-8s3.578-8 8-8c7.711.0 15.234 2.293 21.719 6.539C197.773 194.246 206.758 192 216 192c30.875.0 56 25.121 56 56C272 252.418 268.422 256 264 256z"/></g></g><g><g><path style="fill:#ffb980" d="M120 120c18.977.0 36.875 7.312 50.414 20.594 3.141 3.09 8.203 3.047 11.312-.109 3.094-3.152 3.047-8.219-.109-11.312C165.07 112.941 143.187 104 120 104c-13.046.0-25.395 2.93-36.542 8.046C81.253 117.019 80 122.423 80 128c0 1.316.078 2.637.234 3.992-.094.062-.173.139-.267.202C91.423 124.501 105.193 120 120 120z"/></g></g><g><g><path style="fill:#ffb980" d="M216 360c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32-14.211.0-26.82-9.648-30.664-23.465-.703-2.512-2.578-4.523-5.039-5.395-2.453-.871-5.188-.492-7.305 1.02C114.094 371.906 101.305 376 88 376c-6.948.0-13.625-1.149-19.894-3.207-2.214 4.939-3.501 10.19-3.916 15.586C71.714 390.73 79.711 392 88 392c13.297.0 26.187-3.266 37.773-9.52C133.969 397.894 150.141 408 168 408c26.469.0 48-21.531 48-48z"/></g></g><g><path style="fill:#fdc88e" d="M488 312c0-23.461-12.672-44.691-32.828-55.902.547-2.652.828-5.359.828-8.098.0-5.793-1.273-11.488-3.719-16.738C459.961 219.543 464 206.07 464 192c0-24.242-12.211-46.734-32.234-60.008.156-1.355.234-2.676.234-3.992.0-12.527-6.023-24.316-16-31.828.0-.059.0-.113.0-.172.0-29.023-19.711-54.398-47.406-61.816C357.57 13.293 335.781.0 312 0c-24.08.0-45.078 13.38-56 33.085v457.391C264.604 503.433 279.313 512 296 512c17.859.0 34.008-10 42.234-25.527C342.773 487.488 347.383 488 352 488c30.172.0 56.109-21.254 62.461-50.273C434.195 431.508 448 413.097 448 392c0-6.676-1.398-13.172-4.109-19.215C469.695 364.34 488 339.973 488 312z"/></g><g><path style="fill:#f8ab6b" d="M272.008 151.199C272 151.465 272 151.734 272 152c0 26.469 21.531 48 48 48s48-21.531 48-48c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32s-32-14.355-32-32c0-2.184.219-4.359.656-6.465.492-2.395-.133-4.883-1.703-6.754-1.57-1.871-4.016-3.066-6.352-2.859-.453.012-.891.059-.602.078-13.234.0-24-10.766-24-24v31.813C260.673 147.348 266.061 149.988 272.008 151.199z"/></g><g><path style="fill:#f8ab6b" d="M296 328c9.242.0 18.219-2.246 26.281-6.539C328.765 325.707 336.289 328 344 328c4.422.0 8-3.582 8-8s-3.578-8-8-8c-7.391.0-12.711-3.352-15.867-6.16-2.742-2.434-6.766-2.695-9.797-.656C311.726 309.644 304 312 296 312c-22.055.0-40-17.945-40-40v39.116C266.174 321.517 280.337 328 296 328z"/></g><g><g><path style="fill:#f8ab6b" d="M431.765 131.992c.156-1.355.234-2.676.234-3.992.0-5.577-1.253-10.981-3.458-15.954C417.395 106.93 405.046 104 392 104c-4.422.0-8 3.582-8 8s3.578 8 8 8c14.807.0 28.577 4.501 40.032 12.194C431.939 132.131 431.859 132.054 431.765 131.992z"/></g></g><g><g><path style="fill:#f8ab6b" d="M447.81 388.38c-.415-5.396-1.702-10.647-3.916-15.586C437.624 374.85 430.948 376 424 376c-13.578.0-26.594-4.266-37.641-12.332-2.07-1.5-4.719-1.93-7.133-1.168-2.43.77-4.344 2.648-5.164 5.059C369.101 382.176 355.414 392 340 392c-4.422.0-8 3.582-8 8s3.578 8 8 8c18.875.0 35.961-10.191 45.094-26.156C396.976 388.512 410.258 392 424 392 432.288 392 440.285 390.73 447.81 388.38z"/></g></g></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://www.buymeacoffee.com/0x000216 target=_blank title=Coffee rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 340 340" style="enable-background:new 0 0 340 340"><g id="XMLID_18_"><polygon id="XMLID_138_" style="fill:#dedde0" points="76.429,290 80,340 170,340 170,290"/><polygon id="XMLID_169_" style="fill:#dedde0" points="170,80 61.429,80 65,130 170,130"/><polygon id="XMLID_197_" style="fill:#acabb1" points="170,290 170,340 260,340 263.571,290"/><polygon id="XMLID_221_" style="fill:#acabb1" points="170,80 170,130 275,130 278.571,80"/><path id="XMLID_222_" style="fill:#ffda44" d="M170 260c-22.091.0-40-22.386-40-50s17.909-50 40-50v-30H65 50l10 160h16.429H170V260z"/><path id="XMLID_33_" style="fill:#ff9811" d="M170 130v30c22.091.0 40 22.386 40 50s-17.909 50-40 50v30h93.571H280l10-160h-15H170z"/><path id="XMLID_223_" style="fill:#50412e" d="M210 210c0-27.614-17.909-50-40-50v1e2c22.091.0 40-22.386 40-50z"/><path id="XMLID_224_" style="fill:#786145" d="M130 210c0 27.614 17.909 50 40 50V160c-22.091.0-40 22.386-40 50z"/><polygon id="XMLID_225_" style="fill:#50412e" points="278.571,80 300,80 300,40 260,40 260,0 80,0 80,40 40,40 40,80 61.429,80 170,80"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About Us</span></a></li><li><a href=/termsofservice/><svg class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4L18.5 9.5a1.5 1.5.0 00-4-4L4 16v4"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/></svg>
+<span>Terms Of Service</span></a></li><li><a href=/privacypolicy/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Privacy Policy</span></a></li><li><a href=/disclaimer/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Disclaimer</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/contact/><svg class="icon icon-tabler icon-tabler-mail" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+<span>Contact Us</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#setting-up>Setting Up</a></li><li><a href=#downloading-the-annotation-file>Downloading the Annotation File</a><ol><li><ol><li><a href=#how-much-of-the-genome-is-incomplete>How Much of the Genome Is Incomplete?</a></li><li><a href=#how-many-genes-are-there>How Many Genes Are There?</a></li><li><a href=#how-long-is-a-typical-gene>How Long Is a Typical Gene?</a></li><li><a href=#gene-distribution-among-chromosomes>Gene Distribution Among Chromosomes</a></li></ol></li></ol></li><li><a href=#findings-and-future-research>Findings and Future Research</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/an-in-depth-overview-of-your-genetic-code-using-the-scipy-stack/>An in-depth overview of your genetic code using the SciPy Stack</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Aug 25, 2023</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>24 minute read</time></div></footer></div></header><section class=article-content><p><a class=link href=https://en.wikipedia.org/wiki/Bioinformatics target=_blank rel=noopener>Bioinformatics</a> involves creating methods and software to help us understand biological data.</p><p>It&rsquo;s like data science, but for biology.</p><p>Genomics data, especially from next-generation DNA sequencing (NGS), is increasing rapidly. <a class=link href="http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002195" target=_blank rel=noopener>Stephens, Zachary D et al.</a> shows that we&rsquo;re now gathering genomics data at an exabyte-per-year rate.</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png" media="(min-width: 1920.1px)"><img alt="The Comprehensive Introduction To Your Genome With SciPy" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121412%2Ftoptal-blog-image-1478600437768-72348223698908b523c4b825b9e0befe.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><div class="pop_out_box is-full_width is-big" style=text-align:center>SciPy gathers many Python modules for scientific computing, which is ideal for many bioinformatic needs.</div><p>This post demonstrates how to analyze human genome data in a GFF3 file using the SciPy Stack. The <a class=link href=https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md target=_blank rel=noopener>Generic Feature Format Version 3</a> (GFF3) is the standard format for storing genomic features. This post will show you how to use SciPy to answer these questions:</p><ol><li>How much of the human genome is incomplete?</li><li>How many genes are in the human genome?</li><li>What is the average size of a gene?</li><li>How are genes distributed among chromosomes?</li></ol><p>You can get the latest human genome GFF3 file from <a class=link href=ftp://ftp.ensembl.org/pub/release-85/gff3/homo_sapiens>here</a>. The <a class=link href=http://ftp.ensembl.org/pub/release-85/gff3/homo_sapiens/README target=_blank rel=noopener>README</a>. This directory also includes a file explaining the GFF3 format, and you can find a complete specification <a class=link href=https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md#generic-feature-format-version-3-gff3 target=_blank rel=noopener>here</a>.</p><p>We&rsquo;ll use <a class=link href=http://pandas.pydata.org/ target=_blank rel=noopener>Pandas</a>, a powerful SciPy tool, to work with the GFF3 data.</p><h2 id=setting-up>Setting Up</h2><p>First, we&rsquo;ll set up a virtual environment and install SciPy. This can take a while if done manually because SciPy has many packages. Using <a class=link href=http://conda.pydata.org/miniconda.html target=_blank rel=noopener>Miniconda</a> simplifies the process.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+</span></span><span class=line><span class=cl>bash Miniconda3-latest-Linux-x86_64.sh -b
+</span></span></code></pre></td></tr></table></div></div><p>The <code>-b</code> flag tells bash to run in batch mode. After installing Miniconda, create a virtual environment for genomics and install SciPy.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mkdir -p genomics
+</span></span><span class=line><span class=cl><span class=nb>cd</span> genomics
+</span></span><span class=line><span class=cl>conda create -p venv ipython matplotlib pandas
+</span></span></code></pre></td></tr></table></div></div><p>This installs the three packages needed for this post. You can add more SciPy packages to the <code>conda create</code> command.</p><p>Use <code>conda search</code> to find package names. Now, activate the virtual environment and start IPython.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>source</span> activate venv/
+</span></span><span class=line><span class=cl>ipython
+</span></span></code></pre></td></tr></table></div></div><p><a class=link href=https://ipython.org/ target=_blank rel=noopener>IPython</a> is a more powerful alternative to the standard Python interpreter. Anything you do in the default interpreter, you can do in IPython. If you haven&rsquo;t tried it, I highly recommend it.</p><h2 id=downloading-the-annotation-file>Downloading the Annotation File</h2><p>Now that we&rsquo;re set up, let&rsquo;s download the human genome annotation (GFF3 format).</p><p>It&rsquo;s around 37 MB, much smaller than the entire human genome (about 3 GB in plain text). That&rsquo;s because it only contains annotations, while the actual sequence data is stored in the <a class=link href=https://en.wikipedia.org/wiki/FASTA_format target=_blank rel=noopener>FASTA</a> format. You can download the FASTA file <a class=link href=ftp://ftp.ensembl.org/pub/release-85/fasta/homo_sapiens/dna/>here</a>, but we won&rsquo;t be using it in this tutorial.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>!wget ftp://ftp.ensembl.org/pub/release-85/gff3/homo_sapiens/Homo_sapiens.GRCh38.85.gff3.gz
+</span></span></code></pre></td></tr></table></div></div><p>The <code>!</code> tells IPython that this is a shell command, not a Python command. However, IPython can process common shell commands like <code>ls</code>, <code>pwd</code>, <code>rm</code>, <code>mkdir</code>, and <code>rmdir</code> without the <code>!</code>.</p><p>Looking at the beginning of the GFF file, you&rsquo;ll see lines starting with <code>##</code> or <code>#!</code> containing metadata/pragmas/directives.</p><p>According to the <a class=link href=http://ftp.ensembl.org/pub/release-85/gff3/homo_sapiens/README target=_blank rel=noopener>README</a>, <code>##</code> indicates stable metadata, while <code>#!</code> indicates experimental metadata.</p><p>You&rsquo;ll also see <code>###</code>, which has a more specific meaning defined in the <a class=link href=https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md#generic-feature-format-version-3-gff3 target=_blank rel=noopener>specification</a>.</p><p>Comments meant for humans appear after a single <code>#</code>. For this analysis, we&rsquo;ll ignore all lines starting with <code>#</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>##gff-version   3
+</span></span><span class=line><span class=cl>##sequence-region   1 1 248956422
+</span></span><span class=line><span class=cl>##sequence-region   10 1 133797422
+</span></span><span class=line><span class=cl>##sequence-region   11 1 135086622
+</span></span><span class=line><span class=cl>##sequence-region   12 1 133275309
+</span></span><span class=line><span class=cl>...
+</span></span><span class=line><span class=cl>##sequence-region   MT 1 16569
+</span></span><span class=line><span class=cl>##sequence-region   X 1 156040895
+</span></span><span class=line><span class=cl>##sequence-region   Y 2781480 56887902
+</span></span><span class=line><span class=cl>#!genome-build  GRCh38.p7
+</span></span><span class=line><span class=cl>#!genome-version GRCh38
+</span></span><span class=line><span class=cl>#!genome-date 2013-12
+</span></span><span class=line><span class=cl>#!genome-build-accession NCBI:GCA_000001405.22
+</span></span><span class=line><span class=cl>#!genebuild-last-updated 2016-06
+</span></span></code></pre></td></tr></table></div></div><p>The first line indicates that the file uses GFF version 3.</p><p>Following that are summaries of all sequence regions, which are also found later in the file.</p><p>Lines beginning with <code>#!</code> provide information about the specific genome build this annotation file corresponds to, which is GRCh38.p7.</p><p>The <a class=link href=http://www.ncbi.nlm.nih.gov/projects/genome/assembly/grc/ target=_blank rel=noopener>Genome Reference Consortium</a> (GCR) is an international group that manages updates to reference genome assemblies for various species, including humans, mice, zebrafish, and chickens.</p><p>Here are the first few annotation lines in the file:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>1       GRCh38  chromosome      1       248956422       .       .       .       ID=chromosome:1;Alias=CM000663.2,chr1,NC_000001.11
+</span></span><span class=line><span class=cl>###
+</span></span><span class=line><span class=cl>1       .       biological_region       10469   11240   1.3e+03 .       .       external_name=oe %3D 0.79;logic_name=cpg
+</span></span><span class=line><span class=cl>1       .       biological_region       10650   10657   0.999   +       .       logic_name=eponine
+</span></span><span class=line><span class=cl>1       .       biological_region       10655   10657   0.999   -       .       logic_name=eponine
+</span></span><span class=line><span class=cl>1       .       biological_region       10678   10687   0.999   +       .       logic_name=eponine
+</span></span><span class=line><span class=cl>1       .       biological_region       10681   10688   0.999   -       .       logic_name=eponine
+</span></span><span class=line><span class=cl>...
+</span></span></code></pre></td></tr></table></div></div><p>The columns are <em>seqid</em>, <em>source</em>, <em>type</em>, <em>start</em>, <em>end</em>, <em>score</em>, <em>strand</em>, <em>phase</em>, <em>attributes</em>. Some are self-explanatory. For example:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>1       GRCh38  chromosome      1       248956422       .       .       .       ID=chromosome:1;Alias=CM000663.2,chr1,NC_000001.11
+</span></span></code></pre></td></tr></table></div></div><p>This line represents the first chromosome, with a <em>seqid</em> of 1. It starts at the first base and extends to the 24,895,622nd base, meaning the chromosome is about 25 million bases long.</p><p>Our analysis won&rsquo;t use the <em>score</em>, <em>strand</em>, and <em>phase</em> columns, so we can ignore them. The <em>attributes</em> column tells us that Chromosome 1 has three aliases: CM000663.2, chr1, and NC_000001.11. That&rsquo;s the basic structure of a GFF3 file. We won&rsquo;t examine every line; instead, let&rsquo;s load the whole file into Pandas.</p><p>Pandas is ideal for working with GFF3 files because they are tab-delimited, and Pandas excels at handling CSV-like formats.</p><p>One exception is when the GFF3 file contains <code>##FASTA</code>.</p><p>As explained in the <a class=link href=https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md target=_blank rel=noopener>specification</a>, <code>##FASTA</code> marks the end of an annotation section and the beginning of one or more sequences in FASTA format (which is not tab-delimited). However, our GFF3 file doesn&rsquo;t have this.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>1</span><span class=p>]:</span> <span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>2</span><span class=p>]:</span> <span class=n>pd</span><span class=o>.</span><span class=n>__version__</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>2</span><span class=p>]:</span> <span class=s1>&#39;0.18.1&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>3</span><span class=p>]:</span> <span class=n>col_names</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;seqid&#39;</span><span class=p>,</span> <span class=s1>&#39;source&#39;</span><span class=p>,</span> <span class=s1>&#39;type&#39;</span><span class=p>,</span> <span class=s1>&#39;start&#39;</span><span class=p>,</span> <span class=s1>&#39;end&#39;</span><span class=p>,</span> <span class=s1>&#39;score&#39;</span><span class=p>,</span> <span class=s1>&#39;strand&#39;</span><span class=p>,</span> <span class=s1>&#39;phase&#39;</span><span class=p>,</span> <span class=s1>&#39;attributes&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>3</span><span class=p>]:</span> <span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=s1>&#39;Homo_sapiens.GRCh38.85.gff3.gz&#39;</span><span class=p>,</span> <span class=n>compression</span><span class=o>=</span><span class=s1>&#39;gzip&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                         <span class=n>sep</span><span class=o>=</span><span class=s1>&#39;</span><span class=se>\t</span><span class=s1>&#39;</span><span class=p>,</span> <span class=n>comment</span><span class=o>=</span><span class=s1>&#39;#&#39;</span><span class=p>,</span> <span class=n>low_memory</span><span class=o>=</span><span class=kc>False</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                         <span class=n>header</span><span class=o>=</span><span class=kc>None</span><span class=p>,</span> <span class=n>names</span><span class=o>=</span><span class=n>col_names</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>This code snippet uses <code>pandas.read_csv</code> to load the GFF3 file.</p><p>Since it&rsquo;s not a standard CSV, we need some adjustments.</p><p><code>header=None</code> tells Pandas that the file lacks a header.</p><p><code>names=col_names</code> assigns specific names to each column. Without this, Pandas would use numbers.</p><p><code>sep='\t'</code> indicates that tabs separate the columns, not commas. You can use regular expressions (regex) for more complex separators. <code>comment='#'</code> tells Pandas to ignore lines starting with <code>#</code>.</p><p><code>compression='gzip'</code> specifies that the file is gzip-compressed.</p><p><a class=link href=http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html target=_blank rel=noopener><code>pandas.read_csv</code></a> offers many options for reading different CSV-like formats.</p><p>The result is a <code>DataFrame</code>, Pandas&rsquo;s primary data structure for representing 2D data.</p><p>Pandas also provides <code>Series</code> and <code>Panel</code> for 1D and 3D data, respectively. The <a class=link href=http://pandas.pydata.org/pandas-docs/stable/dsintro.html target=_blank rel=noopener>documentation</a> introduces Pandas&rsquo;s data structures.</p><p>Let&rsquo;s view the first few entries with <code>.head</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [18]: df.head()
+</span></span><span class=line><span class=cl>Out[18]:
+</span></span><span class=line><span class=cl>  seqid  source               type  start        end    score strand phase                                         attributes
+</span></span><span class=line><span class=cl>0     1  GRCh38         chromosome      1  248956422        .      .     .  ID=chromosome:1;Alias=CM000663.2,chr1,NC_00000...
+</span></span><span class=line><span class=cl>1     1       .  biological_region  10469      11240  1.3e+03      .     .           external_name=oe %3D 0.79;logic_name=cpg
+</span></span><span class=line><span class=cl>2     1       .  biological_region  10650      10657    0.999      +     .                                 logic_name=eponine
+</span></span><span class=line><span class=cl>3     1       .  biological_region  10655      10657    0.999      -     .                                 logic_name=eponine
+</span></span><span class=line><span class=cl>4     1       .  biological_region  10678      10687    0.999      +     .                                 logic_name=eponine
+</span></span></code></pre></td></tr></table></div></div><p>The output is neatly formatted, with long strings in the <em>attributes</em> column truncated and replaced with <code>...</code>.</p><p>To display full strings, use <code>pd.set_option('display.max_colwidth', -1)</code>. Pandas offers many customizable <a class=link href=http://pandas.pydata.org/pandas-docs/stable/generated/pandas.set_option.html target=_blank rel=noopener>options</a>.</p><p>Now, let&rsquo;s get basic information about the dataframe with <code>.info</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [20]: df.info()
+</span></span><span class=line><span class=cl>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+</span></span><span class=line><span class=cl>RangeIndex: 2601849 entries, 0 to 2601848
+</span></span><span class=line><span class=cl>Data columns (total 9 columns):
+</span></span><span class=line><span class=cl>seqid         object
+</span></span><span class=line><span class=cl>source        object
+</span></span><span class=line><span class=cl>type          object
+</span></span><span class=line><span class=cl>start         int64
+</span></span><span class=line><span class=cl>end           int64
+</span></span><span class=line><span class=cl>score         object
+</span></span><span class=line><span class=cl>strand        object
+</span></span><span class=line><span class=cl>phase         object
+</span></span><span class=line><span class=cl>attributes    object
+</span></span><span class=line><span class=cl>dtypes: int64(2), object(7)
+</span></span><span class=line><span class=cl>memory usage: 178.7+ MB
+</span></span></code></pre></td></tr></table></div></div><p>This tells us that the GFF3 file has 2,601,848 lines, each with nine columns.</p><p>We also see the data type for each column.</p><p><em>Start</em> and <em>end</em> are integers (int64) representing genome positions.</p><p>Other columns have the <code>object</code> type, meaning they likely contain a mix of integers, floats, and strings.</p><p>The data occupies 178.7+ MB of memory, making it more compact than the uncompressed file (around 402 MB), as confirmed below:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>gunzip -c Homo_sapiens.GRCh38.85.gff3.gz &gt; /tmp/tmp.gff3 <span class=o>&amp;&amp;</span> du -s /tmp/tmp.gff3
+</span></span><span class=line><span class=cl>402M    /tmp/tmp.gff3
+</span></span></code></pre></td></tr></table></div></div><p>We&rsquo;ve loaded the entire GFF3 file into a Python DataFrame. All subsequent analysis will be based on this object.</p><p>Let&rsquo;s examine the first column, <em>seqid</em>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [29]: df.seqid.unique()
+</span></span><span class=line><span class=cl>Out[29]:
+</span></span><span class=line><span class=cl>array([&#39;1&#39;, &#39;10&#39;, &#39;11&#39;, &#39;12&#39;, &#39;13&#39;, &#39;14&#39;, &#39;15&#39;, &#39;16&#39;, &#39;17&#39;, &#39;18&#39;, &#39;19&#39;,
+</span></span><span class=line><span class=cl>       &#39;2&#39;, &#39;20&#39;, &#39;21&#39;, &#39;22&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;,
+</span></span><span class=line><span class=cl>       &#39;GL000008.2&#39;, &#39;GL000009.2&#39;, &#39;GL000194.1&#39;, &#39;GL000195.1&#39;,
+</span></span><span class=line><span class=cl>       ...
+</span></span><span class=line><span class=cl>       &#39;KI270757.1&#39;, &#39;MT&#39;, &#39;X&#39;, &#39;Y&#39;], dtype=object)
+</span></span><span class=line><span class=cl>In [30]: df.seqid.unique().shape
+</span></span><span class=line><span class=cl>Out[30]: (194,)
+</span></span></code></pre></td></tr></table></div></div><p>Accessing column data in a dataframe can be done with <code>df.seqid</code> or <code>df['seqid']</code>. The latter is more versatile, especially when column names are Python keywords (like <code>class</code>) or contain periods or spaces.</p><p>The output shows 194 unique <em>seqids</em>: Chromosomes 1 to 22, X, Y, mitochondrion (MT) DNA, and 169 others.</p><p><em>Seqids</em> starting with KI and GL are DNA segments – or scaffolds – that haven&rsquo;t been assembled into chromosomes.</p><p>This is a crucial point in genomics. While the first draft of the human genome was published over 15 years ago, it remains incomplete. Assembling these sequences is challenging, largely due to <a class=link href=http://www.nature.com/nature/journal/v517/n7536/pdf/nature13907.pdf target=_blank rel=noopener>complex repetitive regions in the genome</a>.</p><p>Now, let&rsquo;s look at the <em>source</em> column.</p><p>The <a class=link href=ftp://ftp.ensembl.org/pub/release-85/gff3/homo_sapiens/README>README</a> file explains that the <em>source</em> describes the algorithm or process that generated the feature.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [66]: df.source.value_counts()
+</span></span><span class=line><span class=cl>Out[66]:
+</span></span><span class=line><span class=cl>havana            1441093
+</span></span><span class=line><span class=cl>ensembl_havana     745065
+</span></span><span class=line><span class=cl>ensembl            228212
+</span></span><span class=line><span class=cl>.                  182510
+</span></span><span class=line><span class=cl>mirbase              4701
+</span></span><span class=line><span class=cl>GRCh38                194
+</span></span><span class=line><span class=cl>insdc                  74
+</span></span></code></pre></td></tr></table></div></div><p>This demonstrates the <code>value_counts</code> method, invaluable for quickly counting categorical variables.</p><p>We see seven unique values in this column. Most GFF3 entries originate from havana, ensembl, and ensembl_havana.</p><p>You can delve deeper into these sources and their relationships in <a class=link href="http://www.ensembl.org/Help/Faq?id=152" target=_blank rel=noopener>this post</a>.</p><p>For simplicity, we&rsquo;ll focus on entries from GRCh38, havana, ensembl, and ensembl_havan.a.</p><h4 id=how-much-of-the-genome-is-incomplete>How Much of the Genome Is Incomplete?</h4><p>Entries from source GRCh38 contain information about each chromosome. Let&rsquo;s filter out the rest and store the result in a new variable, <code>gdf</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [70]: gdf = df[df.source == &#39;GRCh38&#39;]
+</span></span><span class=line><span class=cl>In [87]: gdf.shape
+</span></span><span class=line><span class=cl>Out[87]: (194, 9)
+</span></span><span class=line><span class=cl>In [84]: gdf.sample(10)
+</span></span><span class=line><span class=cl>Out[84]:
+</span></span><span class=line><span class=cl>              seqid  source         type  start        end score strand phase                                         attributes
+</span></span><span class=line><span class=cl>2511585  KI270708.1  GRCh38  supercontig      1     127682     .      .     .  ID=supercontig:KI270708.1;Alias=chr1_KI270708v...
+</span></span><span class=line><span class=cl>2510840  GL000208.1  GRCh38  supercontig      1      92689     .      .     .  ID=supercontig:GL000208.1;Alias=chr5_GL000208v...
+</span></span><span class=line><span class=cl>990810           17  GRCh38   chromosome      1   83257441     .      .     .  ID=chromosome:17;Alias=CM000679.2,chr17,NC_000...
+</span></span><span class=line><span class=cl>2511481  KI270373.1  GRCh38  supercontig      1       1451     .      .     .  ID=supercontig:KI270373.1;Alias=chrUn_KI270373...
+</span></span><span class=line><span class=cl>2511490  KI270384.1  GRCh38  supercontig      1       1658     .      .     .  ID=supercontig:KI270384.1;Alias=chrUn_KI270384...
+</span></span><span class=line><span class=cl>2080148           6  GRCh38   chromosome      1  170805979     .      .     .  ID=chromosome:6;Alias=CM000668.2,chr6,NC_00000...
+</span></span><span class=line><span class=cl>2511504  KI270412.1  GRCh38  supercontig      1       1179     .      .     .  ID=supercontig:KI270412.1;Alias=chrUn_KI270412...
+</span></span><span class=line><span class=cl>1201561          19  GRCh38   chromosome      1   58617616     .      .     .  ID=chromosome:19;Alias=CM000681.2,chr19,NC_000...
+</span></span><span class=line><span class=cl>2511474  KI270340.1  GRCh38  supercontig      1       1428     .      .     .  ID=supercontig:KI270340.1;Alias=chrUn_KI270340...
+</span></span><span class=line><span class=cl>2594560           Y  GRCh38   chromosome  2781480  56887902     .      .     .  ID=chromosome:Y;Alias=CM000686.2,chrY,NC_00002...
+</span></span></code></pre></td></tr></table></div></div><p>Filtering is straightforward in Pandas.</p><p>The expression <code>df.source == 'GRCh38'</code> generates a series of <code>True</code> and <code>False</code> values for each entry, aligned with <code>df</code>&rsquo;s index. Using this in <code>df[]</code> selects only entries with a corresponding <code>True</code> value.</p><p>There are 194 keys in <code>df[]</code> where <code>df.source == 'GRCh38'</code>.</p><p>Since there are 194 unique <em>seqids</em>, each entry in <code>gdf</code> represents a specific <em>seqid</em>.</p><p>We randomly choose 10 entries with the <code>sample</code> method for examination.</p><p>Unassembled sequences have a <em>type</em> of supercontig, while others are classified as chromosomes. To calculate the proportion of the genome that&rsquo;s incomplete, we need the total genome length (the sum of all <em>seqid</em> lengths).</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [90]: gdf = gdf.copy()
+</span></span><span class=line><span class=cl>In [91]: gdf[&#39;length&#39;] = gdf.end - gdf.start + 1
+</span></span><span class=line><span class=cl>In [93]: gdf.head()
+</span></span><span class=line><span class=cl>Out[93]:
+</span></span><span class=line><span class=cl>       seqid  source        type  start        end score strand phase                                         attributes     length
+</span></span><span class=line><span class=cl>0          1  GRCh38  chromosome      1  248956422     .      .     .  ID=chromosome:1;Alias=CM000663.2,chr1,NC_00000...  248956421
+</span></span><span class=line><span class=cl>235068    10  GRCh38  chromosome      1  133797422     .      .     .  ID=chromosome:10;Alias=CM000672.2,chr10,NC_000...  133797421
+</span></span><span class=line><span class=cl>328938    11  GRCh38  chromosome      1  135086622     .      .     .  ID=chromosome:11;Alias=CM000673.2,chr11,NC_000...  135086621
+</span></span><span class=line><span class=cl>483370    12  GRCh38  chromosome      1  133275309     .      .     .  ID=chromosome:12;Alias=CM000674.2,chr12,NC_000...  133275308
+</span></span><span class=line><span class=cl>634486    13  GRCh38  chromosome      1  114364328     .      .     .  ID=chromosome:13;Alias=CM000675.2,chr13,NC_000...  114364327
+</span></span><span class=line><span class=cl>In [97]: gdf.length.sum()
+</span></span><span class=line><span class=cl>Out[97]: 3096629532
+</span></span><span class=line><span class=cl>In [99]: chrs = [str(_) for _ in range(1, 23)] + [&#39;X&#39;, &#39;Y&#39;, &#39;MT&#39;]
+</span></span><span class=line><span class=cl>In [101]: gdf[-gdf.seqid.isin(chrs)].length.sum() / gdf.length.sum()
+</span></span><span class=line><span class=cl>Out[101]: 0.0037021917421198327
+</span></span></code></pre></td></tr></table></div></div><p>First, we create a copy of <code>gdf</code> with <code>.copy()</code>. Directly modifying a slice of <code>df</code> would trigger a <code>SettingWithCopyWarning</code> (see <a class=link href=http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy target=_blank rel=noopener>here</a> for more details).</p><p>We calculate each entry&rsquo;s length and add it to <code>gdf</code> as a new column called &ldquo;length&rdquo;. The total length is roughly 3.1 billion bases, with unassembled sequences constituting about 0.37%.</p><p>Here&rsquo;s how slicing works in the last two commands.</p><p>We create a list, <code>chrs</code>, containing all well-assembled sequences (chromosomes and mitochondria). We use the <code>isin</code> method to filter for entries whose <em>seqid</em> is in <code>chrs</code>.</p><p>The minus sign (<code>-</code>) before the index reverses the selection, keeping entries <em>not</em> in the list (the unassembled sequences starting with KI and GL).</p><p>Note: We could also filter by the <em>type</em> column to achieve the same result:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>gdf</span><span class=p>[(</span><span class=n>gdf</span><span class=p>[</span><span class=s1>&#39;type&#39;</span><span class=p>]</span> <span class=o>==</span> <span class=s1>&#39;supercontig&#39;</span><span class=p>)]</span><span class=o>.</span><span class=n>length</span><span class=o>.</span><span class=n>sum</span><span class=p>()</span> <span class=o>/</span> <span class=n>gdf</span><span class=o>.</span><span class=n>length</span><span class=o>.</span><span class=n>sum</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=how-many-genes-are-there>How Many Genes Are There?</h4><p>Now, we&rsquo;ll focus on entries from sources ensembl, havana, and ensembl_havana, which contain most annotation entries.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [109]: edf = df[df.source.isin([&#39;ensembl&#39;, &#39;havana&#39;, &#39;ensembl_havana&#39;])]
+</span></span><span class=line><span class=cl>In [111]: edf.sample(10)
+</span></span><span class=line><span class=cl>Out[111]:
+</span></span><span class=line><span class=cl>        seqid          source  type      start        end score strand phase                                         attributes
+</span></span><span class=line><span class=cl>915996     16          havana   CDS   27463541   27463592     .      -     2  ID=CDS:ENSP00000457449;Parent=transcript:ENST0...
+</span></span><span class=line><span class=cl>2531429     X          havana  exon   41196251   41196359     .      +     .  Parent=transcript:ENST00000462850;Name=ENSE000...
+</span></span><span class=line><span class=cl>1221944    19  ensembl_havana   CDS    5641740    5641946     .      +     0  ID=CDS:ENSP00000467423;Parent=transcript:ENST0...
+</span></span><span class=line><span class=cl>243070     10          havana  exon   13116267   13116340     .      +     .  Parent=transcript:ENST00000378764;Name=ENSE000...
+</span></span><span class=line><span class=cl>2413583     8  ensembl_havana  exon  144359184  144359423     .      +     .  Parent=transcript:ENST00000530047;Name=ENSE000...
+</span></span><span class=line><span class=cl>2160496     6          havana  exon  111322569  111322678     .      -     .  Parent=transcript:ENST00000434009;Name=ENSE000...
+</span></span><span class=line><span class=cl>839952     15          havana  exon   76227713   76227897     .      -     .  Parent=transcript:ENST00000565910;Name=ENSE000...
+</span></span><span class=line><span class=cl>957782     16  ensembl_havana  exon   67541653   67541782     .      +     .  Parent=transcript:ENST00000379312;Name=ENSE000...
+</span></span><span class=line><span class=cl>1632979    21  ensembl_havana  exon   37840658   37840709     .      -     .  Parent=transcript:ENST00000609713;Name=ENSE000...
+</span></span><span class=line><span class=cl>1953399     4          havana  exon  165464390  165464586     .      +     .  Parent=transcript:ENST00000511992;Name=ENSE000...
+</span></span><span class=line><span class=cl>In [123]: edf.type.value_counts()
+</span></span><span class=line><span class=cl>Out[123]:
+</span></span><span class=line><span class=cl>exon                             1180596
+</span></span><span class=line><span class=cl>CDS                               704604
+</span></span><span class=line><span class=cl>five_prime_UTR                    142387
+</span></span><span class=line><span class=cl>three_prime_UTR                   133938
+</span></span><span class=line><span class=cl>transcript                         96375
+</span></span><span class=line><span class=cl>gene                               42470
+</span></span><span class=line><span class=cl>processed_transcript               28228
+</span></span><span class=line><span class=cl>...
+</span></span><span class=line><span class=cl>Name: type, dtype: int64
+</span></span></code></pre></td></tr></table></div></div><p>Again, we use <code>isin</code> for filtering.</p><p>A quick value count reveals that most entries are exons, coding sequences (CDS), and untranslated regions (UTR). These are sub-gene elements.</p><p>We see 42,470 genes, but let&rsquo;s dig deeper. What are their names and functions? This information is in the <em>attributes</em> column.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [127]: ndf = edf[edf.type == &#39;gene&#39;]
+</span></span><span class=line><span class=cl>In [173]: ndf = ndf.copy()
+</span></span><span class=line><span class=cl>In [133]: ndf.sample(10).attributes.values
+</span></span><span class=line><span class=cl>Out[133]:
+</span></span><span class=line><span class=cl>array([&#39;ID=gene:ENSG00000228611;Name=HNF4GP1;biotype=processed_pseudogene;description=hepatocyte nuclear factor 4 gamma pseudogene 1 [Source:HGNC Symbol%3BAcc:HGNC:35417];gene_id=ENSG00000228611;havana_gene=OTTHUMG00000016986;havana_version=2;logic_name=havana;version=2&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000177189;Name=RPS6KA3;biotype=protein_coding;description=ribosomal protein S6 kinase A3 [Source:HGNC Symbol%3BAcc:HGNC:10432];gene_id=ENSG00000177189;havana_gene=OTTHUMG00000021231;havana_version=5;logic_name=ensembl_havana_gene;version=12&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000231748;Name=RP11-227H15.5;biotype=antisense;gene_id=ENSG00000231748;havana_gene=OTTHUMG00000018373;havana_version=1;logic_name=havana;version=1&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000227426;Name=VN1R33P;biotype=unitary_pseudogene;description=vomeronasal 1 receptor 33 pseudogene [Source:HGNC Symbol%3BAcc:HGNC:37353];gene_id=ENSG00000227426;havana_gene=OTTHUMG00000154474;havana_version=1;logic_name=havana;version=1&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000087250;Name=MT3;biotype=protein_coding;description=metallothionein 3 [Source:HGNC Symbol%3BAcc:HGNC:7408];gene_id=ENSG00000087250;havana_gene=OTTHUMG00000133282;havana_version=3;logic_name=ensembl_havana_gene;version=8&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000177108;Name=ZDHHC22;biotype=protein_coding;description=zinc finger DHHC-type containing 22 [Source:HGNC Symbol%3BAcc:HGNC:20106];gene_id=ENSG00000177108;havana_gene=OTTHUMG00000171575;havana_version=3;logic_name=ensembl_havana_gene;version=5&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000249784;Name=SCARNA22;biotype=scaRNA;description=small Cajal body-specific RNA 22 [Source:HGNC Symbol%3BAcc:HGNC:32580];gene_id=ENSG00000249784;logic_name=ncrna;version=1&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000079101;Name=CLUL1;biotype=protein_coding;description=clusterin like 1 [Source:HGNC Symbol%3BAcc:HGNC:2096];gene_id=ENSG00000079101;havana_gene=OTTHUMG00000178252;havana_version=7;logic_name=ensembl_havana_gene;version=16&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000229224;Name=AC105398.3;biotype=antisense;gene_id=ENSG00000229224;havana_gene=OTTHUMG00000152025;havana_version=1;logic_name=havana;version=1&#39;,
+</span></span><span class=line><span class=cl>       &#39;ID=gene:ENSG00000255552;Name=LY6G6E;biotype=protein_coding;description=lymphocyte antigen 6 complex%2C locus G6E (pseudogene) [Source:HGNC Symbol%3BAcc:HGNC:13934];gene_id=ENSG00000255552;havana_gene=OTTHUMG00000166419;havana_version=1;logic_name=ensembl_havana_gene;version=7&#39;], dtype=object)
+</span></span></code></pre></td></tr></table></div></div><p>This column contains semicolon-separated tag-value pairs. We&rsquo;ll extract gene names, IDs, and descriptions using regular expressions.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>re</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RE_GENE_NAME</span> <span class=o>=</span> <span class=n>re</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=sa>r</span><span class=s1>&#39;Name=(?P&lt;gene_name&gt;.+?);&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>extract_gene_name</span><span class=p>(</span><span class=n>attributes_str</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>res</span> <span class=o>=</span> <span class=n>RE_GENE_NAME</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=n>attributes_str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>res</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=s1>&#39;gene_name&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ndf</span><span class=p>[</span><span class=s1>&#39;gene_name&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>ndf</span><span class=o>.</span><span class=n>attributes</span><span class=o>.</span><span class=n>apply</span><span class=p>(</span><span class=n>extract_gene_name</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>First, we extract gene names.</p><p>In the regex <code>Name=(?P&lt;gene_name>.+?);</code> , <code>+?</code> ensures a non-greedy match, stopping at the first semicolon. Otherwise, it would match up to the last semicolon.</p><p>We compile the regex with <code>re.compile</code> for efficiency, as we&rsquo;ll apply it to many attribute strings.</p><p><code>extract_gene_name</code> is a helper function used with <code>pd.apply</code>, which applies a function to each DataFrame or Series entry.</p><p>In this case, we extract the gene name for each entry in <code>ndf.attributes</code> and add it to <code>ndf</code> as a new column called <code>gene_name</code>.</p><p>Gene IDs and descriptions are extracted similarly.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>RE_GENE_ID</span> <span class=o>=</span> <span class=n>re</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=sa>r</span><span class=s1>&#39;gene_id=(?P&lt;gene_id&gt;ENSG.+?);&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>extract_gene_id</span><span class=p>(</span><span class=n>attributes_str</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>res</span> <span class=o>=</span> <span class=n>RE_GENE_ID</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=n>attributes_str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>res</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=s1>&#39;gene_id&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ndf</span><span class=p>[</span><span class=s1>&#39;gene_id&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>ndf</span><span class=o>.</span><span class=n>attributes</span><span class=o>.</span><span class=n>apply</span><span class=p>(</span><span class=n>extract_gene_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RE_DESC</span> <span class=o>=</span> <span class=n>re</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=s1>&#39;description=(?P&lt;desc&gt;.+?);&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>extract_description</span><span class=p>(</span><span class=n>attributes_str</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>res</span> <span class=o>=</span> <span class=n>RE_DESC</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=n>attributes_str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>res</span> <span class=ow>is</span> <span class=kc>None</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s1>&#39;&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>res</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=s1>&#39;desc&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ndf</span><span class=p>[</span><span class=s1>&#39;desc&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>ndf</span><span class=o>.</span><span class=n>attributes</span><span class=o>.</span><span class=n>apply</span><span class=p>(</span><span class=n>extract_description</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>RE_GENE_ID</code> is more specific, as every <code>gene_id</code> must start with <code>ENSG</code>, where <code>ENS</code> represents <a class=link href=https://www.ensembl.org/index.html target=_blank rel=noopener>ensembl</a> and <code>G</code> stands for gene.</p><p>We return an empty string for entries without a description. As we won&rsquo;t need the <em>attributes</em> column anymore, let&rsquo;s remove it with <code>.drop</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>224</span><span class=p>]:</span> <span class=n>ndf</span><span class=o>.</span><span class=n>drop</span><span class=p>(</span><span class=s1>&#39;attributes&#39;</span><span class=p>,</span> <span class=n>axis</span><span class=o>=</span><span class=mi>1</span><span class=p>,</span> <span class=n>inplace</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>225</span><span class=p>]:</span> <span class=n>ndf</span><span class=o>.</span><span class=n>head</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>225</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>   <span class=n>seqid</span>          <span class=n>source</span>  <span class=nb>type</span>  <span class=n>start</span>    <span class=n>end</span> <span class=n>score</span> <span class=n>strand</span> <span class=n>phase</span>          <span class=n>gene_id</span> <span class=n>gene_name</span>                                               <span class=n>desc</span>
+</span></span><span class=line><span class=cl><span class=mi>16</span>     <span class=mi>1</span>          <span class=n>havana</span>  <span class=n>gene</span>  <span class=mi>11869</span>  <span class=mi>14409</span>     <span class=o>.</span>      <span class=o>+</span>     <span class=o>.</span>  <span class=n>ENSG00000223972</span>   <span class=n>DDX11L1</span>  <span class=n>DEAD</span><span class=o>/</span><span class=n>H</span><span class=o>-</span><span class=n>box</span> <span class=n>helicase</span> <span class=mi>11</span> <span class=n>like</span> <span class=mi>1</span> <span class=p>[</span><span class=n>Source</span><span class=p>:</span><span class=n>HGNC</span> <span class=n>Sym</span><span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=mi>28</span>     <span class=mi>1</span>          <span class=n>havana</span>  <span class=n>gene</span>  <span class=mi>14404</span>  <span class=mi>29570</span>     <span class=o>.</span>      <span class=o>-</span>     <span class=o>.</span>  <span class=n>ENSG00000227232</span>    <span class=n>WASH7P</span>  <span class=n>WAS</span> <span class=n>protein</span> <span class=n>family</span> <span class=n>homolog</span> <span class=mi>7</span> <span class=n>pseudogene</span> <span class=p>[</span><span class=n>Sourc</span><span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=mi>71</span>     <span class=mi>1</span>          <span class=n>havana</span>  <span class=n>gene</span>  <span class=mi>52473</span>  <span class=mi>53312</span>     <span class=o>.</span>      <span class=o>+</span>     <span class=o>.</span>  <span class=n>ENSG00000268020</span>    <span class=n>OR4G4P</span>  <span class=n>olfactory</span> <span class=n>receptor</span> <span class=n>family</span> <span class=mi>4</span> <span class=n>subfamily</span> <span class=n>G</span> <span class=n>member</span><span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=mi>74</span>     <span class=mi>1</span>          <span class=n>havana</span>  <span class=n>gene</span>  <span class=mi>62948</span>  <span class=mi>63887</span>     <span class=o>.</span>      <span class=o>+</span>     <span class=o>.</span>  <span class=n>ENSG00000240361</span>   <span class=n>OR4G11P</span>  <span class=n>olfactory</span> <span class=n>receptor</span> <span class=n>family</span> <span class=mi>4</span> <span class=n>subfamily</span> <span class=n>G</span> <span class=n>member</span><span class=o>...</span>
+</span></span><span class=line><span class=cl><span class=mi>77</span>     <span class=mi>1</span>  <span class=n>ensembl_havana</span>  <span class=n>gene</span>  <span class=mi>69091</span>  <span class=mi>70008</span>     <span class=o>.</span>      <span class=o>+</span>     <span class=o>.</span>  <span class=n>ENSG00000186092</span>     <span class=n>OR4F5</span>  <span class=n>olfactory</span> <span class=n>receptor</span> <span class=n>family</span> <span class=mi>4</span> <span class=n>subfamily</span> <span class=n>F</span> <span class=n>member</span><span class=o>...</span>
+</span></span></code></pre></td></tr></table></div></div><p>Here, <code>attributes</code> specifies the column to drop.</p><p><code>axis=1</code> indicates column removal (the default is <code>axis=0</code> for rows).</p><p><code>inplace=True</code> modifies the DataFrame directly instead of creating a copy.</p><p>A quick <code>.head</code> check confirms that the <em>attributes</em> column is gone, replaced by <code>gene_name</code>, <code>gene_id</code>, and <code>desc</code>.</p><p>Out of curiosity, let&rsquo;s see if <code>gene_id</code> and <code>gene_name</code> are unique:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>232</span><span class=p>]:</span> <span class=n>ndf</span><span class=o>.</span><span class=n>shape</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>232</span><span class=p>]:</span> <span class=p>(</span><span class=mi>42470</span><span class=p>,</span> <span class=mi>11</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>233</span><span class=p>]:</span> <span class=n>ndf</span><span class=o>.</span><span class=n>gene_id</span><span class=o>.</span><span class=n>unique</span><span class=p>()</span><span class=o>.</span><span class=n>shape</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>233</span><span class=p>]:</span> <span class=p>(</span><span class=mi>42470</span><span class=p>,)</span>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>234</span><span class=p>]:</span> <span class=n>ndf</span><span class=o>.</span><span class=n>gene_name</span><span class=o>.</span><span class=n>unique</span><span class=p>()</span><span class=o>.</span><span class=n>shape</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>234</span><span class=p>]:</span> <span class=p>(</span><span class=mi>42387</span><span class=p>,)</span>
+</span></span></code></pre></td></tr></table></div></div><p>There are fewer gene names than gene IDs, implying that some gene names are associated with multiple gene IDs. Let&rsquo;s find them.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>243</span><span class=p>]:</span> <span class=n>count_df</span> <span class=o>=</span> <span class=n>ndf</span><span class=o>.</span><span class=n>groupby</span><span class=p>(</span><span class=s1>&#39;gene_name&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>count</span><span class=p>()</span><span class=o>.</span><span class=n>ix</span><span class=p>[:,</span> <span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>sort_values</span><span class=p>()</span><span class=o>.</span><span class=n>ix</span><span class=p>[::</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>244</span><span class=p>]:</span> <span class=n>count_df</span><span class=o>.</span><span class=n>head</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>244</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl><span class=n>gene_name</span>
+</span></span><span class=line><span class=cl><span class=n>SCARNA20</span>           <span class=mi>7</span>
+</span></span><span class=line><span class=cl><span class=n>SCARNA16</span>           <span class=mi>6</span>
+</span></span><span class=line><span class=cl><span class=n>SCARNA17</span>           <span class=mi>5</span>
+</span></span><span class=line><span class=cl><span class=n>SCARNA15</span>           <span class=mi>4</span>
+</span></span><span class=line><span class=cl><span class=n>SCARNA21</span>           <span class=mi>4</span>
+</span></span><span class=line><span class=cl><span class=n>SCARNA11</span>           <span class=mi>4</span>
+</span></span><span class=line><span class=cl><span class=n>Clostridiales</span><span class=o>-</span><span class=mi>1</span>    <span class=mi>3</span>
+</span></span><span class=line><span class=cl><span class=n>SCARNA4</span>            <span class=mi>3</span>
+</span></span><span class=line><span class=cl><span class=n>C1QTNF9B</span><span class=o>-</span><span class=n>AS1</span>       <span class=mi>2</span>
+</span></span><span class=line><span class=cl><span class=n>C11orf71</span>           <span class=mi>2</span>
+</span></span><span class=line><span class=cl><span class=n>Name</span><span class=p>:</span> <span class=n>seqid</span><span class=p>,</span> <span class=n>dtype</span><span class=p>:</span> <span class=n>int64</span>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>262</span><span class=p>]:</span> <span class=n>count_df</span><span class=p>[</span><span class=n>count_df</span> <span class=o>&gt;</span> <span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>shape</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>262</span><span class=p>]:</span> <span class=p>(</span><span class=mi>63</span><span class=p>,)</span>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>263</span><span class=p>]:</span> <span class=n>count_df</span><span class=o>.</span><span class=n>shape</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>263</span><span class=p>]:</span> <span class=p>(</span><span class=mi>42387</span><span class=p>,)</span>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>264</span><span class=p>]:</span> <span class=n>count_df</span><span class=p>[</span><span class=n>count_df</span> <span class=o>&gt;</span> <span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>/</span> <span class=n>count_df</span><span class=o>.</span><span class=n>shape</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>264</span><span class=p>]:</span> <span class=mf>0.0014863047632528842</span>
+</span></span></code></pre></td></tr></table></div></div><p>We group entries by <code>gene_name</code> and count the items in each group with <code>.count()</code>.</p><p>Inspecting the output of <code>ndf.groupby('gene_name').count()</code> shows that all columns are counted for each group, but most have the same value.</p><p>Note that NA values are excluded from the count. We only need the count from the first column, <code>seqid</code>, which has no NA values (ensured by <code>.ix[:, 0]</code>).</p><p>We then sort the counts using <code>.sort_values</code> and reverse the order with <code>.ix[::-1]</code>.</p><p>The result shows that a gene name can be shared by up to seven gene IDs.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>255</span><span class=p>]:</span> <span class=n>ndf</span><span class=p>[</span><span class=n>ndf</span><span class=o>.</span><span class=n>gene_name</span> <span class=o>==</span> <span class=s1>&#39;SCARNA20&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>255</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>        <span class=n>seqid</span>   <span class=n>source</span>  <span class=nb>type</span>      <span class=n>start</span>        <span class=n>end</span> <span class=n>score</span> <span class=n>strand</span> <span class=n>phase</span>          <span class=n>gene_id</span> <span class=n>gene_name</span>                                                                    <span class=n>desc</span>
+</span></span><span class=line><span class=cl><span class=mi>179399</span>   <span class=mi>1</span>     <span class=n>ensembl</span>  <span class=n>gene</span>  <span class=mi>171768070</span>  <span class=mi>171768175</span>  <span class=o>.</span>     <span class=o>+</span>      <span class=o>.</span>     <span class=n>ENSG00000253060</span>  <span class=n>SCARNA20</span>  <span class=n>Small</span> <span class=n>Cajal</span> <span class=n>body</span> <span class=n>specific</span> <span class=n>RNA</span> <span class=mi>20</span> <span class=p>[</span><span class=n>Source</span><span class=p>:</span><span class=n>RFAM</span><span class=o>%</span><span class=mi>3</span><span class=n>BAcc</span><span class=p>:</span><span class=n>RF00601</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=mi>201037</span>   <span class=mi>1</span>     <span class=n>ensembl</span>  <span class=n>gene</span>  <span class=mi>204727991</span>  <span class=mi>204728106</span>  <span class=o>.</span>     <span class=o>+</span>      <span class=o>.</span>     <span class=n>ENSG00000251861</span>  <span class=n>SCARNA20</span>  <span class=n>Small</span> <span class=n>Cajal</span> <span class=n>body</span> <span class=n>specific</span> <span class=n>RNA</span> <span class=mi>20</span> <span class=p>[</span><span class=n>Source</span><span class=p>:</span><span class=n>RFAM</span><span class=o>%</span><span class=mi>3</span><span class=n>BAcc</span><span class=p>:</span><span class=n>RF00601</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=mi>349203</span>   <span class=mi>11</span>    <span class=n>ensembl</span>  <span class=n>gene</span>  <span class=mi>8555016</span>    <span class=mi>8555146</span>    <span class=o>.</span>     <span class=o>+</span>      <span class=o>.</span>     <span class=n>ENSG00000252778</span>  <span class=n>SCARNA20</span>  <span class=n>Small</span> <span class=n>Cajal</span> <span class=n>body</span> <span class=n>specific</span> <span class=n>RNA</span> <span class=mi>20</span> <span class=p>[</span><span class=n>Source</span><span class=p>:</span><span class=n>RFAM</span><span class=o>%</span><span class=mi>3</span><span class=n>BAcc</span><span class=p>:</span><span class=n>RF00601</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=mi>718520</span>   <span class=mi>14</span>    <span class=n>ensembl</span>  <span class=n>gene</span>  <span class=mi>63479272</span>   <span class=mi>63479413</span>   <span class=o>.</span>     <span class=o>+</span>      <span class=o>.</span>     <span class=n>ENSG00000252800</span>  <span class=n>SCARNA20</span>  <span class=n>Small</span> <span class=n>Cajal</span> <span class=n>body</span> <span class=n>specific</span> <span class=n>RNA</span> <span class=mi>20</span> <span class=p>[</span><span class=n>Source</span><span class=p>:</span><span class=n>RFAM</span><span class=o>%</span><span class=mi>3</span><span class=n>BAcc</span><span class=p>:</span><span class=n>RF00601</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=mi>837233</span>   <span class=mi>15</span>    <span class=n>ensembl</span>  <span class=n>gene</span>  <span class=mi>75121536</span>   <span class=mi>75121666</span>   <span class=o>.</span>     <span class=o>-</span>      <span class=o>.</span>     <span class=n>ENSG00000252722</span>  <span class=n>SCARNA20</span>  <span class=n>Small</span> <span class=n>Cajal</span> <span class=n>body</span> <span class=n>specific</span> <span class=n>RNA</span> <span class=mi>20</span> <span class=p>[</span><span class=n>Source</span><span class=p>:</span><span class=n>RFAM</span><span class=o>%</span><span class=mi>3</span><span class=n>BAcc</span><span class=p>:</span><span class=n>RF00601</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=mi>1039874</span>  <span class=mi>17</span>    <span class=n>ensembl</span>  <span class=n>gene</span>  <span class=mi>28018770</span>   <span class=mi>28018907</span>   <span class=o>.</span>     <span class=o>+</span>      <span class=o>.</span>     <span class=n>ENSG00000251818</span>  <span class=n>SCARNA20</span>  <span class=n>Small</span> <span class=n>Cajal</span> <span class=n>body</span> <span class=n>specific</span> <span class=n>RNA</span> <span class=mi>20</span> <span class=p>[</span><span class=n>Source</span><span class=p>:</span><span class=n>RFAM</span><span class=o>%</span><span class=mi>3</span><span class=n>BAcc</span><span class=p>:</span><span class=n>RF00601</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=mi>1108215</span>  <span class=mi>17</span>    <span class=n>ensembl</span>  <span class=n>gene</span>  <span class=mi>60231516</span>   <span class=mi>60231646</span>   <span class=o>.</span>     <span class=o>-</span>      <span class=o>.</span>     <span class=n>ENSG00000252577</span>  <span class=n>SCARNA20</span>  <span class=n>small</span> <span class=n>Cajal</span> <span class=n>body</span><span class=o>-</span><span class=n>specific</span> <span class=n>RNA</span> <span class=mi>20</span> <span class=p>[</span><span class=n>Source</span><span class=p>:</span><span class=n>HGNC</span> <span class=n>Symbol</span><span class=o>%</span><span class=mi>3</span><span class=n>BAcc</span><span class=p>:</span><span class=n>HGNC</span><span class=p>:</span><span class=mi>32578</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><p>Examining the SCARNA20 genes reveals that they are distinct, located at different genomic positions despite sharing the same name. Their descriptions aren&rsquo;t helpful in differentiating them.</p><p>Key takeaway: Gene names are not always unique to gene IDs, with about 0.15% shared by multiple genes.</p><h4 id=how-long-is-a-typical-gene>How Long Is a Typical Gene?</h4><p>Let&rsquo;s add a <code>length</code> column to <code>ndf</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>277</span><span class=p>]:</span> <span class=n>ndf</span><span class=p>[</span><span class=s1>&#39;length&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=n>ndf</span><span class=o>.</span><span class=n>end</span> <span class=o>-</span> <span class=n>ndf</span><span class=o>.</span><span class=n>start</span> <span class=o>+</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=n>In</span> <span class=p>[</span><span class=mi>278</span><span class=p>]:</span> <span class=n>ndf</span><span class=o>.</span><span class=n>length</span><span class=o>.</span><span class=n>describe</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>Out</span><span class=p>[</span><span class=mi>278</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl><span class=n>count</span>    <span class=mf>4.247000e+04</span>
+</span></span><span class=line><span class=cl><span class=n>mean</span>     <span class=mf>3.583348e+04</span>
+</span></span><span class=line><span class=cl><span class=n>std</span>      <span class=mf>9.683485e+04</span>
+</span></span><span class=line><span class=cl><span class=nb>min</span>      <span class=mf>8.000000e+00</span>
+</span></span><span class=line><span class=cl><span class=mi>25</span><span class=o>%</span>      <span class=mf>8.840000e+02</span>
+</span></span><span class=line><span class=cl><span class=mi>50</span><span class=o>%</span>      <span class=mf>5.170500e+03</span>
+</span></span><span class=line><span class=cl><span class=mi>75</span><span class=o>%</span>      <span class=mf>3.055200e+04</span>
+</span></span><span class=line><span class=cl><span class=nb>max</span>      <span class=mf>2.304997e+06</span>
+</span></span><span class=line><span class=cl><span class=n>Name</span><span class=p>:</span> <span class=n>length</span><span class=p>,</span> <span class=n>dtype</span><span class=p>:</span> <span class=n>float64</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>.describe()</code> provides basic length statistics:</p><ul><li><p>Mean gene length: ~36,000 bases</p></li><li><p>Median gene length: ~5,200 bases</p></li><li><p>Minimum gene length: 8 bases</p></li><li><p>Maximum gene length: ~2.3 million bases</p></li></ul><p>The mean being much larger than the median suggests a right-skewed length distribution. Let&rsquo;s visualize this.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>matplotlib</span> <span class=k>as</span> <span class=nn>plt</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ndf</span><span class=o>.</span><span class=n>length</span><span class=o>.</span><span class=n>plot</span><span class=p>(</span><span class=n>kind</span><span class=o>=</span><span class=s1>&#39;hist&#39;</span><span class=p>,</span> <span class=n>bins</span><span class=o>=</span><span class=mi>50</span><span class=p>,</span> <span class=n>logy</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>show</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>Pandas simplifies matplotlib integration, making DataFrame and Series plotting easy.</p><p>Here, <code>kind='hist'</code> requests a histogram with 50 bins and a logarithmic y-axis (<code>logy=True</code>).</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png" media="(min-width: 1920.1px)"><img alt src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121414%2Ftoptal-blog-image-1478601601958-60ef4533ec66c0dcd39b47dbe9b783ca.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>The histogram shows that most genes fall within the first bin. However, some are over two million bases long. Let&rsquo;s identify them:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [39]: ndf[ndf.length &gt; 2e6].sort_values(&#39;length&#39;).ix[::-1]
+</span></span><span class=line><span class=cl>Out[39]:
+</span></span><span class=line><span class=cl>        seqid          source  type      start        end score strand phase gene_name          gene_id                                               desc   length
+</span></span><span class=line><span class=cl>2309345     7  ensembl_havana  gene  146116002  148420998     .      +     .   CNTNAP2  ENSG00000174469  contactin associated protein-like 2 [Source:HG...  2304997
+</span></span><span class=line><span class=cl>2422510     9  ensembl_havana  gene    8314246   10612723     .      -     .     PTPRD  ENSG00000153707  protein tyrosine phosphatase%2C receptor type ...  2298478
+</span></span><span class=line><span class=cl>2527169     X  ensembl_havana  gene   31097677   33339441     .      -     .       DMD  ENSG00000198947    dystrophin [Source:HGNC Symbol%3BAcc:HGNC:2928]  2241765
+</span></span><span class=line><span class=cl>440886     11  ensembl_havana  gene   83455012   85627922     .      -     .      DLG2  ENSG00000150672  discs large MAGUK scaffold protein 2 [Source:H...  2172911
+</span></span><span class=line><span class=cl>2323457     8  ensembl_havana  gene    2935353    4994972     .      -     .     CSMD1  ENSG00000183117  CUB and Sushi multiple domains 1 [Source:HGNC ...  2059620
+</span></span><span class=line><span class=cl>1569914    20  ensembl_havana  gene   13995369   16053197     .      +     .   MACROD2  ENSG00000172264  MACRO domain containing 2 [Source:HGNC Symbol%...  2057829
+</span></span></code></pre></td></tr></table></div></div><p>The longest gene is CNTNAP2 (contactin-associated protein-like 2). According to its <a class=link href=https://en.wikipedia.org/wiki/CNTNAP2 target=_blank rel=noopener>wikipedia page</a>:</p><blockquote><p>This gene spans almost 1.6% of chromosome 7 and is one of the largest in the human genome.</p></blockquote><p>Our analysis confirms this! Now, let&rsquo;s look at the shortest genes:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [40]: ndf.sort_values(&#39;length&#39;).head()
+</span></span><span class=line><span class=cl>Out[40]:
+</span></span><span class=line><span class=cl>        seqid  source  type      start        end score strand phase   gene_name          gene_id                                               desc  length
+</span></span><span class=line><span class=cl>682278     14  havana  gene   22438547   22438554     .      +     .       TRDD1  ENSG00000223997  T cell receptor delta diversity 1 [Source:HGNC...       8
+</span></span><span class=line><span class=cl>682282     14  havana  gene   22439007   22439015     .      +     .       TRDD2  ENSG00000237235  T cell receptor delta diversity 2 [Source:HGNC...       9
+</span></span><span class=line><span class=cl>2306836     7  havana  gene  142786213  142786224     .      +     .       TRBD1  ENSG00000282431  T cell receptor beta diversity 1 [Source:HGNC ...      12
+</span></span><span class=line><span class=cl>682286     14  havana  gene   22449113   22449125     .      +     .       TRDD3  ENSG00000228985  T cell receptor delta diversity 3 [Source:HGNC...      13
+</span></span><span class=line><span class=cl>1879625     4  havana  gene   10238213   10238235     .      -     .  AC006499.9  ENSG00000271544                                                         23
+</span></span></code></pre></td></tr></table></div></div><p>The length difference between the extremes is five orders of magnitude (2.3 million vs. 8), highlighting life&rsquo;s incredible diversity.</p><p>A single gene can produce multiple proteins through alternative splicing, a concept we haven&rsquo;t explored here. The GFF3 file contains this information, but it&rsquo;s beyond this post&rsquo;s scope.</p><h4 id=gene-distribution-among-chromosomes>Gene Distribution Among Chromosomes</h4><p>Finally, let&rsquo;s analyze gene distribution across chromosomes, which also demonstrates the <code>.merge</code> method for combining DataFrames. Intuitively, longer chromosomes should contain more genes. Let&rsquo;s see.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [53]: ndf = ndf[ndf.seqid.isin(chrs)]
+</span></span><span class=line><span class=cl>In [54]: chr_gene_counts = ndf.groupby(&#39;seqid&#39;).count().ix[:, 0].sort_values().ix[::-1]
+</span></span><span class=line><span class=cl>Out[54]: chr_gene_counts
+</span></span><span class=line><span class=cl>seqid
+</span></span><span class=line><span class=cl>1     3902
+</span></span><span class=line><span class=cl>2     2806
+</span></span><span class=line><span class=cl>11    2561
+</span></span><span class=line><span class=cl>19    2412
+</span></span><span class=line><span class=cl>17    2280
+</span></span><span class=line><span class=cl>3     2204
+</span></span><span class=line><span class=cl>6     2154
+</span></span><span class=line><span class=cl>12    2140
+</span></span><span class=line><span class=cl>7     2106
+</span></span><span class=line><span class=cl>5     2002
+</span></span><span class=line><span class=cl>16    1881
+</span></span><span class=line><span class=cl>X     1852
+</span></span><span class=line><span class=cl>4     1751
+</span></span><span class=line><span class=cl>9     1659
+</span></span><span class=line><span class=cl>8     1628
+</span></span><span class=line><span class=cl>10    1600
+</span></span><span class=line><span class=cl>15    1476
+</span></span><span class=line><span class=cl>14    1449
+</span></span><span class=line><span class=cl>22     996
+</span></span><span class=line><span class=cl>20     965
+</span></span><span class=line><span class=cl>13     872
+</span></span><span class=line><span class=cl>18     766
+</span></span><span class=line><span class=cl>21     541
+</span></span><span class=line><span class=cl>Y      436
+</span></span><span class=line><span class=cl>Name: source, dtype: int64
+</span></span></code></pre></td></tr></table></div></div><p>We reuse the <code>chrs</code> variable to exclude unassembled sequences. The output confirms that the largest chromosome, Chromosome 1, has the most genes. While Chromosome Y has the fewest genes, it&rsquo;s not the smallest chromosome.</p><p>Surprisingly, there seem to be no genes in the mitochondrion (MT). This is incorrect.</p><p>Filtering the original <code>df</code> DataFrame reveals that all MT genes come from the insdc source, which we excluded when creating <code>edf</code> (focusing on havana, ensembl, and ensembl_havana).</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [134]: df[(df.type == &#39;gene&#39;) &amp; (df.seqid == &#39;MT&#39;)]
+</span></span><span class=line><span class=cl>Out[134]:
+</span></span><span class=line><span class=cl>        seqid source  type  start    end score strand phase                                         attributes
+</span></span><span class=line><span class=cl>        2514003    MT  insdc  gene    648   1601     .      +     .  ID=gene:ENSG00000211459;Name=MT-RNR1;biotype=M...
+</span></span><span class=line><span class=cl>        2514009    MT  insdc  gene   1671   3229     .      +     .  ID=gene:ENSG00000210082;Name=MT-RNR2;biotype=M...
+</span></span><span class=line><span class=cl>        2514016    MT  insdc  gene   3307   4262     .      +     .  ID=gene:ENSG00000198888;Name=MT-ND1;biotype=pr...
+</span></span><span class=line><span class=cl>        2514029    MT  insdc  gene   4470   5511     .      +     .  ID=gene:ENSG00000198763;Name=MT-ND2;biotype=pr...
+</span></span><span class=line><span class=cl>        2514048    MT  insdc  gene   5904   7445     .      +     .  ID=gene:ENSG00000198804;Name=MT-CO1;biotype=pr...
+</span></span><span class=line><span class=cl>        2514058    MT  insdc  gene   7586   8269     .      +     .  ID=gene:ENSG00000198712;Name=MT-CO2;biotype=pr...
+</span></span><span class=line><span class=cl>        2514065    MT  insdc  gene   8366   8572     .      +     .  ID=gene:ENSG00000228253;Name=MT-ATP8;biotype=p...
+</span></span><span class=line><span class=cl>        2514069    MT  insdc  gene   8527   9207     .      +     .  ID=gene:ENSG00000198899;Name=MT-ATP6;biotype=p...
+</span></span><span class=line><span class=cl>        2514073    MT  insdc  gene   9207   9990     .      +     .  ID=gene:ENSG00000198938;Name=MT-CO3;biotype=pr...
+</span></span><span class=line><span class=cl>        2514080    MT  insdc  gene  10059  10404     .      +     .  ID=gene:ENSG00000198840;Name=MT-ND3;biotype=pr...
+</span></span><span class=line><span class=cl>        2514087    MT  insdc  gene  10470  10766     .      +     .  ID=gene:ENSG00000212907;Name=MT-ND4L;biotype=p...
+</span></span><span class=line><span class=cl>        2514091    MT  insdc  gene  10760  12137     .      +     .  ID=gene:ENSG00000198886;Name=MT-ND4;biotype=pr...
+</span></span><span class=line><span class=cl>        2514104    MT  insdc  gene  12337  14148     .      +     .  ID=gene:ENSG00000198786;Name=MT-ND5;biotype=pr...
+</span></span><span class=line><span class=cl>        2514108    MT  insdc  gene  14149  14673     .      -     .  ID=gene:ENSG00000198695;Name=MT-ND6;biotype=pr...
+</span></span><span class=line><span class=cl>        2514115    MT  insdc  gene  14747  15887     .      +     .  ID=gene:ENSG00000198727;Name=MT-CYB;biotype=pr...
+</span></span></code></pre></td></tr></table></div></div><p>This snippet demonstrates combining conditions during filtering with <code>&</code> (logical &ldquo;and&rdquo;). The logical &ldquo;or&rdquo; operator is <code>|</code>.</p><p>Parentheses around each condition are mandatory, unlike in standard Python, which uses literal <code>and</code> and <code>or</code>.</p><p>Let&rsquo;s use the <code>gdf</code> DataFrame from earlier to get each chromosome&rsquo;s length:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [61]: gdf = gdf[gdf.seqid.isin(chrs)]
+</span></span><span class=line><span class=cl>In [62]: gdf.drop([&#39;start&#39;, &#39;end&#39;, &#39;score&#39;, &#39;strand&#39;, &#39;phase&#39; ,&#39;attributes&#39;], axis=1, inplace=True)
+</span></span><span class=line><span class=cl>In [63]: gdf.sort_values(&#39;length&#39;).ix[::-1]
+</span></span><span class=line><span class=cl>Out[63]:
+</span></span><span class=line><span class=cl>        seqid  source        type     length
+</span></span><span class=line><span class=cl>0           1  GRCh38  chromosome  248956422
+</span></span><span class=line><span class=cl>1364641     2  GRCh38  chromosome  242193529
+</span></span><span class=line><span class=cl>1705855     3  GRCh38  chromosome  198295559
+</span></span><span class=line><span class=cl>1864567     4  GRCh38  chromosome  190214555
+</span></span><span class=line><span class=cl>1964921     5  GRCh38  chromosome  181538259
+</span></span><span class=line><span class=cl>2080148     6  GRCh38  chromosome  170805979
+</span></span><span class=line><span class=cl>2196981     7  GRCh38  chromosome  159345973
+</span></span><span class=line><span class=cl>2514125     X  GRCh38  chromosome  156040895
+</span></span><span class=line><span class=cl>2321361     8  GRCh38  chromosome  145138636
+</span></span><span class=line><span class=cl>2416560     9  GRCh38  chromosome  138394717
+</span></span><span class=line><span class=cl>328938     11  GRCh38  chromosome  135086622
+</span></span><span class=line><span class=cl>235068     10  GRCh38  chromosome  133797422
+</span></span><span class=line><span class=cl>483370     12  GRCh38  chromosome  133275309
+</span></span><span class=line><span class=cl>634486     13  GRCh38  chromosome  114364328
+</span></span><span class=line><span class=cl>674767     14  GRCh38  chromosome  107043718
+</span></span><span class=line><span class=cl>767312     15  GRCh38  chromosome  101991189
+</span></span><span class=line><span class=cl>865053     16  GRCh38  chromosome   90338345
+</span></span><span class=line><span class=cl>990810     17  GRCh38  chromosome   83257441
+</span></span><span class=line><span class=cl>1155977    18  GRCh38  chromosome   80373285
+</span></span><span class=line><span class=cl>1559144    20  GRCh38  chromosome   64444167
+</span></span><span class=line><span class=cl>1201561    19  GRCh38  chromosome   58617616
+</span></span><span class=line><span class=cl>2594560     Y  GRCh38  chromosome   54106423
+</span></span><span class=line><span class=cl>1647482    22  GRCh38  chromosome   50818468
+</span></span><span class=line><span class=cl>1616710    21  GRCh38  chromosome   46709983
+</span></span><span class=line><span class=cl>2513999    MT  GRCh38  chromosome      16569
+</span></span></code></pre></td></tr></table></div></div><p>We drop irrelevant columns for clarity.</p><p><code>.drop</code> can remove multiple columns in one go.</p><p>The MT entry remains; we&rsquo;ll address it shortly. Now, let&rsquo;s merge the two datasets based on the <em>seqid</em> column.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [73]: cdf = chr_gene_counts.to_frame(name=&#39;gene_count&#39;).reset_index()
+</span></span><span class=line><span class=cl>In [75]: cdf.head(2)
+</span></span><span class=line><span class=cl>Out[75]:
+</span></span><span class=line><span class=cl>  seqid  gene_count
+</span></span><span class=line><span class=cl>0     1        3902
+</span></span><span class=line><span class=cl>1     2        2806
+</span></span><span class=line><span class=cl>In [78]: merged = gdf.merge(cdf, on=&#39;seqid&#39;)
+</span></span><span class=line><span class=cl>In [79]: merged
+</span></span><span class=line><span class=cl>Out[79]:
+</span></span><span class=line><span class=cl>   seqid  source        type     length  gene_count
+</span></span><span class=line><span class=cl>0      1  GRCh38  chromosome  248956422        3902
+</span></span><span class=line><span class=cl>1     10  GRCh38  chromosome  133797422        1600
+</span></span><span class=line><span class=cl>2     11  GRCh38  chromosome  135086622        2561
+</span></span><span class=line><span class=cl>3     12  GRCh38  chromosome  133275309        2140
+</span></span><span class=line><span class=cl>4     13  GRCh38  chromosome  114364328         872
+</span></span><span class=line><span class=cl>5     14  GRCh38  chromosome  107043718        1449
+</span></span><span class=line><span class=cl>6     15  GRCh38  chromosome  101991189        1476
+</span></span><span class=line><span class=cl>7     16  GRCh38  chromosome   90338345        1881
+</span></span><span class=line><span class=cl>8     17  GRCh38  chromosome   83257441        2280
+</span></span><span class=line><span class=cl>9     18  GRCh38  chromosome   80373285         766
+</span></span><span class=line><span class=cl>10    19  GRCh38  chromosome   58617616        2412
+</span></span><span class=line><span class=cl>11     2  GRCh38  chromosome  242193529        2806
+</span></span><span class=line><span class=cl>12    20  GRCh38  chromosome   64444167         965
+</span></span><span class=line><span class=cl>13    21  GRCh38  chromosome   46709983         541
+</span></span><span class=line><span class=cl>14    22  GRCh38  chromosome   50818468         996
+</span></span><span class=line><span class=cl>15     3  GRCh38  chromosome  198295559        2204
+</span></span><span class=line><span class=cl>16     4  GRCh38  chromosome  190214555        1751
+</span></span><span class=line><span class=cl>17     5  GRCh38  chromosome  181538259        2002
+</span></span><span class=line><span class=cl>18     6  GRCh38  chromosome  170805979        2154
+</span></span><span class=line><span class=cl>19     7  GRCh38  chromosome  159345973        2106
+</span></span><span class=line><span class=cl>20     8  GRCh38  chromosome  145138636        1628
+</span></span><span class=line><span class=cl>21     9  GRCh38  chromosome  138394717        1659
+</span></span><span class=line><span class=cl>22     X  GRCh38  chromosome  156040895        1852
+</span></span><span class=line><span class=cl>23     Y  GRCh38  chromosome   54106423         436
+</span></span></code></pre></td></tr></table></div></div><p>As <code>chr_gene_counts</code> is a Series (which doesn&rsquo;t support merging), we convert it to a DataFrame with <code>.to_frame</code>.</p><p><code>.reset_index()</code> turns the original index (<em>seqid</em>) into a new column and resets the index to 0-based integers.</p><p><code>cdf.head(2)</code> shows the result. Next, we use <code>.merge</code> to combine the DataFrames based on <code>seqid</code>.</p><p>The merged DataFrame still lacks the MT entry because <code>.merge</code> defaults to an inner join. You can perform left, right, or outer joins by adjusting the <code>how</code> parameter (see <a class=link href=http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.merge.html#pandas.DataFrame.merge target=_blank rel=noopener>documentation</a> for details).</p><p>You might encounter the related <code>.join</code> method. Both <code>.merge</code> and <code>.join</code> combine DataFrames but have different APIs.</p><p>The official <a class=link href=http://pandas.pydata.org/pandas-docs/stable/merging.html#brief-primer-on-merge-methods-relational-algebra target=_blank rel=noopener>documentation</a> states:</p><blockquote><p>The related DataFrame.join method, uses merge internally for the index-on-index and index-on-column(s) joins, but joins on indexes by default rather than trying to join on common columns (the default behavior for merge). If you are joining on index, you may wish to use DataFrame.join to save yourself some typing.</p></blockquote><p>In essence, <code>.merge</code> is more general and used internally by <code>.join</code>.</p><p>Finally, let&rsquo;s calculate the correlation between chromosome <code>length</code> and <code>gene_count</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>In [81]: merged[[&#39;length&#39;, &#39;gene_count&#39;]].corr()
+</span></span><span class=line><span class=cl>Out[81]:
+</span></span><span class=line><span class=cl>              length  gene_count
+</span></span><span class=line><span class=cl>length      1.000000    0.728221
+</span></span><span class=line><span class=cl>gene_count  0.728221    1.000000
+</span></span></code></pre></td></tr></table></div></div><p><code>.corr</code> calculates the <a class=link href=https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient target=_blank rel=noopener>Pearson correlation</a> between all column pairs in a DataFrame.</p><p>We have only one pair, and the correlation is positive (0.73).</p><p>This indicates that larger chromosomes tend to have more genes. Let&rsquo;s visualize this after sorting by <code>length</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=n>ax</span> <span class=o>=</span> <span class=n>merged</span><span class=p>[[</span><span class=s1>&#39;length&#39;</span><span class=p>,</span> <span class=s1>&#39;gene_count&#39;</span><span class=p>]]</span><span class=o>.</span><span class=n>sort_values</span><span class=p>(</span><span class=s1>&#39;length&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>plot</span><span class=p>(</span><span class=n>x</span><span class=o>=</span><span class=s1>&#39;length&#39;</span><span class=p>,</span> <span class=n>y</span><span class=o>=</span><span class=s1>&#39;gene_count&#39;</span><span class=p>,</span> <span class=n>style</span><span class=o>=</span><span class=s1>&#39;o-&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=c1># add some margin to both ends of x axis</span>
+</span></span><span class=line><span class=cl><span class=n>xlim</span> <span class=o>=</span> <span class=n>ax</span><span class=o>.</span><span class=n>get_xlim</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>margin</span> <span class=o>=</span> <span class=n>xlim</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>*</span> <span class=mf>0.1</span>
+</span></span><span class=line><span class=cl><span class=n>ax</span><span class=o>.</span><span class=n>set_xlim</span><span class=p>([</span><span class=n>xlim</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>-</span> <span class=n>margin</span><span class=p>,</span> <span class=n>xlim</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>+</span> <span class=n>margin</span><span class=p>])</span>
+</span></span><span class=line><span class=cl><span class=c1># Label each point on the graph</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=n>x</span><span class=p>,</span> <span class=n>y</span><span class=p>)</span> <span class=ow>in</span> <span class=n>merged</span><span class=p>[[</span><span class=s1>&#39;seqid&#39;</span><span class=p>,</span> <span class=s1>&#39;length&#39;</span><span class=p>,</span> <span class=s1>&#39;gene_count&#39;</span><span class=p>]]</span><span class=o>.</span><span class=n>sort_values</span><span class=p>(</span><span class=s1>&#39;length&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>values</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>ax</span><span class=o>.</span><span class=n>text</span><span class=p>(</span><span class=n>x</span><span class=p>,</span> <span class=n>y</span> <span class=o>-</span> <span class=mi>100</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=n>s</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png" media="(min-width: 1920.1px)"><img alt src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F121413%2Ftoptal-blog-image-1478601215377-37d251d5cf8742c53a16f90574c1e1df.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>While there&rsquo;s a positive correlation overall, it doesn&rsquo;t hold true for every chromosome. Notably, Chromosomes 17, 16, 15, 14, and 13 exhibit a negative correlation, meaning the gene count decreases as chromosome size increases.</p><h2 id=findings-and-future-research>Findings and Future Research</h2><p>This concludes our exploration of manipulating a human genome annotation file (GFF3 format) using the SciPy stack, primarily employing IPython, Pandas, and matplotlib. We learned common Pandas operations and uncovered intriguing facts about our genome:</p><ol><li>Despite the first draft being over 15 years old, about 0.37% of the human genome remains incomplete.</li><li>This particular <a class=link href=ftp://ftp.ensembl.org/pub/release-85/gff3/homo_sapiens/Homo_sapiens.GRCh38.85.gff3.gz>GFF3 file</a> reveals approximately 42,000 genes in the human genome.</li><li>Gene lengths vary drastically, from a few dozen to over two million bases.</li><li>Gene distribution across chromosomes is uneven. Generally, larger chromosomes harbor more genes, but some show an inverse correlation.</li></ol><p>The GFF3 file is rich in information, and we&rsquo;ve only scratched the surface. Further exploration could involve these questions:</p><ol><li>How many transcripts does a gene typically have? What proportion of genes have multiple transcripts?</li><li>What is the typical number of isoforms per transcript?</li><li>How many exons, CDS, and UTRs does a transcript typically have? What are their size distributions?</li><li>Can we categorize genes based on their function described in the <em>description</em> column?</li></ol></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3987358164777632" crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-5X67X4Q4")</script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X67X4Q4" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

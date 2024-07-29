@@ -1,0 +1,929 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="This tutorial provides a concise explanation of monads and demonstrates their implementation in five popular programming languages: JavaScript, Python, Ruby, Swift, and Scala. Whether you&rsquo;re seeking to understand monads in a specific language or compare different implementations, this guide has you covered! By leveraging monads, you can effectively eliminate various bugs, including null-pointer exceptions, unhandled exceptions, and race conditions. This tutorial covers the following: An overview of category theory The definition of a monad Implementations of Option (&ldquo;Maybe&rdquo;), Either, and Future monads, accompanied by a sample program illustrating their use in JavaScript, Python, Ruby, Swift, and Scala Let&rsquo;s embark on this journey!"><title>Monads such as Option/Maybe, Either, and Future are available in JavaScript, Python, Ruby, Swift, and Scala</title>
+<link rel=canonical href=https://Nexus-Security.github.io/monads-such-as-option/maybe-either-and-future-are-available-in-javascript-python-ruby-swift-and-scala/><link rel=stylesheet href=/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css><meta property='og:title' content="Monads such as Option/Maybe, Either, and Future are available in JavaScript, Python, Ruby, Swift, and Scala"><meta property='og:description' content="This tutorial provides a concise explanation of monads and demonstrates their implementation in five popular programming languages: JavaScript, Python, Ruby, Swift, and Scala. Whether you&rsquo;re seeking to understand monads in a specific language or compare different implementations, this guide has you covered! By leveraging monads, you can effectively eliminate various bugs, including null-pointer exceptions, unhandled exceptions, and race conditions. This tutorial covers the following: An overview of category theory The definition of a monad Implementations of Option (&ldquo;Maybe&rdquo;), Either, and Future monads, accompanied by a sample program illustrating their use in JavaScript, Python, Ruby, Swift, and Scala Let&rsquo;s embark on this journey!"><meta property='og:url' content='https://Nexus-Security.github.io/monads-such-as-option/maybe-either-and-future-are-available-in-javascript-python-ruby-swift-and-scala/'><meta property='og:site_name' content='Nexus Security'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2023-09-13T00:00:00+00:00'><meta property='article:modified_time' content='2023-09-13T00:00:00+00:00'><meta name=twitter:title content="Monads such as Option/Maybe, Either, and Future are available in JavaScript, Python, Ruby, Swift, and Scala"><meta name=twitter:description content="This tutorial provides a concise explanation of monads and demonstrates their implementation in five popular programming languages: JavaScript, Python, Ruby, Swift, and Scala. Whether you&rsquo;re seeking to understand monads in a specific language or compare different implementations, this guide has you covered! By leveraging monads, you can effectively eliminate various bugs, including null-pointer exceptions, unhandled exceptions, and race conditions. This tutorial covers the following: An overview of category theory The definition of a monad Implementations of Option (&ldquo;Maybe&rdquo;), Either, and Future monads, accompanied by a sample program illustrating their use in JavaScript, Python, Ruby, Swift, and Scala Let&rsquo;s embark on this journey!"><link rel="shortcut icon" href=/fav.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"light")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><ol class=menu-social><li><a href=https://github.com/Nexus-Security target=_blank title=GitHub rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><defs><filter id="alpha" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%"><feColorMatrix type="matrix" in="SourceGraphic" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/></filter><mask id="mask0"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.2;stroke:none"/></g></mask><clipPath id="clip1"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface5" clip-path="url(#clip1)"><path style="stroke:none;fill-rule:nonzero;fill:#fff;fill-opacity:1" d="M10.9375 83.867188c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C21.6875 48.125 21.40625 33.070312 26.488281 17.675781c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C58.9375 34.65625 59.957031 34.84375 60.894531 34.554688 64.824219 33.382812 71.851562 32.6875 79.6875 32.6875S94.550781 33.386719 98.476562 34.554688C99.417969 34.835938 100.433594 34.65625 101.226562 34.074219 113.96875 24.65625 124.011719 20.445312 129.8125 18.582031c-.476562000000001-1.882812-1.019531-3.746093-1.625-5.589843-4.78125 1.207031-16.300781 5.050781-31.648438 16.394531C95.746094 29.96875 94.730469 30.144531 93.789062 29.867188c-3.925781-1.171876-10.953124-1.875-18.789062-1.875-7.832031.0-14.855469.703124000000003-18.792969 1.871093C55.265625 30.144531 54.246094 29.964844 53.457031 29.382812c-15.355469-11.34375-26.875-15.1875-31.65625-16.402343C16.71875 28.382812 17 43.4375 17.726562 45.523438 18.101562 46.589844 17.890625 47.777344 17.175781 48.648438 9.71875 57.367188 6.25 67.070312 6.25 79.179688c0 23.515624 7.175781 37.921874 17.417969 46.550781C16.007812 116.851562 10.9375 103.582031 10.9375 83.867188zm0 0"/></g><mask id="mask1"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.101961;stroke:none"/></g></mask><clipPath id="clip2"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface8" clip-path="url(#clip2)"><path style="stroke:none;fill-rule:nonzero;fill:#000;fill-opacity:1" d="M32.34375 78.5c3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 73.425781 55.824219 73.730469 60.023438 74.054688c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 74.917969 85.210938 74.425781 89.976562 74.054688 102.070312 73.125 111.605469 72.367188 117.648438 78.492188c4.527343 4.601562 6.890624 10.328124 7.21875 16.945312C124.925781 94.398438 125 93.382812 125 92.261719c0-7.285157-2.476562-13.492188-7.351562-18.449219-6.042969-6.117188-15.578126-5.367188-27.671876-4.4375C85.210938 69.742188 80.34375 70.238281 74.867188 70.117188 69.914062 70.0625 64.960938 69.8125 60.023438 69.375 55.824219 69.050781 51.929688 68.742188 48.382812 68.742188c-6.65625.0-12.09375 1.070312-16.039062 5.078124C27.476562 78.769531 25 84.976562 25 92.261719 25 93.375 25.074219 94.398438 25.132812 95.445312 25.460938 88.820312 27.820312 83.101562 32.34375 78.5zm0 0"/></g><linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="10.768" y1="13.86" x2="18.633" y2="21.724" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear1" gradientUnits="userSpaceOnUse" x1="4.004" y1="18.529" x2="4.047" y2="18.573" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear2" gradientUnits="userSpaceOnUse" x1=".617" y1="5.771" x2="23.69" y2="16.53" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#fff;stop-opacity:.2"/><stop offset="1" style="stop-color:#fff;stop-opacity:0"/></linearGradient></defs><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#5c6671;fill-opacity:1" d="M88.539062 137.488281 75 137.5 61.457031 137.488281C36.273438 137.488281 6.25 127.367188 6.25 79.179688c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C17 43.4375 16.71875 28.382812 21.800781 12.988281c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C54.25 29.96875 55.269531 30.15625 56.207031 29.867188c3.9375-1.171876 10.960938-1.875 18.792969-1.875 7.835938.0 14.863281.703124000000003 18.789062 1.871093C94.730469 30.140625 95.746094 29.964844 96.539062 29.382812c15.347657-11.34375 26.867188-15.1875 31.648438-16.394531 5.082031 15.394531 4.804688 30.449219 4.082031 32.53125C131.867188 46.585938 132.078125 47.785156 132.820312 48.648438 140.273438 57.367188 143.75 67.070312 143.75 79.179688c0 48.1875-30.023438 58.308593-55.210938 58.308593zm0 0"/><use xlink:href="#surface5" mask="url(#mask0)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M89.488281 63.144531C84.886719 63.507812 80.125 63.875 75.226562 63.875H74.78125C69.875 63.875 65.117188 63.5 60.519531 63.144531 47.898438 62.164062 35.988281 61.230469 27.894531 69.429688 21.824219 75.59375 18.75 83.28125 18.75 92.261719 18.75 128.238281 46.429688 131.25 75.226562 131.25c28.34375.0 56.023438-3.011719 56.023438-38.988281.0-8.988281-3.074219-16.667969-9.144531-22.835938-8.085938-8.195312-20.003907-7.269531-32.617188-6.28125zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#d9cfcc;fill-opacity:1" d="M74.773438 125C42.492188 125 25 119.78125 25 92.261719c0-7.285157 2.476562-13.492188 7.34375-18.449219 3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 68.738281 55.824219 69.042969 60.023438 69.367188c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 70.230469 85.210938 69.738281 89.976562 69.367188c12.09375-.929687999999999 21.628907-1.6875 27.671876 4.4375C122.523438 78.769531 125 84.976562 125 92.261719 125 119.78125 107.507812 125 74.773438 125zm0 0"/><use xlink:href="#surface8" mask="url(#mask1)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M50 75c-7.125.0-12.5 9.40625-12.5 21.875S42.875 118.75 50 118.75s12.5-9.40625 12.5-21.875S57.125 75 50 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M50 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S47.449219 81.25 50 81.25s6.25 6.085938 6.25 15.625S52.550781 112.5 50 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M1e2 75c-7.125.0-12.5 9.40625-12.5 21.875S92.875 118.75 1e2 118.75s12.5-9.40625 12.5-21.875S107.125 75 1e2 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M1e2 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S97.449219 81.25 1e2 81.25s6.25 6.085938 6.25 15.625S102.550781 112.5 1e2 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M52.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M102.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear0)" d="M125 72.8125 124.894531 72.855469C129.039062 78.382812 131.25 84.851562 131.25 92.261719c0 35.976562-27.679688 38.988281-56.023438 38.988281-16.664062.0-32.914062-1.054688-43.683593-8.875l13.386719 13.386719c5.507812 1.207031 11.121093 1.71875 16.527343 1.71875L75 137.5 88.539062 137.488281c22.992188.0 49.941407-8.53125 54.472657-46.664062zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear1)" d="M25.070312 115.800781 25 115.832031 25.269531 116.101562zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear2)" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/></g></svg></a></li><li><a href=mailto:0x000216@gmail.com target=_blank title=Email rel=me><svg width="512" height="512" viewBox="0 0 512 512"><path d="M33.994 73.934C27.135 76.021 21.866 80.426 18.364 87 16.567 90.374 16.5 96.438 16.5 256V421.5l2.158 4C21.184 430.18 25.101 434.027 30 436.636 33.003 438.235 36.304 438.546 53.246 438.825L72.993 439.15l.253-137.978L73.5 163.194 90 175.45C99.075 182.191 140.17 212.762 181.321 243.386l74.821 55.68 21.179-15.752C288.97 274.65 330 244.021 368.5 215.248l70-52.312L438.754 301.043 439.007 439.15 458.754 438.825C476.726 438.529 478.859 438.306 482.5 436.342 487.18 433.816 491.027 429.899 493.636 425 495.433 421.626 495.5 415.562 495.5 256 495.5 96.438 495.433 90.374 493.636 87 488.565 77.48 482.099 73.799 469.397 73.202L460.293 72.774 454.397 77.337C439.883 88.566 256.423 221.935 255.772 221.73 254.976 221.479 78.972 93.309 62.177 80.75L51.812 73 44.156 73.086C39.945 73.133 35.372 73.515 33.994 73.934" stroke="none" fill="#d34c3c" fill-rule="evenodd"/><path d="M54.528 74.911C55.612 75.963 74.953 90.25 97.507 106.661c22.555 16.412 67.228 48.964 99.275 72.339s58.594 42.604 58.993 42.731C256.549 221.978 454.147 78.147 457.472 74.916 459.416 73.028 456.501 73 256 73 55.677 73 52.586 73.029 54.528 74.911M73 300.878V439H256 439V300.941C439 190.749 438.748 163.038 437.75 163.654 437.063 164.078 405.45 187.632 367.5 215.994c-37.95 28.363-78.528 58.655-90.173 67.316l-21.173 15.748-66.827-49.716C152.572 221.999 111.925 191.776 99 182.18s-24.062-17.892-24.75-18.436C73.251 162.954 73 190.519 73 300.878" stroke="none" fill="#e5e5e5" fill-rule="evenodd"/></svg></a></li><li><a href=https://nexus-security.github.io/index.xml target=_blank title=RSS rel=me><svg id="Layer_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><path style="fill:#f78c20" d="M78.333 355.334C35.14 355.334.0 390.474.0 433.667S35.14 512 78.333 512s78.333-35.14 78.333-78.333-35.14-78.333-78.333-78.333z"/><g><path style="fill:#ffa929" d="M78.333 381.445c-28.795.0-52.222 23.427-52.222 52.222s23.427 52.222 52.222 52.222 52.222-23.427 52.222-52.222-23.427-52.222-52.222-52.222z"/><path style="fill:#ffa929" d="M477.918 264.861c-21.843-51.641-53.111-98.019-92.936-137.842-39.824-39.824-86.201-71.093-137.843-92.935C193.669 11.468 136.874.0 78.333.0c-4.807.0-8.704 3.897-8.704 8.704v85.519c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h85.52c4.807.0 8.704-3.897 8.704-8.704C512 375.126 500.533 318.331 477.918 264.861z"/><path style="fill:#ffa929" d="M78.333 163.853c-4.807.0-8.704 3.897-8.704 8.704v95.74c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h95.74c4.807.0 8.704-3.897 8.704-8.704.0-72.07-28.065-139.826-79.027-190.787-50.961-50.961-118.717-79.027-190.787-79.027z"/></g><g><path style="fill:#f78c20" d="M78.333 242.186c-2.918.0-5.817.076-8.704.206v25.905c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h25.905c.129-2.886.206-5.786.206-8.704.0-105.752-85.729-191.481-191.481-191.481z"/><path style="fill:#f78c20" d="M78.333 68.113c-2.91.0-5.81.042-8.704.11v26.001c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h26.001c.067-2.894.11-5.793.11-8.704C443.887 231.777 280.223 68.113 78.333 68.113z"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://x.com/0x000216 target=_blank title=Twitter rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#03a9f4;fill-opacity:1" d="M150 33.179688c-5.640625 2.460937-11.609375 4.09375-17.71875 4.855468 6.4375-3.820312 11.25-9.867187 13.527344-16.996094-6.027344 3.574219-12.621094 6.089844-19.5 7.441407-8.628906-9.210938-22.007813-12.214844-33.746094-7.574219-11.738281 4.636719-19.449219 15.980469-19.445312 28.601562.0 2.4375.203124000000003 4.78125.710937000000001 7.015626C49.085938 55.308594 26.03125 43.609375 10.445312 24.355469 2.25 38.402344 6.386719 56.398438 19.894531 65.457031 15.027344 65.324219 10.261719 64.027344 6 61.667969V62.007812c.015625 14.636719 10.304688 27.25 24.636719 30.214844-2.628907.691406000000001-5.339844 1.03125-8.0625 1.011719C20.621094 93.269531 18.667969 93.09375 16.753906 92.710938c4.070313 12.507812 15.585938 21.089843 28.734375 21.421874-10.886719 8.511719-24.308593 13.128907-38.128906 13.113282C4.835938 127.246094 2.417969 127.132812.0 126.824219c14.0625 9.0625 30.445312 13.855469 47.175781 13.800781 56.585938.0 87.523438-46.875 87.523438-87.507812.0-1.359376-.046875-2.671876-.113281000000001-3.972657C140.652344 44.804688 145.875 39.394531 150 33.179688zm0 0"/></g></svg></a></li><li><a href=https://www.minds.com/0x000216/ target=_blank title=Minds rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><g><g><path style="fill:#ffe1b2" d="M256 33.085C245.078 13.38 224.079.0 2e2.0c-23.781.0-45.57 13.293-56.594 34.184C115.711 41.602 96 66.977 96 96c0 .059.0.113.0.172-9.977 7.512-16 19.301-16 31.828.0 1.316.078 2.637.234 3.992C60.211 145.266 48 167.758 48 192c0 14.07 4.039 27.543 11.719 39.262C57.273 236.512 56 242.207 56 248c0 2.738.281 5.445.828 8.098C36.672 267.308 24 288.539 24 312c0 27.973 18.305 52.34 44.109 60.785C65.398 378.828 64 385.324 64 392c0 21.098 13.805 39.508 33.539 45.727C103.891 466.746 129.828 488 160 488c4.617.0 9.227-.512 13.766-1.527C181.992 502 198.141 512 216 512c16.687.0 31.396-8.567 40-21.523V33.085z"/></g><g><g><path style="fill:#ffb980" d="M264 256c-4.422.0-8-3.582-8-8 0-22.055-17.945-40-40-40-8.008.0-15.734 2.355-22.336 6.812-3.023 2.043-7.055 1.781-9.797-.652-3.156-2.809-8.477-6.16-15.867-6.16-4.422.0-8-3.582-8-8s3.578-8 8-8c7.711.0 15.234 2.293 21.719 6.539C197.773 194.246 206.758 192 216 192c30.875.0 56 25.121 56 56C272 252.418 268.422 256 264 256z"/></g></g><g><g><path style="fill:#ffb980" d="M120 120c18.977.0 36.875 7.312 50.414 20.594 3.141 3.09 8.203 3.047 11.312-.109 3.094-3.152 3.047-8.219-.109-11.312C165.07 112.941 143.187 104 120 104c-13.046.0-25.395 2.93-36.542 8.046C81.253 117.019 80 122.423 80 128c0 1.316.078 2.637.234 3.992-.094.062-.173.139-.267.202C91.423 124.501 105.193 120 120 120z"/></g></g><g><g><path style="fill:#ffb980" d="M216 360c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32-14.211.0-26.82-9.648-30.664-23.465-.703-2.512-2.578-4.523-5.039-5.395-2.453-.871-5.188-.492-7.305 1.02C114.094 371.906 101.305 376 88 376c-6.948.0-13.625-1.149-19.894-3.207-2.214 4.939-3.501 10.19-3.916 15.586C71.714 390.73 79.711 392 88 392c13.297.0 26.187-3.266 37.773-9.52C133.969 397.894 150.141 408 168 408c26.469.0 48-21.531 48-48z"/></g></g><g><path style="fill:#fdc88e" d="M488 312c0-23.461-12.672-44.691-32.828-55.902.547-2.652.828-5.359.828-8.098.0-5.793-1.273-11.488-3.719-16.738C459.961 219.543 464 206.07 464 192c0-24.242-12.211-46.734-32.234-60.008.156-1.355.234-2.676.234-3.992.0-12.527-6.023-24.316-16-31.828.0-.059.0-.113.0-.172.0-29.023-19.711-54.398-47.406-61.816C357.57 13.293 335.781.0 312 0c-24.08.0-45.078 13.38-56 33.085v457.391C264.604 503.433 279.313 512 296 512c17.859.0 34.008-10 42.234-25.527C342.773 487.488 347.383 488 352 488c30.172.0 56.109-21.254 62.461-50.273C434.195 431.508 448 413.097 448 392c0-6.676-1.398-13.172-4.109-19.215C469.695 364.34 488 339.973 488 312z"/></g><g><path style="fill:#f8ab6b" d="M272.008 151.199C272 151.465 272 151.734 272 152c0 26.469 21.531 48 48 48s48-21.531 48-48c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32s-32-14.355-32-32c0-2.184.219-4.359.656-6.465.492-2.395-.133-4.883-1.703-6.754-1.57-1.871-4.016-3.066-6.352-2.859-.453.012-.891.059-.602.078-13.234.0-24-10.766-24-24v31.813C260.673 147.348 266.061 149.988 272.008 151.199z"/></g><g><path style="fill:#f8ab6b" d="M296 328c9.242.0 18.219-2.246 26.281-6.539C328.765 325.707 336.289 328 344 328c4.422.0 8-3.582 8-8s-3.578-8-8-8c-7.391.0-12.711-3.352-15.867-6.16-2.742-2.434-6.766-2.695-9.797-.656C311.726 309.644 304 312 296 312c-22.055.0-40-17.945-40-40v39.116C266.174 321.517 280.337 328 296 328z"/></g><g><g><path style="fill:#f8ab6b" d="M431.765 131.992c.156-1.355.234-2.676.234-3.992.0-5.577-1.253-10.981-3.458-15.954C417.395 106.93 405.046 104 392 104c-4.422.0-8 3.582-8 8s3.578 8 8 8c14.807.0 28.577 4.501 40.032 12.194C431.939 132.131 431.859 132.054 431.765 131.992z"/></g></g><g><g><path style="fill:#f8ab6b" d="M447.81 388.38c-.415-5.396-1.702-10.647-3.916-15.586C437.624 374.85 430.948 376 424 376c-13.578.0-26.594-4.266-37.641-12.332-2.07-1.5-4.719-1.93-7.133-1.168-2.43.77-4.344 2.648-5.164 5.059C369.101 382.176 355.414 392 340 392c-4.422.0-8 3.582-8 8s3.578 8 8 8c18.875.0 35.961-10.191 45.094-26.156C396.976 388.512 410.258 392 424 392 432.288 392 440.285 390.73 447.81 388.38z"/></g></g></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://www.buymeacoffee.com/0x000216 target=_blank title=Coffee rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 340 340" style="enable-background:new 0 0 340 340"><g id="XMLID_18_"><polygon id="XMLID_138_" style="fill:#dedde0" points="76.429,290 80,340 170,340 170,290"/><polygon id="XMLID_169_" style="fill:#dedde0" points="170,80 61.429,80 65,130 170,130"/><polygon id="XMLID_197_" style="fill:#acabb1" points="170,290 170,340 260,340 263.571,290"/><polygon id="XMLID_221_" style="fill:#acabb1" points="170,80 170,130 275,130 278.571,80"/><path id="XMLID_222_" style="fill:#ffda44" d="M170 260c-22.091.0-40-22.386-40-50s17.909-50 40-50v-30H65 50l10 160h16.429H170V260z"/><path id="XMLID_33_" style="fill:#ff9811" d="M170 130v30c22.091.0 40 22.386 40 50s-17.909 50-40 50v30h93.571H280l10-160h-15H170z"/><path id="XMLID_223_" style="fill:#50412e" d="M210 210c0-27.614-17.909-50-40-50v1e2c22.091.0 40-22.386 40-50z"/><path id="XMLID_224_" style="fill:#786145" d="M130 210c0 27.614 17.909 50 40 50V160c-22.091.0-40 22.386-40 50z"/><polygon id="XMLID_225_" style="fill:#50412e" points="278.571,80 300,80 300,40 260,40 260,0 80,0 80,40 40,40 40,80 61.429,80 170,80"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About Us</span></a></li><li><a href=/termsofservice/><svg class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4L18.5 9.5a1.5 1.5.0 00-4-4L4 16v4"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/></svg>
+<span>Terms Of Service</span></a></li><li><a href=/privacypolicy/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Privacy Policy</span></a></li><li><a href=/disclaimer/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Disclaimer</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/contact/><svg class="icon icon-tabler icon-tabler-mail" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+<span>Contact Us</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#introduction-to-category-theory>Introduction to Category Theory</a></li><li><a href=#enter-monads>Enter Monads</a></li><li><a href=#the-option-monad-aka-the-maybe-monad>The Option Monad, a.k.a. the Maybe Monad</a></li><li><a href=#the-either-monad>The Either Monad</a></li><li><a href=#the-future-monad>The Future Monad</a></li><li><a href=#composing-a-program-from-monads>Composing a Program from Monads</a></li><li><a href=#overhead-done-benefits-ongoing>Overhead: Done. Benefits: Ongoing</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/monads-such-as-option/maybe-either-and-future-are-available-in-javascript-python-ruby-swift-and-scala/>Monads such as Option/Maybe, Either, and Future are available in JavaScript, Python, Ruby, Swift, and Scala</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Sep 13, 2023</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>24 minute read</time></div></footer></div></header><section class=article-content><p>This tutorial provides a concise explanation of monads and demonstrates their implementation in five popular programming languages: JavaScript, Python, Ruby, Swift, and Scala. Whether you&rsquo;re seeking to understand monads in a specific language or compare different implementations, this guide has you covered!</p><p>By leveraging monads, you can effectively eliminate various bugs, including null-pointer exceptions, unhandled exceptions, and race conditions.</p><p>This tutorial covers the following:</p><ul><li>An overview of category theory</li><li>The definition of a monad</li><li>Implementations of Option (&ldquo;Maybe&rdquo;), Either, and Future monads, accompanied by a sample program illustrating their use in JavaScript, Python, Ruby, Swift, and Scala</li></ul><p>Let&rsquo;s embark on this journey! Our first destination is category theory, the foundation of monads.</p><h2 id=introduction-to-category-theory>Introduction to Category Theory</h2><p>Category theory, a mathematical field that gained prominence in the mid-20th century, underpins many functional programming concepts, including monads. We&rsquo;ll briefly examine some category theory concepts relevant to software development.</p><p>Three core concepts define a <em>category:</em></p><ol><li><em>Type</em> represents data types as seen in statically typed languages, such as <code>Int</code>, <code>String</code>, <code>Dog</code>, <code>Cat</code>, etc.</li><li><em>Functions</em> establish connections between types, visualized as arrows from one type to another (or to themselves). A function $f$ from type $T$ to type $U$ is denoted as $f: T \to U$, analogous to a programming function taking a $T$ type argument and returning a $U$ type value.</li><li><em>Composition</em> combines existing functions to create new ones, denoted by the $\cdot$ operator. In a category, for any functions $f: T \to U$ and $g: U \to V$, there exists a unique function $h: T \to V$ denoted as $f \cdot g$. Essentially, this operation maps a pair of functions to a new one. Programming languages readily support this operation. For example, given a function $strlen: String \to Int$ returning the length of a string and another function $even: Int \to Boolean$ checking for even numbers, we can create a function $even{\_}strlen: String \to Boolean$ to determine if a string&rsquo;s length is even. Here, $even{\_}strlen = even \cdot strlen$. Composition implies:<ol><li>Associativity: $f \cdot g \cdot h = (f \cdot g) \cdot h = f \cdot (g \cdot h)$</li><li>Identity function existence: $\forall T: \exists f: T \to T$. In simpler terms, for every type $T$, there&rsquo;s a function mapping $T$ to itself.</li></ol></li></ol><p>Let&rsquo;s visualize a simple category:</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png" media="(min-width: 1920.1px)"><img alt="A simple category involving String, Int, and Double, and some functions among them." src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127400%2Ftoptal-blog-image-1539932705307-f5f3b455b80f047461bcdfcf19a2f178.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p><em>Note: We assume <code>Int</code>, <code>String</code>, and other types here are non-nullable, meaning the null value is absent.</em></p><p><em>Note 2: This diagram represents only a portion of a category, sufficient for our discussion as it includes the essential elements without unnecessary complexity. A complete category would also include composed functions like $roundToString: Double \to String = intToString \cdot round$ to satisfy the composition requirement.</em></p><p>You&rsquo;ll observe that functions within this category are quite basic. In fact, it&rsquo;s nearly impossible to introduce bugs into them. There are no nulls, no exceptions—just arithmetic and memory operations. The only potential issues arise from processor or memory failures, requiring program termination—a rare occurrence.</p><p>Having all our code operate at this level of stability would be ideal! However, real-world applications require functionalities like I/O. This is where monads come to the rescue: They encapsulate unstable operations within small, well-tested code units, enabling stable calculations throughout your application!</p><h2 id=enter-monads>Enter Monads</h2><p>Let&rsquo;s refer to unstable behavior like I/O as a <em>side effect</em>. Our goal is to work with previously defined functions like <code>length</code> and types like <code>String</code> in a stable manner, even with this <em>side effect</em>.</p><p>Starting with an empty category $M[A]$, we aim to create a category containing values with a specific side effect and values without any. Initially, this category is empty and not very useful. To enhance its utility, we&rsquo;ll follow these steps:</p><ol><li>Populate it with values from category $A$ types like <code>String</code>, <code>Int</code>, <code>Double</code>, etc. (green boxes in the diagram below).</li><li>With these values, meaningful operations are still limited. So, for each function $f: T \to U$ from $A$, we&rsquo;ll create a function $g: M[T] \to M[U]$ (blue arrows in the diagram below). This enables us to perform the same operations on values in category $M[A]$ as in category $A$.</li><li>This new category $M[A]$ introduces a new class of functions with the signature $h: T \to M[U]$ (red arrows in the diagram below), arising from promoting values in step one. These functions distinguish working with $M[A]$ from working with $A$. The final step ensures these functions operate seamlessly on types in $M[A]$, allowing us to derive function $m: M[T] \to M[U]$ from $h: T \to M[U]$.</li></ol><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png" media="(min-width: 1920.1px)"><img alt="Creating a new category: Categories A and M[A], plus a red arrow from A's Double to M[A]'s Int, labelled &#34;roundAsync&#34;. M[A] reuses every value and function of A at this point." src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F127403%2Ftoptal-blog-image-1540211900150-82f554ff98243b2ef4c9f00c13f64c14.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>We define two methods to promote values of $A$ types to $M[A]$ types: one without side effects and one with.</p><ol><li>The first, called $pure$, applies to each value of a stable category: $pure: T \to M[T]$. The resulting $M[T]$ values have no side effects, hence the name $pure$. For instance, in an I/O monad, $pure$ immediately returns a value without the possibility of failure.</li><li>The second, called $constructor$, unlike $pure$, returns $M[T]$ with potential side effects. For example, an async I/O monad&rsquo;s $constructor$ could fetch data from the web, returning it as a <code>String</code>. The returned value would have the type $M[String]$ in this case.</li></ol><p>With these two promotion methods, you, the programmer, decide which function to use based on the program&rsquo;s requirements. Consider fetching the HTML page from <a class=link href=https://www.toptal.com/javascript/option-maybe-either-future-monads-js target=_blank rel=noopener>https://www.toptal.com/javascript/option-maybe-either-future-monads-js</a>. You create a function $fetch$. Due to potential issues like network failures, the return type is $M[String]$. The function signature becomes $fetch: String \to M[String]$, using the $constructor$ for $M$ within its body.</p><p>For testing, you create a mock function $fetchMock: String \to M[String]$. While the signature remains the same, $fetchMock$ directly injects the HTML page without any unstable network operations, using $pure$ in its implementation.</p><p>Next, we need a function to safely promote any function $f$ from category $A$ to $M[A]$ (blue arrows in the diagram). This function is $map: (T \to U) \to (M[T] \to M[U])$.</p><p>We now have a category that can handle side effects (using $constructor$) and includes all functions from the stable category, ensuring their stability within $M[A]$. This introduces functions like $f: T \to M[U]$, such as $pure$, $constructor$, and combinations of these with $map$. We need a way to work with arbitrary functions in the form $f: T \to M[U]$.</p><p>To apply a function based on $f$ to $M[T]$, using $map$ would result in a function $g: M[T] \to M[M[U]]$, introducing an undesired additional category $M[M[A]]$. To address this, we introduce the $flatMap: (T \to M[U]) \to (M[T] \to M[U])$ function.</p><p>Let&rsquo;s illustrate the need for $flatMap$. Assume we&rsquo;ve completed step 2, having $pure$, $constructor$, and $map$. We want to fetch an HTML page from toptal.com, scan all URLs within it, and fetch those as well. We create a function $fetch: String \to M[String]$ to fetch a single URL and return its HTML page.</p><p>Applying this function to a URL gives us $x: M[String]$, the toptal.com page. After some transformations on $x$, we obtain a URL $u: M[String]$. We&rsquo;d like to apply $fetch$ to $u$, but its input type is $String$, not $M[String]$. This is where $flatMap$ comes in, converting $fetch: String \to M[String]$ to $m_fetch: M[String] \to M[String]$.</p><p>Having completed all three steps, we can now compose any value transformations we need. For example, given a value $x$ of type $M[T]$ and a function $f: T \to U$, we can apply $f$ to $x$ using $map$, resulting in a value $y$ of type $M[U]$. This ensures 100% bug-free value transformations as long as $pure$, $constructor$, $map$, and $flatMap$ are implemented correctly.</p><p>Instead of handling potential issues related to side effects throughout your codebase, you only need to ensure the correct implementation of these four functions. At the end of your program, you&rsquo;ll have a single $M[X]$ from which you can safely extract the value $X$ and handle any error cases.</p><p>This is essentially what a monad is: an entity implementing $pure$, $map$, and $flatMap$. (While $map$ can be derived from $pure$ and $flatMap$, its widespread use and utility warrant its inclusion in the definition.)</p><h2 id=the-option-monad-aka-the-maybe-monad>The Option Monad, a.k.a. the Maybe Monad</h2><p>Let&rsquo;s delve into the practical implementation and use of monads. Our first example, the Option monad, addresses the infamous null pointer error common in classic programming languages. Tony Hoare, the inventor of null, famously called it his &ldquo;Billion Dollar Mistake&rdquo;:</p><blockquote><p>This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.</p></blockquote><p>Let&rsquo;s see how we can improve upon this. The Option monad either holds a non-null value or no value at all. This resembles a null value, but with the Option monad, we can safely utilize our well-defined functions without the risk of encountering null pointer exceptions. Let&rsquo;s examine implementations in various languages:</p><div class=code-accordion><h2 class="code-comparison-title is-closed">JavaScript—Option Monad/Maybe Monad</h2><div class=code-comparison-body><pre><code class=language-js>
+class Monad {
+  // pure :: a -&gt; M a
+  pure = () =&gt; { throw "pure method needs to be implemented" }
+  
+  // flatMap :: # M a -&gt; (a -&gt; M b) -&gt; M b
+  flatMap = (x) =&gt; { throw "flatMap method needs to be implemented" }
+
+  // map :: # M a -&gt; (a -&gt; b) -&gt; M b
+  map = f =&gt; this.flatMap(x =&gt; new this.pure(f(x)))
+}
+
+export class Option extends Monad {
+  // pure :: a -&gt; Option a
+  pure = (value) =&gt; {
+    if ((value === null) || (value === undefined)) {
+      return none;
+    }
+    return new Some(value)
+  }
+
+  // flatMap :: # Option a -&gt; (a -&gt; Option b) -&gt; Option b
+  flatMap = f =&gt; 
+    this.constructor.name === 'None' ? 
+    none : 
+    f(this.value)
+
+  // equals :: # M a -&gt; M a -&gt; boolean
+  equals = (x) =&gt; this.toString() === x.toString()
+}
+
+class None extends Option {
+  toString() {
+    return 'None';
+  }
+}
+// Cached None class value
+export const none = new None()
+Option.pure = none.pure
+
+export class Some extends Option {
+  constructor(value) {
+    super();
+    this.value = value;
+  }
+
+  toString() {
+    return `Some(${this.value})`
+  }
+}
+</code></pre></div><h2 class="code-comparison-title is-closed">Python—Option Monad/Maybe Monad</h2><div class=code-comparison-body><pre><code class=language-python>
+class Monad:
+  # pure :: a -&gt; M a
+  @staticmethod
+  def pure(x):
+    raise Exception("pure method needs to be implemented")
+  
+  # flat_map :: # M a -&gt; (a -&gt; M b) -&gt; M b
+  def flat_map(self, f):
+    raise Exception("flat_map method needs to be implemented")
+
+  # map :: # M a -&gt; (a -&gt; b) -&gt; M b
+  def map(self, f):
+    return self.flat_map(lambda x: self.pure(f(x)))
+
+class Option(Monad):
+  # pure :: a -&gt; Option a
+  @staticmethod
+  def pure(x):
+    return Some(x)
+
+  # flat_map :: # Option a -&gt; (a -&gt; Option b) -&gt; Option b
+  def flat_map(self, f):
+    if self.defined:
+      return f(self.value)
+    else:
+      return nil
+
+
+class Some(Option):
+  def __init__(self, value):
+    self.value = value
+    self.defined = True
+
+class Nil(Option):
+  def __init__(self):
+    self.value = None
+    self.defined = False
+
+nil = Nil()
+</code></pre></div><h2 class="code-comparison-title is-closed">Ruby—Option Monad/Maybe Monad</h2><div class=code-comparison-body><pre><code class=language-ruby>
+class Monad
+  # pure :: a -&gt; M a
+  def self.pure(x)
+    raise StandardError("pure method needs to be implemented")
+  end
+  
+  # pure :: a -&gt; M a
+  def pure(x)
+    self.class.pure(x)
+  end
+    
+  def flat_map(f)
+    raise StandardError("flat_map method needs to be implemented")
+  end
+
+  # map :: # M a -&gt; (a -&gt; b) -&gt; M b
+  def map(f)
+    flat_map(-&gt; (x) { pure(f.call(x)) })
+  end
+end
+
+class Option &lt; Monad
+
+  attr_accessor :defined, :value
+
+  # pure :: a -&gt; Option a
+  def self.pure(x)
+    Some.new(x)
+  end
+
+  # pure :: a -&gt; Option a
+  def pure(x)
+    Some.new(x)
+  end
+  
+  # flat_map :: # Option a -&gt; (a -&gt; Option b) -&gt; Option b
+  def flat_map(f)
+    if defined
+      f.call(value)
+    else
+      $none
+    end
+  end
+end
+
+class Some &lt; Option
+  def initialize(value)
+    @value = value
+    @defined = true
+  end
+end
+
+class None &lt; Option
+  def initialize()
+    @defined = false
+  end
+end
+
+$none = None.new()
+</code></pre></div><h2 class="code-comparison-title is-closed">Swift—Option Monad/Maybe Monad</h2><div class=code-comparison-body><pre><code class=language-swift>
+import Foundation
+
+enum Maybe&lt;A&gt; {
+  case None
+  case Some(A)
+  
+  static func pure&lt;B&gt;(_ value: B) -&gt; Maybe&lt;B&gt; {
+    return .Some(value)
+  }
+  
+  func flatMap&lt;B&gt;(_ f: (A) -&gt; Maybe&lt;B&gt;) -&gt; Maybe&lt;B&gt; {
+    switch self {
+    case .None:
+      return .None
+    case .Some(let value):
+      return f(value)
+    }
+  }
+  
+  func map&lt;B&gt;(f: (A) -&gt; B) -&gt; Maybe&lt;B&gt; {
+    return self.flatMap { type(of: self).pure(f($0)) }
+  }
+}
+</code></pre></div><h2 class="code-comparison-title is-closed">Scala—Option Monad/Maybe Monad</h2><div class=code-comparison-body><pre><code class=language-scala>
+import language.higherKinds
+
+trait Monad[M[_]] {
+  def pure[A](a: A): M[A]
+  def flatMap[A, B](ma: M[A])(f: A =&gt; M[B]): M[B]
+  
+  def map[A, B](ma: M[A])(f: A =&gt; B): M[B] =
+    flatMap(ma)(x =&gt; pure(f(x)))
+}
+object Monad {
+def apply[F[_]](implicit M: Monad[F]): Monad[F] = M
+  
+  implicit val myOptionMonad = new Monad[MyOption] {
+    def pure[A](a: A) = MySome(a)
+    def flatMap[A, B](ma: MyOption[A])(f: A =&gt; MyOption[B]): MyOption[B] = ma match {
+      case MyNone =&gt; MyNone
+      case MySome(a) =&gt; f(a)
+    }
+  }
+}
+
+sealed trait MyOption[+A] {
+  def flatMap[B](f: A =&gt; MyOption[B]): MyOption[B] =
+    Monad[MyOption].flatMap(this)(f)
+
+  def map[B](f: A =&gt; B): MyOption[B] =
+    Monad[MyOption].map(this)(f)
+}
+
+case object MyNone extends MyOption[Nothing]
+case class MySome[A](x: A) extends MyOption[A]
+</code></pre></div></div><p>We start by implementing a base <code>Monad</code> class for all our monad implementations. This simplifies things significantly, as implementing just <code>pure</code> and <code>flatMap</code> for a specific monad provides access to many other methods automatically (limited to <code>map</code> in our examples for brevity, but generally including useful methods like <code>sequence</code> and <code>traverse</code> for handling arrays of <code>Monad</code>s).</p><p>We express <code>map</code> as a composition of <code>pure</code> and <code>flatMap</code>. Examining <code>flatMap</code>&rsquo;s signature, $flatMap: (T \to M[U]) \to (M[T] \to M[U])$, reveals its similarity to $map: (T \to U) \to (M[T] \to M[U])$. The only difference is the additional $M$ in the middle, which we address using <code>pure</code> to convert $U$ into $M[U]$. This way, we express <code>map</code> in terms of <code>flatMap</code> and <code>pure</code>.</p><p>This approach works seamlessly in Scala due to its advanced type system and in dynamically typed languages like JS, Python, and Ruby. However, Swift, being statically typed and lacking advanced type features like <a class=link href=https://yz.mit.edu/wp/true-scala-complexity/ target=_blank rel=noopener>higher-kinded types</a>, requires a separate <code>map</code> implementation for each monad.</p><p>Note that the Option monad is already a standard feature in languages like Swift and Scala, explaining the slight name variations in our implementations.</p><p>With our base <code>Monad</code> class in place, let&rsquo;s move on to the Option monad implementations. As mentioned earlier, the core concept is that Option either holds a value (<code>Some</code>) or not (<code>None</code>).</p><p>The <code>pure</code> method simply promotes a value to <code>Some</code>, while <code>flatMap</code> checks the Option&rsquo;s current state. If it&rsquo;s <code>None</code>, it returns <code>None</code>. If it&rsquo;s <code>Some</code> with an underlying value, it extracts this value, applies <code>f()</code> to it, and returns the result.</p><p>Using just these two functions and <code>map</code>, encountering a null pointer exception becomes impossible. (A potential issue could arise within our <code>flatMap</code> implementation, but that&rsquo;s just a few lines of code checked once. Afterward, we can confidently use our Option monad implementation throughout our codebase without fearing null pointer exceptions.)</p><h2 id=the-either-monad>The Either Monad</h2><p>Next up is the Either monad, essentially an Option monad with <code>Some</code> renamed to <code>Right</code> and <code>None</code> renamed to <code>Left</code>. However, <code>Left</code> in this case can also hold a value.</p><p>This is useful for representing exceptions. If an exception occurs, the Either value will be <code>Left(Exception)</code>. The <code>flatMap</code> function halts progression if the value is <code>Left</code>, mimicking exception throwing behavior: If an exception happens, further execution stops.</p><div class=code-accordion><h2 class="code-comparison-title is-closed">JavaScript—Either Monad</h2><div class=code-comparison-body><pre><code class=language-js>
+import Monad from './monad';
+
+export class Either extends Monad {
+  // pure :: a -&gt; Either a
+  pure = (value) =&gt; {
+    return new Right(value)
+  }
+
+  // flatMap :: # Either a -&gt; (a -&gt; Either b) -&gt; Either b
+  flatMap = f =&gt; 
+    this.isLeft() ? 
+    this : 
+    f(this.value)
+
+  isLeft = () =&gt; this.constructor.name === 'Left'
+}
+
+export class Left extends Either {
+  constructor(value) {
+    super();
+    this.value = value;
+  }
+
+  toString() {
+    return `Left(${this.value})`
+  }
+}
+
+export class Right extends Either {
+  constructor(value) {
+    super();
+    this.value = value;
+  }
+
+  toString() {
+    return `Right(${this.value})`
+  }
+}
+
+// attempt :: (() -&gt; a) -&gt; M a 
+Either.attempt = f =&gt; {
+    try {
+      return new Right(f())
+    } catch(e) {
+      return new Left(e)
+    }
+}
+Either.pure = (new Left(null)).pure
+</code></pre></div><h2 class="code-comparison-title is-closed">Python—Either Monad</h2><div class=code-comparison-body><pre><code class=language-python>
+from monad import Monad
+
+class Either(Monad):
+  # pure :: a -&gt; Either a
+  @staticmethod
+  def pure(value):
+    return Right(value)
+
+  # flat_map :: # Either a -&gt; (a -&gt; Either b) -&gt; Either b
+  def flat_map(self, f):
+    if self.is_left:
+      return self
+    else:
+      return f(self.value)
+
+class Left(Either):
+  def __init__(self, value):
+    self.value = value
+    self.is_left = True
+
+class Right(Either):
+  def __init__(self, value):
+    self.value = value
+self.is_left = False
+</code></pre></div><h2 class="code-comparison-title is-closed">Ruby—Either Monad</h2><div class=code-comparison-body><pre><code class=language-ruby>
+require_relative './monad'
+
+class Either &lt; Monad
+
+  attr_accessor :is_left, :value
+
+  # pure :: a -&gt; Either a
+  def self.pure(value)
+    Right.new(value)
+  end
+
+  # pure :: a -&gt; Either a
+  def pure(value)
+    self.class.pure(value)
+  end
+
+  # flat_map :: # Either a -&gt; (a -&gt; Either b) -&gt; Either b
+  def flat_map(f)
+    if is_left
+      self
+    else
+      f.call(value)
+    end
+  end
+end
+
+class Left &lt; Either
+  def initialize(value)
+    @value = value
+    @is_left = true
+  end
+end
+
+class Right &lt; Either
+  def initialize(value)
+    @value = value
+    @is_left = false
+  end
+end
+</code></pre></div><h2 class="code-comparison-title is-closed">Swift—Either Monad</h2><div class=code-comparison-body><pre><code class=language-swift>
+import Foundation
+
+enum Either&lt;A, B&gt; {
+  case Left(A)
+  case Right(B)
+  static func pure&lt;C&gt;(_ value: C) -&gt; Either&lt;A, C&gt; {
+    return Either&lt;A, C&gt;.Right(value)
+  }
+  
+  func flatMap&lt;D&gt;(_ f: (B) -&gt; Either&lt;A, D&gt;) -&gt; Either&lt;A, D&gt; {
+    switch self {
+    case .Left(let x):
+      return Either&lt;A, D&gt;.Left(x)
+    case .Right(let x):
+      return f(x)
+    }
+  }
+  
+  func map&lt;C&gt;(f: (B) -&gt; C) -&gt; Either&lt;A, C&gt; {
+    return self.flatMap { Either&lt;A, C&gt;.pure(f($0)) }
+  }
+}
+</code></pre></div><h2 class="code-comparison-title is-closed">Scala—Either Monad</h2><div class=code-comparison-body><pre><code class=language-scala>
+package monad
+
+sealed trait MyEither[+E, +A] {
+  def flatMap[EE &gt;: E, B](f: A =&gt; MyEither[EE, B]): MyEither[EE, B] =
+    Monad[MyEither[EE, ?]].flatMap(this)(f)
+
+  def map[EE &gt;: E, B](f: A =&gt; B): MyEither[EE, B] =
+    Monad[MyEither[EE, ?]].map(this)(f)
+  
+}
+case class MyLeft[E](e: E) extends MyEither[E, Nothing]
+case class MyRight[A](a: A) extends MyEither[Nothing, A]
+
+// ...
+
+implicit def myEitherMonad[E] = new Monad[MyEither[E, ?]] {
+  def pure[A](a: A) = MyRight(a)
+
+  def flatMap[A, B](ma: MyEither[E, A])(f: A =&gt; MyEither[E, B]): MyEither[E, B] = ma match {
+    case MyLeft(a) =&gt; MyLeft(a)
+    case MyRight(b) =&gt; f(b)
+  }
+}
+</code></pre></div></div><p>Catching exceptions is also straightforward: simply map <code>Left</code> to <code>Right</code>. (We omit this in our examples for brevity.)</p><h2 id=the-future-monad>The Future Monad</h2><p>Finally, let&rsquo;s explore the Future monad. This monad acts as a container for a value available either immediately or in the near future. Using <code>map</code> and <code>flatMap</code>, you can create chains of Futures that wait for a Future value to resolve before executing the next dependent code block. This resembles the concept of Promises in JS.</p><p>Our objective is to bridge existing asynchronous APIs across different languages to a consistent base. Callbacks in $constructor$ offer the most straightforward design approach.</p><p>While callbacks introduced the &ldquo;callback hell&rdquo; problem in JavaScript and other languages, this won&rsquo;t be an issue for us thanks to monads. In fact, the <code>Promise</code> object in JavaScript, designed to address callback hell, is a monad itself!</p><p>Let&rsquo;s examine the Future monad&rsquo;s constructor signature:</p><p><code>constructor :: ((Either err a -> void) -> void) -> Future (Either err a)</code></p><p>Breaking it down, we first define:</p><p><code>type Callback = Either err a -> void</code></p><p>Here, <code>Callback</code> is a function accepting either an error or a resolved value as an argument and returning nothing. Now the signature becomes:</p><p><code>constructor :: (Callback -> void) -> Future (Either err a)</code></p><p>We need to provide a function that returns nothing and triggers a callback once the asynchronous computation resolves to either an error or a value. This enables easy bridging for any language.</p><p>Turning to the Future monad&rsquo;s internal structure, the key idea is a cache variable. This variable stores a value if the Future monad is resolved and remains empty otherwise. Subscribing to the Future with a callback triggers it immediately if the value is resolved. Otherwise, the callback is added to a subscribers list.</p><p>Upon Future resolution, each callback in the list is triggered exactly once with the resolved value in a separate thread (or as the next function in the event loop for JS). Careful synchronization primitive usage is crucial here to prevent race conditions.</p><p>The basic flow involves initiating the asynchronous computation provided as the constructor argument and pointing its callback to our internal callback method. Simultaneously, you can subscribe to the Future monad, adding your callbacks to the queue. Once the computation completes, the internal callback method invokes all queued callbacks. This approach closely resembles the asynchronous handling in Reactive Extensions (RxJS, RxSwift, etc.).</p><p>The Future monad&rsquo;s public API consists of <code>pure</code>, <code>map</code>, and <code>flatMap</code>, similar to previous monads. Additionally, we include a couple of convenient methods:</p><ol><li> <code>async</code> takes a synchronous blocking function and executes it in a separate thread.</li><li><code>traverse</code> takes an array of values and a function mapping a value to a <code>Future</code>. It returns a <code>Future</code> of an array containing resolved values.</li></ol><p>Let&rsquo;s see this in action:</p><div class=code-accordion><h2 class="code-comparison-title is-closed">JavaScript—Future Monad</h2><div class=code-comparison-body><pre><code class=language-js>
+import Monad from './monad';
+import { Either, Left, Right } from './either';
+import { none, Some } from './option';
+
+export class Future extends Monad {
+  // constructor :: ((Either err a -&gt; void) -&gt; void) -&gt; Future (Either err a)
+  constructor(f) {
+    super();
+    this.subscribers = [];
+    this.cache = none;
+    f(this.callback)
+  }
+
+  // callback :: Either err a -&gt; void
+  callback = (value) =&gt; {
+    this.cache = new Some(value)
+    while (this.subscribers.length) {
+      const subscriber = this.subscribers.shift();
+      subscriber(value)
+    }
+  }
+
+  // subscribe :: (Either err a -&gt; void) -&gt; void
+  subscribe = (subscriber) =&gt; 
+    (this.cache === none ? this.subscribers.push(subscriber) : subscriber(this.cache.value))
+
+  toPromise = () =&gt; new Promise(
+    (resolve, reject) =&gt;
+      this.subscribe(val =&gt; val.isLeft() ? reject(val.value) : resolve(val.value))
+  )
+
+  // pure :: a -&gt; Future a
+  pure = Future.pure
+
+  // flatMap :: (a -&gt; Future b) -&gt; Future b
+  flatMap = f =&gt;
+    new Future(
+      cb =&gt; this.subscribe(value =&gt; value.isLeft() ? cb(value) : f(value.value).subscribe(cb))
+    )
+}
+
+Future.async = (nodeFunction, ...args) =&gt; {
+  return new Future(cb =&gt; 
+    nodeFunction(...args, (err, data) =&gt; err ? cb(new Left(err)) : cb(new Right(data)))
+  );
+}
+
+Future.pure = value =&gt; new Future(cb =&gt; cb(Either.pure(value)))
+
+// traverse :: [a] -&gt; (a -&gt; Future b) -&gt; Future [b]
+Future.traverse = list =&gt; f =&gt;
+  list.reduce(
+    (acc, elem) =&gt; acc.flatMap(values =&gt; f(elem).map(value =&gt; [...values, value])), 
+    Future.pure([])
+  )
+</code></pre></div><h2 class="code-comparison-title is-closed">Python—Future Monad</h2><div class=code-comparison-body><pre><code class=language-python>
+from monad import Monad
+from option import nil, Some
+from either import Either, Left, Right
+from functools import reduce
+import threading
+
+class Future(Monad):
+  # __init__ :: ((Either err a -&gt; void) -&gt; void) -&gt; Future (Either err a)
+  def __init__(self, f):
+    self.subscribers = []
+    self.cache = nil
+    self.semaphore = threading.BoundedSemaphore(1)
+    f(self.callback)
+
+  # pure :: a -&gt; Future a
+  @staticmethod
+  def pure(value):
+    return Future(lambda cb: cb(Either.pure(value)))
+
+  def exec(f, cb):
+    try:
+      data = f()
+      cb(Right(data))
+    except Exception as err:
+      cb(Left(err))
+
+  def exec_on_thread(f, cb):
+    t = threading.Thread(target=Future.exec, args=[f, cb])
+    t.start()
+
+  def async(f):
+    return Future(lambda cb: Future.exec_on_thread(f, cb))
+
+  # flat_map :: (a -&gt; Future b) -&gt; Future b
+  def flat_map(self, f):
+    return Future(
+      lambda cb: self.subscribe(
+        lambda value: cb(value) if (value.is_left) else f(value.value).subscribe(cb)
+      )
+    )
+
+  # traverse :: [a] -&gt; (a -&gt; Future b) -&gt; Future [b]
+  def traverse(arr):
+    return lambda f: reduce(
+      lambda acc, elem: acc.flat_map(
+        lambda values: f(elem).map(
+          lambda value: values + [value]
+        )
+      ), arr, Future.pure([]))
+
+  # callback :: Either err a -&gt; void
+  def callback(self, value):
+    self.semaphore.acquire()
+    self.cache = Some(value)
+    while (len(self.subscribers) &gt; 0):
+      sub = self.subscribers.pop(0)
+      t = threading.Thread(target=sub, args=[value])
+      t.start()
+    self.semaphore.release()
+  
+  # subscribe :: (Either err a -&gt; void) -&gt; void
+  def subscribe(self, subscriber):
+    self.semaphore.acquire()
+    if (self.cache.defined):
+      self.semaphore.release()
+      subscriber(self.cache.value)
+    else:
+      self.subscribers.append(subscriber)
+self.semaphore.release()
+</code></pre></div><h2 class="code-comparison-title is-closed">Ruby—Future Monad</h2><div class=code-comparison-body><pre><code class=language-ruby>
+require_relative './monad'
+require_relative './either'
+require_relative './option'
+
+class Future &lt; Monad
+  attr_accessor :subscribers, :cache, :semaphore
+
+  # initialize :: ((Either err a -&gt; void) -&gt; void) -&gt; Future (Either err a)
+  def initialize(f)
+    @subscribers = []
+    @cache = $none
+    @semaphore = Queue.new
+    @semaphore.push(nil)
+    f.call(method(:callback))
+  end
+
+  # pure :: a -&gt; Future a
+  def self.pure(value)
+    Future.new(-&gt; (cb) { cb.call(Either.pure(value)) })
+  end
+
+  def self.async(f, *args)
+    Future.new(-&gt; (cb) {
+      Thread.new {
+        begin
+          cb.call(Right.new(f.call(*args)))
+        rescue =&gt; e
+          cb.call(Left.new(e))
+        end  
+      }
+    })
+  end
+
+  # pure :: a -&gt; Future a
+  def pure(value)
+    self.class.pure(value)
+  end
+
+  # flat_map :: (a -&gt; Future b) -&gt; Future b
+  def flat_map(f)
+    Future.new(-&gt; (cb) { 
+      subscribe(-&gt; (value) {
+        if (value.is_left)
+          cb.call(value) 
+        else
+          f.call(value.value).subscribe(cb)
+        end
+      }) 
+    })
+  end
+
+  # traverse :: [a] -&gt; (a -&gt; Future b) -&gt; Future [b]
+  def self.traverse(arr, f)
+    arr.reduce(Future.pure([])) do |acc, elem|
+      acc.flat_map(-&gt; (values) {
+        f.call(elem).map(-&gt; (value) { values + [value] })
+      })
+    end
+  end
+
+  # callback :: Either err a -&gt; void
+  def callback(value)
+    semaphore.pop
+    self.cache = Some.new(value)
+    while (subscribers.count &gt; 0)
+      sub = self.subscribers.shift
+      Thread.new {
+        sub.call(value)
+      }
+    end
+    semaphore.push(nil)
+  end
+  
+  # subscribe :: (Either err a -&gt; void) -&gt; void
+  def subscribe(subscriber)
+    semaphore.pop
+    if (self.cache.defined)
+      semaphore.push(nil)
+      subscriber.call(cache.value)
+    else
+      self.subscribers.push(subscriber)
+      semaphore.push(nil)
+    end
+  end
+end
+</code></pre></div><h2 class="code-comparison-title is-closed">Swift—Future Monad</h2><div class=code-comparison-body><pre><code class=language-swift>
+import Foundation
+
+let background = DispatchQueue(label: "background", attributes: .concurrent)
+
+class Future&lt;Err, A&gt; {
+  typealias Callback = (Either&lt;Err, A&gt;) -&gt; Void
+  
+  var subscribers: Array&lt;Callback&gt; = Array&lt;Callback&gt;()
+  var cache: Maybe&lt;Either&lt;Err, A&gt;&gt; = .None
+  var semaphore = DispatchSemaphore(value: 1)
+
+  lazy var callback: Callback = { value in
+    self.semaphore.wait()
+    self.cache = .Some(value)
+    while (self.subscribers.count &gt; 0) {
+      let subscriber = self.subscribers.popLast()
+      background.async {
+        subscriber?(value)
+      }
+    }
+    self.semaphore.signal()
+  }
+  
+  init(_ f: @escaping (@escaping Callback) -&gt; Void) {
+    f(self.callback)
+  }
+  
+  func subscribe(_ cb: @escaping Callback) {
+    self.semaphore.wait()
+    switch cache {
+    case .None:
+      subscribers.append(cb)
+      self.semaphore.signal()
+    case .Some(let value):
+      self.semaphore.signal()
+      cb(value)
+    }
+  }
+  
+  static func pure&lt;B&gt;(_ value: B) -&gt; Future&lt;Err, B&gt; {
+    return Future&lt;Err, B&gt; { $0(Either&lt;Err, B&gt;.pure(value)) }
+  }
+  
+  func flatMap&lt;B&gt;(_ f: @escaping (A) -&gt; Future&lt;Err, B&gt;) -&gt; Future&lt;Err, B&gt; {
+    return Future&lt;Err, B&gt; { [weak self] cb in
+      guard let this = self else { return }
+      this.subscribe { value in
+        switch value {
+        case .Left(let err):
+          cb(Either&lt;Err, B&gt;.Left(err))
+        case .Right(let x):
+          f(x).subscribe(cb)
+        }
+      }
+    }
+  }
+  
+  func map&lt;B&gt;(_ f: @escaping (A) -&gt; B) -&gt; Future&lt;Err, B&gt; {
+    return self.flatMap { Future&lt;Err, B&gt;.pure(f($0)) }
+  }
+  
+  static func traverse&lt;B&gt;(_ list: Array&lt;A&gt;, _ f: @escaping (A) -&gt; Future&lt;Err, B&gt;) -&gt; Future&lt;Err, Array&lt;B&gt;&gt; {
+    return list.reduce(Future&lt;Err, Array&lt;B&gt;&gt;.pure(Array&lt;B&gt;())) { (acc: Future&lt;Err, Array&lt;B&gt;&gt;, elem: A) in
+      return acc.flatMap { elems in
+        return f(elem).map { val in
+          return elems + [val]
+        }
+      }
+    }
+  }
+}
+</code></pre></div><h2 class="code-comparison-title is-closed">Scala—Future Monad</h2><div class=code-comparison-body><pre><code class=language-scala>
+package monad
+
+import java.util.concurrent.Semaphore
+
+class MyFuture[A] {
+  private var subscribers: List[MyEither[Exception, A] =&gt; Unit] = List()
+  private var cache: MyOption[MyEither[Exception, A]] = MyNone
+  private val semaphore = new Semaphore(1)
+
+  def this(f: (MyEither[Exception, A] =&gt; Unit) =&gt; Unit) {
+    this()
+    f(this.callback _)
+  }
+
+  def flatMap[B](f: A =&gt; MyFuture[B]): MyFuture[B] =
+    Monad[MyFuture].flatMap(this)(f)
+
+  def map[B](f: A =&gt; B): MyFuture[B] =
+    Monad[MyFuture].map(this)(f)
+
+  def callback(value: MyEither[Exception, A]): Unit = {
+    semaphore.acquire
+    cache = MySome(value)
+    subscribers.foreach { sub =&gt;
+      val t = new Thread(
+        new Runnable {
+          def run: Unit = {
+            sub(value)
+          }
+        }
+      )
+      t.start
+    }
+    subscribers = List()
+    semaphore.release
+  }
+
+  def subscribe(sub: MyEither[Exception, A] =&gt; Unit): Unit = {
+    semaphore.acquire
+    cache match {
+      case MyNone =&gt;
+        subscribers = sub :: subscribers
+        semaphore.release
+      case MySome(value) =&gt;
+        semaphore.release
+        sub(value)
+    }
+  }
+}
+
+object MyFuture {
+  def async[B, C](f: B =&gt; C, arg: B): MyFuture[C] =
+    new MyFuture[C]({ cb =&gt;
+      val t = new Thread(
+        new Runnable {
+          def run: Unit = {
+            try {
+              cb(MyRight(f(arg)))
+            } catch {
+              case e: Exception =&gt; cb(MyLeft(e))
+            }
+          }
+        }
+      )
+      t.start
+    })
+
+  def traverse[A, B](list: List[A])(f: A =&gt; MyFuture[B]): MyFuture[List[B]] = {
+    list.foldRight(Monad[MyFuture].pure(List[B]())) { (elem, acc) =&gt;
+      Monad[MyFuture].flatMap(acc) ({ values =&gt;
+        Monad[MyFuture].map(f(elem)) { value =&gt; value :: values }
+      })
+    }
+  }
+}
+
+// ...
+
+implicit val myFutureMonad = new Monad[MyFuture] {
+  def pure[A](a: A): MyFuture[A] = 
+    new MyFuture[A]({ cb =&gt; cb(myEitherMonad[Exception].pure(a)) })
+
+  def flatMap[A, B](ma: MyFuture[A])(f: A =&gt; MyFuture[B]): MyFuture[B] =
+    new MyFuture[B]({ cb =&gt;
+      ma.subscribe(_ match {
+        case MyLeft(e) =&gt; cb(MyLeft(e))
+        case MyRight(a) =&gt; f(a).subscribe(cb)
+      })
+    })
+}
+</code></pre></div></div><p>Notice how <code>Future</code>&rsquo;s public API remains free of low-level details like threads, semaphores, etc. You simply provide something with a callback, and the monad takes care of the rest!</p><h2 id=composing-a-program-from-monads>Composing a Program from Monads</h2><p>Let&rsquo;s build a program using our monads. We have a file containing a list of URLs and want to fetch them in parallel, truncate the responses to 200 bytes for brevity, and print the result.</p><p>First, we convert existing language APIs to monadic interfaces (using functions <code>readFile</code> and <code>fetch</code>). We then compose them into a chain to obtain the final result. Note that the chain itself remains exceptionally safe, as all the complex details are encapsulated within the monads.</p><div class=code-accordion><h2 class="code-comparison-title is-closed">JavaScript—Sample Monad Program</h2><div class=code-comparison-body><pre><code class=language-js>
+import { Future } from './future';
+import { Either, Left, Right } from './either';
+import { readFile } from 'fs';
+import https from 'https';
+
+const getResponse = url =&gt; 
+  new Future(cb =&gt; https.get(url, res =&gt; {
+    var body = '';
+    res.on('data', data =&gt; body += data);
+    res.on('end', data =&gt; cb(new Right(body)));
+    res.on('error', err =&gt; cb(new Left(err)))
+  }))
+
+const getShortResponse = url =&gt; getResponse(url).map(resp =&gt; resp.substring(0, 200))
+
+Future
+  .async(readFile, 'resources/urls.txt')
+  .map(data =&gt; data.toString().split("\n"))
+  .flatMap(urls =&gt; Future.traverse(urls)(getShortResponse))
+.map(console.log)
+</code></pre></div><h2 class="code-comparison-title is-closed">Python—Sample Monad Program</h2><div class=code-comparison-body><pre><code class=language-python>
+import http.client
+import threading
+import time
+import os
+from future import Future
+from either import Either, Left, Right
+
+conn = http.client.HTTPSConnection("en.wikipedia.org")
+
+def read_file_sync(uri):
+  base_dir = os.path.dirname(__file__) #&lt;-- absolute dir the script is in
+  path = os.path.join(base_dir, uri)
+  with open(path) as f:
+    return f.read()
+
+def fetch_sync(uri):
+  conn.request("GET", uri)
+  r = conn.getresponse()
+  return r.read().decode("utf-8")[:200]
+
+def read_file(uri):
+  return Future.async(lambda: read_file_sync(uri))
+
+def fetch(uri):
+  return Future.async(lambda: fetch_sync(uri))
+
+def main(args=None):
+  lines = read_file("../resources/urls.txt").map(lambda res: res.splitlines())
+  content = lines.flat_map(lambda urls: Future.traverse(urls)(fetch))
+  output = content.map(lambda res: print("\n".join(res)))
+
+if __name__ == "__main__":
+main()
+</code></pre></div><h2 class="code-comparison-title is-closed">Ruby—Sample Monad Program</h2><div class=code-comparison-body><pre><code class=language-ruby>
+require './lib/future'
+require 'net/http'
+require 'uri'
+
+semaphore = Queue.new
+
+def read(uri)
+  Future.async(-&gt; () { File.read(uri) })
+end
+
+def fetch(url)
+  Future.async(-&gt; () {
+    uri = URI(url)
+    Net::HTTP.get_response(uri).body[0..200]
+  })
+end
+
+read("resources/urls.txt")
+  .map(-&gt; (x) { x.split("\n") })
+  .flat_map(-&gt; (urls) {
+    Future.traverse(urls, -&gt; (url) { fetch(url) })
+  })
+  .map(-&gt; (res) { puts res; semaphore.push(true) })
+
+semaphore.pop
+</code></pre></div><h2 class="code-comparison-title is-closed">Swift—Sample Monad Program</h2><div class=code-comparison-body><pre><code class=language-swift>
+import Foundation
+
+enum Err: Error {
+  case Some(String)
+}
+
+func readFile(_ path: String) -&gt; Future&lt;Error, String&gt; {
+  return Future&lt;Error, String&gt; { callback in
+    background.async {
+      let url = URL(fileURLWithPath: path)
+      let text = try? String(contentsOf: url)
+      if let res = text {
+        callback(Either&lt;Error, String&gt;.pure(res))
+      } else {
+        callback(Either&lt;Error, String&gt;.Left(Err.Some("Error reading urls.txt")))
+      }
+    }
+  }
+}
+
+func fetchUrl(_ url: String) -&gt; Future&lt;Error, String&gt; {
+  return Future&lt;Error, String&gt; { callback in
+    background.async {
+      let url = URL(string: url)
+      let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+        if let err = error {
+          callback(Either&lt;Error, String&gt;.Left(err))
+          return
+        }
+        guard let nonEmptyData = data else {
+          callback(Either&lt;Error, String&gt;.Left(Err.Some("Empty response")))
+          return
+        }
+        guard let result = String(data: nonEmptyData, encoding: String.Encoding.utf8) else {
+          callback(Either&lt;Error, String&gt;.Left(Err.Some("Cannot decode response")))
+          return
+        }
+        let index = result.index(result.startIndex, offsetBy: 200)
+        callback(Either&lt;Error, String&gt;.pure(String(result[..&lt;index])))
+      }
+      task.resume()
+    }
+  }
+}
+
+var result: Any = ""
+let _ = readFile("\(projectDir)/Resources/urls.txt")
+    .map { data -&gt; [String] in
+      data.components(separatedBy: "\n").filter { (line: String) in !line.isEmpty }
+    }.flatMap { urls in
+        return Future&lt;Error, String&gt;.traverse(urls) { url in
+            return fetchUrl(url)
+        }
+    }.map { responses in
+      print(responses)
+    }
+
+RunLoop.main.run()
+</code></pre></div><h2 class="code-comparison-title is-closed">Scala—Sample Monad Program</h2><div class=code-comparison-body><pre><code class=language-scala>
+import scala.io.Source
+import java.util.concurrent.Semaphore
+import monad._
+
+object Main extends App {
+  val semaphore = new Semaphore(0)
+
+  def readFile(name: String): MyFuture[List[String]] =
+    MyFuture.async[String, List[String]](filename =&gt; Source.fromResource(filename).getLines.toList, name)
+  
+  def fetch(url: String): MyFuture[String] =
+    MyFuture.async[String, String](
+      uri =&gt; Source.fromURL(uri).mkString.substring(0, 200),
+      url
+    )
+  
+  val future = for {
+    urls &lt;- readFile("urls.txt")
+    entries &lt;- MyFuture.traverse(urls)(fetch _)
+  } yield { 
+    println(entries)
+    semaphore.release
+  }
+
+  semaphore.acquire
+}
+</code></pre></div></div><p>There you have it—monad solutions in practice. You can find the complete code for this article <a class=link href=https://github.com/alleycat-at-git/monad target=_blank rel=noopener>on GitHub</a>.</p><h2 id=overhead-done-benefits-ongoing>Overhead: Done. Benefits: Ongoing</h2><p>While using monads for this simple program might seem like overkill, the initial setup remains constant in size. From now on, you can write extensive asynchronous code using monads without worrying about threads, race conditions, semaphores, exceptions, or null pointers!</p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3987358164777632" crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-5X67X4Q4")</script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X67X4Q4" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

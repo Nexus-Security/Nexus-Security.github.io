@@ -1,0 +1,732 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Discussions that are critical of Python often mention how challenging it is to use it for multithreaded tasks. They point to the global interpreter lock, often called the GIL](https://opensource.com/article/17/4/grok-gil), as the culprit. The GIL prevents multiple threads of Python code from executing simultaneously. Because of this, the Python multithreading module doesn&rsquo;t function as someone familiar with languages like C++ or Java might expect. It&rsquo;s crucial to understand that developers can still write concurrent or parallel code in Python that significantly improves performance, as long as they consider a few factors."><title>Tutorial on Python Multithreading and Multiprocessing</title>
+<link rel=canonical href=https://Nexus-Security.github.io/tutorial-on-python-multithreading-and-multiprocessing/><link rel=stylesheet href=/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css><meta property='og:title' content="Tutorial on Python Multithreading and Multiprocessing"><meta property='og:description' content="Discussions that are critical of Python often mention how challenging it is to use it for multithreaded tasks. They point to the global interpreter lock, often called the GIL](https://opensource.com/article/17/4/grok-gil), as the culprit. The GIL prevents multiple threads of Python code from executing simultaneously. Because of this, the Python multithreading module doesn&rsquo;t function as someone familiar with languages like C++ or Java might expect. It&rsquo;s crucial to understand that developers can still write concurrent or parallel code in Python that significantly improves performance, as long as they consider a few factors."><meta property='og:url' content='https://Nexus-Security.github.io/tutorial-on-python-multithreading-and-multiprocessing/'><meta property='og:site_name' content='Nexus Security'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2022-10-12T00:00:00+00:00'><meta property='article:modified_time' content='2022-10-12T00:00:00+00:00'><meta name=twitter:title content="Tutorial on Python Multithreading and Multiprocessing"><meta name=twitter:description content="Discussions that are critical of Python often mention how challenging it is to use it for multithreaded tasks. They point to the global interpreter lock, often called the GIL](https://opensource.com/article/17/4/grok-gil), as the culprit. The GIL prevents multiple threads of Python code from executing simultaneously. Because of this, the Python multithreading module doesn&rsquo;t function as someone familiar with languages like C++ or Java might expect. It&rsquo;s crucial to understand that developers can still write concurrent or parallel code in Python that significantly improves performance, as long as they consider a few factors."><link rel="shortcut icon" href=/fav.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"light")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><ol class=menu-social><li><a href=https://github.com/Nexus-Security target=_blank title=GitHub rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><defs><filter id="alpha" filterUnits="objectBoundingBox" x="0" y="0" width="100%" height="100%"><feColorMatrix type="matrix" in="SourceGraphic" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/></filter><mask id="mask0"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.2;stroke:none"/></g></mask><clipPath id="clip1"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface5" clip-path="url(#clip1)"><path style="stroke:none;fill-rule:nonzero;fill:#fff;fill-opacity:1" d="M10.9375 83.867188c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C21.6875 48.125 21.40625 33.070312 26.488281 17.675781c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C58.9375 34.65625 59.957031 34.84375 60.894531 34.554688 64.824219 33.382812 71.851562 32.6875 79.6875 32.6875S94.550781 33.386719 98.476562 34.554688C99.417969 34.835938 100.433594 34.65625 101.226562 34.074219 113.96875 24.65625 124.011719 20.445312 129.8125 18.582031c-.476562000000001-1.882812-1.019531-3.746093-1.625-5.589843-4.78125 1.207031-16.300781 5.050781-31.648438 16.394531C95.746094 29.96875 94.730469 30.144531 93.789062 29.867188c-3.925781-1.171876-10.953124-1.875-18.789062-1.875-7.832031.0-14.855469.703124000000003-18.792969 1.871093C55.265625 30.144531 54.246094 29.964844 53.457031 29.382812c-15.355469-11.34375-26.875-15.1875-31.65625-16.402343C16.71875 28.382812 17 43.4375 17.726562 45.523438 18.101562 46.589844 17.890625 47.777344 17.175781 48.648438 9.71875 57.367188 6.25 67.070312 6.25 79.179688c0 23.515624 7.175781 37.921874 17.417969 46.550781C16.007812 116.851562 10.9375 103.582031 10.9375 83.867188zm0 0"/></g><mask id="mask1"><g filter="url(#alpha)"><rect x="0" y="0" width="150" height="150" style="fill:#000;fill-opacity:.101961;stroke:none"/></g></mask><clipPath id="clip2"><rect x="0" y="0" width="150" height="150"/></clipPath><g id="surface8" clip-path="url(#clip2)"><path style="stroke:none;fill-rule:nonzero;fill:#000;fill-opacity:1" d="M32.34375 78.5c3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 73.425781 55.824219 73.730469 60.023438 74.054688c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 74.917969 85.210938 74.425781 89.976562 74.054688 102.070312 73.125 111.605469 72.367188 117.648438 78.492188c4.527343 4.601562 6.890624 10.328124 7.21875 16.945312C124.925781 94.398438 125 93.382812 125 92.261719c0-7.285157-2.476562-13.492188-7.351562-18.449219-6.042969-6.117188-15.578126-5.367188-27.671876-4.4375C85.210938 69.742188 80.34375 70.238281 74.867188 70.117188 69.914062 70.0625 64.960938 69.8125 60.023438 69.375 55.824219 69.050781 51.929688 68.742188 48.382812 68.742188c-6.65625.0-12.09375 1.070312-16.039062 5.078124C27.476562 78.769531 25 84.976562 25 92.261719 25 93.375 25.074219 94.398438 25.132812 95.445312 25.460938 88.820312 27.820312 83.101562 32.34375 78.5zm0 0"/></g><linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="10.768" y1="13.86" x2="18.633" y2="21.724" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear1" gradientUnits="userSpaceOnUse" x1="4.004" y1="18.529" x2="4.047" y2="18.573" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#000;stop-opacity:.101961"/><stop offset="1" style="stop-color:#000;stop-opacity:0"/></linearGradient><linearGradient id="linear2" gradientUnits="userSpaceOnUse" x1=".617" y1="5.771" x2="23.69" y2="16.53" gradientTransform="matrix(6.25,0,0,6.25,0,0)"><stop offset="0" style="stop-color:#fff;stop-opacity:.2"/><stop offset="1" style="stop-color:#fff;stop-opacity:0"/></linearGradient></defs><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#5c6671;fill-opacity:1" d="M88.539062 137.488281 75 137.5 61.457031 137.488281C36.273438 137.488281 6.25 127.367188 6.25 79.179688c0-12.109376 3.46875-21.816407 10.925781-30.535157.71875-.875.925781000000001-2.058593.550781000000001-3.125C17 43.4375 16.71875 28.382812 21.800781 12.988281c4.78125 1.207031 16.300781 5.050781 31.65625 16.398438C54.25 29.96875 55.269531 30.15625 56.207031 29.867188c3.9375-1.171876 10.960938-1.875 18.792969-1.875 7.835938.0 14.863281.703124000000003 18.789062 1.871093C94.730469 30.140625 95.746094 29.964844 96.539062 29.382812c15.347657-11.34375 26.867188-15.1875 31.648438-16.394531 5.082031 15.394531 4.804688 30.449219 4.082031 32.53125C131.867188 46.585938 132.078125 47.785156 132.820312 48.648438 140.273438 57.367188 143.75 67.070312 143.75 79.179688c0 48.1875-30.023438 58.308593-55.210938 58.308593zm0 0"/><use xlink:href="#surface5" mask="url(#mask0)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M89.488281 63.144531C84.886719 63.507812 80.125 63.875 75.226562 63.875H74.78125C69.875 63.875 65.117188 63.5 60.519531 63.144531 47.898438 62.164062 35.988281 61.230469 27.894531 69.429688 21.824219 75.59375 18.75 83.28125 18.75 92.261719 18.75 128.238281 46.429688 131.25 75.226562 131.25c28.34375.0 56.023438-3.011719 56.023438-38.988281.0-8.988281-3.074219-16.667969-9.144531-22.835938-8.085938-8.195312-20.003907-7.269531-32.617188-6.28125zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#d9cfcc;fill-opacity:1" d="M74.773438 125C42.492188 125 25 119.78125 25 92.261719c0-7.285157 2.476562-13.492188 7.34375-18.449219 3.945312-4 9.382812-5.074219 16.039062-5.074219C51.925781 68.738281 55.824219 69.042969 60.023438 69.367188c4.71875.375 9.589843.71875 14.84375.746093000000002C80.335938 70.230469 85.210938 69.738281 89.976562 69.367188c12.09375-.929687999999999 21.628907-1.6875 27.671876 4.4375C122.523438 78.769531 125 84.976562 125 92.261719 125 119.78125 107.507812 125 74.773438 125zm0 0"/><use xlink:href="#surface8" mask="url(#mask1)"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M50 75c-7.125.0-12.5 9.40625-12.5 21.875S42.875 118.75 50 118.75s12.5-9.40625 12.5-21.875S57.125 75 50 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M50 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S47.449219 81.25 50 81.25s6.25 6.085938 6.25 15.625S52.550781 112.5 50 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#303c42;fill-opacity:1" d="M1e2 75c-7.125.0-12.5 9.40625-12.5 21.875S92.875 118.75 1e2 118.75s12.5-9.40625 12.5-21.875S107.125 75 1e2 75zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#6d4c41;fill-opacity:1" d="M1e2 112.5c-2.550781.0-6.25-6.085938-6.25-15.625S97.449219 81.25 1e2 81.25s6.25 6.085938 6.25 15.625S102.550781 112.5 1e2 112.5zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M52.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:#a1887f;fill-opacity:1" d="M102.21875 90.511719c0 1.539062-1.246094 2.789062-2.789062 2.789062-1.539063.0-2.785157-1.25-2.785157-2.789062.0-1.539063 1.246094-2.785157 2.785157-2.785157 1.542968.0 2.789062 1.246094 2.789062 2.785157zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear0)" d="M125 72.8125 124.894531 72.855469C129.039062 78.382812 131.25 84.851562 131.25 92.261719c0 35.976562-27.679688 38.988281-56.023438 38.988281-16.664062.0-32.914062-1.054688-43.683593-8.875l13.386719 13.386719c5.507812 1.207031 11.121093 1.71875 16.527343 1.71875L75 137.5 88.539062 137.488281c22.992188.0 49.941407-8.53125 54.472657-46.664062zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear1)" d="M25.070312 115.800781 25 115.832031 25.269531 116.101562zm0 0"/><path style="stroke:none;fill-rule:nonzero;fill:url(#linear2)" d="M138.570312 45.789062C139.492188 39.613281 138.867188 23.738281 133.167969 8.292969 132.660156 6.945312 131.300781 6.113281 129.867188 6.273438 129.269531 6.34375 115.1875 8.164062 94.039062 23.46875 89.445312 22.363281 82.632812 21.742188 75 21.742188s-14.4375.625-19.042969 1.726562C34.800781 8.15625 20.71875 6.34375 20.117188 6.273438 18.6875 6.117188 17.332031 6.949219 16.820312 8.292969 11.117188 23.738281 10.5 39.613281 11.425781 45.789062 3.742188 55.289062.0 66.230469.0 79.179688c0 41.632812 21.824219 64.558593 61.457031 64.558593L75 143.75 88.539062 143.738281C128.167969 143.738281 150 120.8125 150 79.179688c0-12.949219-3.742188-23.890626-11.429688-33.390626zm0 0"/></g></svg></a></li><li><a href=mailto:0x000216@gmail.com target=_blank title=Email rel=me><svg width="512" height="512" viewBox="0 0 512 512"><path d="M33.994 73.934C27.135 76.021 21.866 80.426 18.364 87 16.567 90.374 16.5 96.438 16.5 256V421.5l2.158 4C21.184 430.18 25.101 434.027 30 436.636 33.003 438.235 36.304 438.546 53.246 438.825L72.993 439.15l.253-137.978L73.5 163.194 90 175.45C99.075 182.191 140.17 212.762 181.321 243.386l74.821 55.68 21.179-15.752C288.97 274.65 330 244.021 368.5 215.248l70-52.312L438.754 301.043 439.007 439.15 458.754 438.825C476.726 438.529 478.859 438.306 482.5 436.342 487.18 433.816 491.027 429.899 493.636 425 495.433 421.626 495.5 415.562 495.5 256 495.5 96.438 495.433 90.374 493.636 87 488.565 77.48 482.099 73.799 469.397 73.202L460.293 72.774 454.397 77.337C439.883 88.566 256.423 221.935 255.772 221.73 254.976 221.479 78.972 93.309 62.177 80.75L51.812 73 44.156 73.086C39.945 73.133 35.372 73.515 33.994 73.934" stroke="none" fill="#d34c3c" fill-rule="evenodd"/><path d="M54.528 74.911C55.612 75.963 74.953 90.25 97.507 106.661c22.555 16.412 67.228 48.964 99.275 72.339s58.594 42.604 58.993 42.731C256.549 221.978 454.147 78.147 457.472 74.916 459.416 73.028 456.501 73 256 73 55.677 73 52.586 73.029 54.528 74.911M73 300.878V439H256 439V300.941C439 190.749 438.748 163.038 437.75 163.654 437.063 164.078 405.45 187.632 367.5 215.994c-37.95 28.363-78.528 58.655-90.173 67.316l-21.173 15.748-66.827-49.716C152.572 221.999 111.925 191.776 99 182.18s-24.062-17.892-24.75-18.436C73.251 162.954 73 190.519 73 300.878" stroke="none" fill="#e5e5e5" fill-rule="evenodd"/></svg></a></li><li><a href=https://nexus-security.github.io/index.xml target=_blank title=RSS rel=me><svg id="Layer_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><path style="fill:#f78c20" d="M78.333 355.334C35.14 355.334.0 390.474.0 433.667S35.14 512 78.333 512s78.333-35.14 78.333-78.333-35.14-78.333-78.333-78.333z"/><g><path style="fill:#ffa929" d="M78.333 381.445c-28.795.0-52.222 23.427-52.222 52.222s23.427 52.222 52.222 52.222 52.222-23.427 52.222-52.222-23.427-52.222-52.222-52.222z"/><path style="fill:#ffa929" d="M477.918 264.861c-21.843-51.641-53.111-98.019-92.936-137.842-39.824-39.824-86.201-71.093-137.843-92.935C193.669 11.468 136.874.0 78.333.0c-4.807.0-8.704 3.897-8.704 8.704v85.519c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h85.52c4.807.0 8.704-3.897 8.704-8.704C512 375.126 500.533 318.331 477.918 264.861z"/><path style="fill:#ffa929" d="M78.333 163.853c-4.807.0-8.704 3.897-8.704 8.704v95.74c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h95.74c4.807.0 8.704-3.897 8.704-8.704.0-72.07-28.065-139.826-79.027-190.787-50.961-50.961-118.717-79.027-190.787-79.027z"/></g><g><path style="fill:#f78c20" d="M78.333 242.186c-2.918.0-5.817.076-8.704.206v25.905c0 4.807 3.897 8.704 8.704 8.704 86.386.0 156.666 70.281 156.666 156.666.0 4.807 3.897 8.704 8.704 8.704h25.905c.129-2.886.206-5.786.206-8.704.0-105.752-85.729-191.481-191.481-191.481z"/><path style="fill:#f78c20" d="M78.333 68.113c-2.91.0-5.81.042-8.704.11v26.001c0 4.807 3.897 8.704 8.704 8.704 182.37.0 330.74 148.369 330.74 330.74.0 4.807 3.897 8.704 8.704 8.704h26.001c.067-2.894.11-5.793.11-8.704C443.887 231.777 280.223 68.113 78.333 68.113z"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://x.com/0x000216 target=_blank title=Twitter rel=me><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150" viewBox="0 0 150 150"><g id="surface1"><path style="stroke:none;fill-rule:nonzero;fill:#03a9f4;fill-opacity:1" d="M150 33.179688c-5.640625 2.460937-11.609375 4.09375-17.71875 4.855468 6.4375-3.820312 11.25-9.867187 13.527344-16.996094-6.027344 3.574219-12.621094 6.089844-19.5 7.441407-8.628906-9.210938-22.007813-12.214844-33.746094-7.574219-11.738281 4.636719-19.449219 15.980469-19.445312 28.601562.0 2.4375.203124000000003 4.78125.710937000000001 7.015626C49.085938 55.308594 26.03125 43.609375 10.445312 24.355469 2.25 38.402344 6.386719 56.398438 19.894531 65.457031 15.027344 65.324219 10.261719 64.027344 6 61.667969V62.007812c.015625 14.636719 10.304688 27.25 24.636719 30.214844-2.628907.691406000000001-5.339844 1.03125-8.0625 1.011719C20.621094 93.269531 18.667969 93.09375 16.753906 92.710938c4.070313 12.507812 15.585938 21.089843 28.734375 21.421874-10.886719 8.511719-24.308593 13.128907-38.128906 13.113282C4.835938 127.246094 2.417969 127.132812.0 126.824219c14.0625 9.0625 30.445312 13.855469 47.175781 13.800781 56.585938.0 87.523438-46.875 87.523438-87.507812.0-1.359376-.046875-2.671876-.113281000000001-3.972657C140.652344 44.804688 145.875 39.394531 150 33.179688zm0 0"/></g></svg></a></li><li><a href=https://www.minds.com/0x000216/ target=_blank title=Minds rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><g><g><path style="fill:#ffe1b2" d="M256 33.085C245.078 13.38 224.079.0 2e2.0c-23.781.0-45.57 13.293-56.594 34.184C115.711 41.602 96 66.977 96 96c0 .059.0.113.0.172-9.977 7.512-16 19.301-16 31.828.0 1.316.078 2.637.234 3.992C60.211 145.266 48 167.758 48 192c0 14.07 4.039 27.543 11.719 39.262C57.273 236.512 56 242.207 56 248c0 2.738.281 5.445.828 8.098C36.672 267.308 24 288.539 24 312c0 27.973 18.305 52.34 44.109 60.785C65.398 378.828 64 385.324 64 392c0 21.098 13.805 39.508 33.539 45.727C103.891 466.746 129.828 488 160 488c4.617.0 9.227-.512 13.766-1.527C181.992 502 198.141 512 216 512c16.687.0 31.396-8.567 40-21.523V33.085z"/></g><g><g><path style="fill:#ffb980" d="M264 256c-4.422.0-8-3.582-8-8 0-22.055-17.945-40-40-40-8.008.0-15.734 2.355-22.336 6.812-3.023 2.043-7.055 1.781-9.797-.652-3.156-2.809-8.477-6.16-15.867-6.16-4.422.0-8-3.582-8-8s3.578-8 8-8c7.711.0 15.234 2.293 21.719 6.539C197.773 194.246 206.758 192 216 192c30.875.0 56 25.121 56 56C272 252.418 268.422 256 264 256z"/></g></g><g><g><path style="fill:#ffb980" d="M120 120c18.977.0 36.875 7.312 50.414 20.594 3.141 3.09 8.203 3.047 11.312-.109 3.094-3.152 3.047-8.219-.109-11.312C165.07 112.941 143.187 104 120 104c-13.046.0-25.395 2.93-36.542 8.046C81.253 117.019 80 122.423 80 128c0 1.316.078 2.637.234 3.992-.094.062-.173.139-.267.202C91.423 124.501 105.193 120 120 120z"/></g></g><g><g><path style="fill:#ffb980" d="M216 360c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32-14.211.0-26.82-9.648-30.664-23.465-.703-2.512-2.578-4.523-5.039-5.395-2.453-.871-5.188-.492-7.305 1.02C114.094 371.906 101.305 376 88 376c-6.948.0-13.625-1.149-19.894-3.207-2.214 4.939-3.501 10.19-3.916 15.586C71.714 390.73 79.711 392 88 392c13.297.0 26.187-3.266 37.773-9.52C133.969 397.894 150.141 408 168 408c26.469.0 48-21.531 48-48z"/></g></g><g><path style="fill:#fdc88e" d="M488 312c0-23.461-12.672-44.691-32.828-55.902.547-2.652.828-5.359.828-8.098.0-5.793-1.273-11.488-3.719-16.738C459.961 219.543 464 206.07 464 192c0-24.242-12.211-46.734-32.234-60.008.156-1.355.234-2.676.234-3.992.0-12.527-6.023-24.316-16-31.828.0-.059.0-.113.0-.172.0-29.023-19.711-54.398-47.406-61.816C357.57 13.293 335.781.0 312 0c-24.08.0-45.078 13.38-56 33.085v457.391C264.604 503.433 279.313 512 296 512c17.859.0 34.008-10 42.234-25.527C342.773 487.488 347.383 488 352 488c30.172.0 56.109-21.254 62.461-50.273C434.195 431.508 448 413.097 448 392c0-6.676-1.398-13.172-4.109-19.215C469.695 364.34 488 339.973 488 312z"/></g><g><path style="fill:#f8ab6b" d="M272.008 151.199C272 151.465 272 151.734 272 152c0 26.469 21.531 48 48 48s48-21.531 48-48c0-4.418-3.578-8-8-8s-8 3.582-8 8c0 17.645-14.352 32-32 32s-32-14.355-32-32c0-2.184.219-4.359.656-6.465.492-2.395-.133-4.883-1.703-6.754-1.57-1.871-4.016-3.066-6.352-2.859-.453.012-.891.059-.602.078-13.234.0-24-10.766-24-24v31.813C260.673 147.348 266.061 149.988 272.008 151.199z"/></g><g><path style="fill:#f8ab6b" d="M296 328c9.242.0 18.219-2.246 26.281-6.539C328.765 325.707 336.289 328 344 328c4.422.0 8-3.582 8-8s-3.578-8-8-8c-7.391.0-12.711-3.352-15.867-6.16-2.742-2.434-6.766-2.695-9.797-.656C311.726 309.644 304 312 296 312c-22.055.0-40-17.945-40-40v39.116C266.174 321.517 280.337 328 296 328z"/></g><g><g><path style="fill:#f8ab6b" d="M431.765 131.992c.156-1.355.234-2.676.234-3.992.0-5.577-1.253-10.981-3.458-15.954C417.395 106.93 405.046 104 392 104c-4.422.0-8 3.582-8 8s3.578 8 8 8c14.807.0 28.577 4.501 40.032 12.194C431.939 132.131 431.859 132.054 431.765 131.992z"/></g></g><g><g><path style="fill:#f8ab6b" d="M447.81 388.38c-.415-5.396-1.702-10.647-3.916-15.586C437.624 374.85 430.948 376 424 376c-13.578.0-26.594-4.266-37.641-12.332-2.07-1.5-4.719-1.93-7.133-1.168-2.43.77-4.344 2.648-5.164 5.059C369.101 382.176 355.414 392 340 392c-4.422.0-8 3.582-8 8s3.578 8 8 8c18.875.0 35.961-10.191 45.094-26.156C396.976 388.512 410.258 392 424 392 432.288 392 440.285 390.73 447.81 388.38z"/></g></g></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li><li><a href=https://www.buymeacoffee.com/0x000216 target=_blank title=Coffee rel=me><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 340 340" style="enable-background:new 0 0 340 340"><g id="XMLID_18_"><polygon id="XMLID_138_" style="fill:#dedde0" points="76.429,290 80,340 170,340 170,290"/><polygon id="XMLID_169_" style="fill:#dedde0" points="170,80 61.429,80 65,130 170,130"/><polygon id="XMLID_197_" style="fill:#acabb1" points="170,290 170,340 260,340 263.571,290"/><polygon id="XMLID_221_" style="fill:#acabb1" points="170,80 170,130 275,130 278.571,80"/><path id="XMLID_222_" style="fill:#ffda44" d="M170 260c-22.091.0-40-22.386-40-50s17.909-50 40-50v-30H65 50l10 160h16.429H170V260z"/><path id="XMLID_33_" style="fill:#ff9811" d="M170 130v30c22.091.0 40 22.386 40 50s-17.909 50-40 50v30h93.571H280l10-160h-15H170z"/><path id="XMLID_223_" style="fill:#50412e" d="M210 210c0-27.614-17.909-50-40-50v1e2c22.091.0 40-22.386 40-50z"/><path id="XMLID_224_" style="fill:#786145" d="M130 210c0 27.614 17.909 50 40 50V160c-22.091.0-40 22.386-40 50z"/><polygon id="XMLID_225_" style="fill:#50412e" points="278.571,80 300,80 300,40 260,40 260,0 80,0 80,40 40,40 40,80 61.429,80 170,80"/></g><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About Us</span></a></li><li><a href=/termsofservice/><svg class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4L18.5 9.5a1.5 1.5.0 00-4-4L4 16v4"/><line x1="13.5" y1="6.5" x2="17.5" y2="10.5"/></svg>
+<span>Terms Of Service</span></a></li><li><a href=/privacypolicy/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Privacy Policy</span></a></li><li><a href=/disclaimer/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Disclaimer</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/contact/><svg class="icon icon-tabler icon-tabler-mail" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+<span>Contact Us</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#getting-started-with-python-multithreading>Getting Started with Python Multithreading</a></li><li><a href=#parallelism-and-concurrency-in-python-a-multithreading-example>Parallelism and Concurrency in Python: A Multithreading Example</a></li><li><a href=#python-multiprocessing-creating-multiple-processes>Python Multiprocessing: Creating Multiple Processes</a></li><li><a href=#distributing-tasks-to-multiple-workers>Distributing Tasks to Multiple Workers</a></li><li><a href=#multiprocessing-vs-multithreading-in-python-choosing-the-right-approach>Multiprocessing vs. Multithreading in Python: Choosing the Right Approach</a></li><li><a href=#update>Update</a><ol><li><a href=#enhancing-concurrency-in-python-32-with-concurrentfutures>Enhancing Concurrency in Python 3.2+ with <code>concurrent.futures</code></a></li><li><a href=#asyncawait-python-35-only>Async/Await (Python 3.5+ only)</a></li></ol></li><li><a href=#there-should-be-oneand-preferably-only-oneobvious-way-to-do-it>There Should Be One—and Preferably Only One—Obvious Way to Do It</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><div class=article-title-wrapper><h2 class=article-title><a href=/tutorial-on-python-multithreading-and-multiprocessing/>Tutorial on Python Multithreading and Multiprocessing</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Oct 12, 2022</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>19 minute read</time></div></footer></div></header><section class=article-content><p>Discussions that are critical of Python often mention how challenging it is to use it for multithreaded tasks. They point to the global interpreter lock, often called the GIL](<a class=link href=https://opensource.com/article/17/4/grok-gil%29 target=_blank rel=noopener>https://opensource.com/article/17/4/grok-gil)</a>, as the culprit. The GIL prevents multiple threads of Python code from executing simultaneously. Because of this, the Python multithreading module doesn&rsquo;t function as someone familiar with languages like C++ or Java might expect. It&rsquo;s crucial to understand that developers can still write concurrent or parallel code in Python that significantly improves performance, as long as they consider a few factors. If you haven&rsquo;t already, I recommend reading Eqbal Quran&rsquo;s article about concurrency and parallelism in Ruby, available here on the Toptal Engineering Blog.</p><p>To illustrate concurrency in Python, we&rsquo;ll create a script to download popular images from Imgur. We&rsquo;ll begin with a version that downloads images sequentially, one at a time. Before we start, you&rsquo;ll need to register <a class=link href=https://api.imgur.com/oauth2/addclient target=_blank rel=noopener>an application on Imgur</a>. If you don&rsquo;t have an Imgur account, please create one.</p><p>The Python multithreading examples in this article are compatible with Python 3.6.4. They should work with Python 2 with minor adjustments, mainly related to the <code>urllib</code> library, which has changed considerably between these versions.</p><h2 id=getting-started-with-python-multithreading>Getting Started with Python Multithreading</h2><p>Let&rsquo;s create a Python module called <code>download.py</code>. This file will contain all the functions we need to retrieve the list of images and download them. We&rsquo;ll divide this functionality into three separate functions:</p><ul><li><code>get_links</code></li><li><code>download_link</code></li><li><code>setup_download_dir</code></li></ul><p>The purpose of the <code>setup_download_dir</code> function is to create a directory for downloaded images if one doesn&rsquo;t exist.</p><p>Imgur&rsquo;s API requires a client ID to be included in the <code>Authorization</code> header of all HTTP requests. You can find this ID on the dashboard of the application you registered on Imgur. The API&rsquo;s response will be in JSON format, and we can use Python&rsquo;s built-in JSON library to decode it. Downloading an image is even more straightforward: we just retrieve it using its URL and write it to a file.</p><p>The script looks like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>json</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>urllib.request</span> <span class=kn>import</span> <span class=n>urlopen</span><span class=p>,</span> <span class=n>Request</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>types</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;image/jpeg&#39;</span><span class=p>,</span> <span class=s1>&#39;image/png&#39;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>get_links</span><span class=p>(</span><span class=n>client_id</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>headers</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;Authorization&#39;</span><span class=p>:</span> <span class=s1>&#39;Client-ID </span><span class=si>{}</span><span class=s1>&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>client_id</span><span class=p>)}</span>
+</span></span><span class=line><span class=cl>    <span class=n>req</span> <span class=o>=</span> <span class=n>Request</span><span class=p>(</span><span class=s1>&#39;https://api.imgur.com/3/gallery/random/random/&#39;</span><span class=p>,</span> <span class=n>headers</span><span class=o>=</span><span class=n>headers</span><span class=p>,</span> <span class=n>method</span><span class=o>=</span><span class=s1>&#39;GET&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=n>urlopen</span><span class=p>(</span><span class=n>req</span><span class=p>)</span> <span class=k>as</span> <span class=n>resp</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>data</span> <span class=o>=</span> <span class=n>json</span><span class=o>.</span><span class=n>loads</span><span class=p>(</span><span class=n>resp</span><span class=o>.</span><span class=n>read</span><span class=p>()</span><span class=o>.</span><span class=n>decode</span><span class=p>(</span><span class=s1>&#39;utf-8&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>[</span><span class=n>item</span><span class=p>[</span><span class=s1>&#39;link&#39;</span><span class=p>]</span> <span class=k>for</span> <span class=n>item</span> <span class=ow>in</span> <span class=n>data</span><span class=p>[</span><span class=s1>&#39;data&#39;</span><span class=p>]</span> <span class=k>if</span> <span class=s1>&#39;type&#39;</span> <span class=ow>in</span> <span class=n>item</span> <span class=ow>and</span> <span class=n>item</span><span class=p>[</span><span class=s1>&#39;type&#39;</span><span class=p>]</span> <span class=ow>in</span> <span class=n>types</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>download_link</span><span class=p>(</span><span class=n>directory</span><span class=p>,</span> <span class=n>link</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_path</span> <span class=o>=</span> <span class=n>directory</span> <span class=o>/</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>basename</span><span class=p>(</span><span class=n>link</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=n>urlopen</span><span class=p>(</span><span class=n>link</span><span class=p>)</span> <span class=k>as</span> <span class=n>image</span><span class=p>,</span> <span class=n>download_path</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=s1>&#39;wb&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>image</span><span class=o>.</span><span class=n>read</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Downloaded </span><span class=si>%s</span><span class=s1>&#39;</span><span class=p>,</span> <span class=n>link</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>setup_download_dir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_dir</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=s1>&#39;images&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>download_dir</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>download_dir</span><span class=o>.</span><span class=n>mkdir</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>download_dir</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now we need to write a module that uses these functions to download the images sequentially. We&rsquo;ll call this module <code>single.py</code>. It will contain the main function for the initial, basic version of our Imgur image downloader. The module will access the Imgur client ID stored in the <code>IMGUR_CLIENT_ID</code> environment variable. It will call the <code>setup_download_dir</code> function to create the download destination directory. Finally, it will fetch a list of images using the <code>get_links</code> function, exclude all GIF and album URLs from this list, and use the <code>download_link</code> function to download and save each remaining image to disk.</p><p>Here is the <code>single.py</code> script:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>time</span> <span class=kn>import</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>download</span> <span class=kn>import</span> <span class=n>setup_download_dir</span><span class=p>,</span> <span class=n>get_links</span><span class=p>,</span> <span class=n>download_link</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>basicConfig</span><span class=p>(</span><span class=n>level</span><span class=o>=</span><span class=n>logging</span><span class=o>.</span><span class=n>INFO</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;</span><span class=si>%(asctime)s</span><span class=s1> - </span><span class=si>%(name)s</span><span class=s1> - </span><span class=si>%(levelname)s</span><span class=s1> - </span><span class=si>%(message)s</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ts</span> <span class=o>=</span> <span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>client_id</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>getenv</span><span class=p>(</span><span class=s1>&#39;IMGUR_CLIENT_ID&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>client_id</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Couldn&#39;t find IMGUR_CLIENT_ID environment variable!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_dir</span> <span class=o>=</span> <span class=n>setup_download_dir</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>links</span> <span class=o>=</span> <span class=n>get_links</span><span class=p>(</span><span class=n>client_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>link</span> <span class=ow>in</span> <span class=n>links</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>download_link</span><span class=p>(</span><span class=n>download_dir</span><span class=p>,</span> <span class=n>link</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>logging</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Took </span><span class=si>%s</span><span class=s1> seconds&#39;</span><span class=p>,</span> <span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>ts</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>On my laptop, this script downloaded 91 images in 19.4 seconds. It&rsquo;s important to note that this may vary depending on your network speed. While 19.4 seconds is not too long, imagine downloading 900 images instead of 90. With an average download time of 0.2 seconds per image, downloading 900 pictures would take about 3 minutes, and 9,000 pictures would take 30 minutes. The good news is that we can significantly reduce this time by implementing concurrency or parallelism.</p><p>From this point onward, the provided code examples will only include import statements that are new and specific to those examples. For your convenience, you can find all of the Python scripts used in this article in <a class=link href=https://github.com/volker48/python-concurrency target=_blank rel=noopener>this GitHub repository</a>.</p><h2 id=parallelism-and-concurrency-in-python-a-multithreading-example>Parallelism and Concurrency in Python: A Multithreading Example</h2><p>One of the most popular ways to achieve parallelism and concurrency in Python is through threading, a feature usually managed by the operating system. Threads are more lightweight than processes and share the same memory space.</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png" media="(min-width: 1920.1px)"><img alt="Python multithreading memory model" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126087%2Ftoptal-blog-image-1526311066247-4ce28d0e2a6878d80c5374d2c53e8aff.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>In this Python multithreading example, we&rsquo;ll create a new module to replace <code>single.py</code>. This module will generate a pool of eight threads, resulting in a total of nine threads, including the main thread. I chose eight worker threads because my computer has eight CPU cores, and assigning one worker thread per core seemed like a reasonable starting point. In real-world scenarios, this number is carefully chosen based on various factors, such as other applications or services running on the same machine.</p><p>This module is very similar to the previous one. The main difference is the new <code>DownloadWorker</code> class, which inherits from Python&rsquo;s <code>Thread</code> class. We&rsquo;ve overridden the <code>run</code> method, which now executes an infinite loop. In each iteration, it calls <code>self.queue.get()</code> to retrieve a URL from a thread-safe queue. This call blocks until an item is available for processing. Once the worker thread receives an item from the queue, it calls the <code>download_link</code> method, the same one used in the previous script, to download the image to the designated images directory. After the download is complete, the worker thread notifies the queue that the task is finished. This step is crucial because the Queue tracks the number of tasks that were added. Without the worker signaling completion, the <code>queue.join()</code> call in the main thread would block indefinitely.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>queue</span> <span class=kn>import</span> <span class=n>Queue</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>threading</span> <span class=kn>import</span> <span class=n>Thread</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>time</span> <span class=kn>import</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>download</span> <span class=kn>import</span> <span class=n>setup_download_dir</span><span class=p>,</span> <span class=n>get_links</span><span class=p>,</span> <span class=n>download_link</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>basicConfig</span><span class=p>(</span><span class=n>level</span><span class=o>=</span><span class=n>logging</span><span class=o>.</span><span class=n>INFO</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;</span><span class=si>%(asctime)s</span><span class=s1> - </span><span class=si>%(name)s</span><span class=s1> - </span><span class=si>%(levelname)s</span><span class=s1> - </span><span class=si>%(message)s</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>DownloadWorker</span><span class=p>(</span><span class=n>Thread</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>queue</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>Thread</span><span class=o>.</span><span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>queue</span> <span class=o>=</span> <span class=n>queue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>run</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=kc>True</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># Get the work from the queue and expand the tuple</span>
+</span></span><span class=line><span class=cl>            <span class=n>directory</span><span class=p>,</span> <span class=n>link</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>queue</span><span class=o>.</span><span class=n>get</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>download_link</span><span class=p>(</span><span class=n>directory</span><span class=p>,</span> <span class=n>link</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>finally</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=bp>self</span><span class=o>.</span><span class=n>queue</span><span class=o>.</span><span class=n>task_done</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ts</span> <span class=o>=</span> <span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>client_id</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>getenv</span><span class=p>(</span><span class=s1>&#39;IMGUR_CLIENT_ID&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>client_id</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Couldn&#39;t find IMGUR_CLIENT_ID environment variable!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_dir</span> <span class=o>=</span> <span class=n>setup_download_dir</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>links</span> <span class=o>=</span> <span class=n>get_links</span><span class=p>(</span><span class=n>client_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Create a queue to communicate with the worker threads</span>
+</span></span><span class=line><span class=cl>    <span class=n>queue</span> <span class=o>=</span> <span class=n>Queue</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Create 8 worker threads</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>x</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>8</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>worker</span> <span class=o>=</span> <span class=n>DownloadWorker</span><span class=p>(</span><span class=n>queue</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Setting daemon to True will let the main thread exit even though the workers are blocking</span>
+</span></span><span class=line><span class=cl>        <span class=n>worker</span><span class=o>.</span><span class=n>daemon</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>        <span class=n>worker</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Put the tasks into the queue as a tuple</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>link</span> <span class=ow>in</span> <span class=n>links</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Queueing </span><span class=si>{}</span><span class=s1>&#39;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>link</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=n>queue</span><span class=o>.</span><span class=n>put</span><span class=p>((</span><span class=n>download_dir</span><span class=p>,</span> <span class=n>link</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Causes the main thread to wait for the queue to finish processing all the tasks</span>
+</span></span><span class=line><span class=cl>    <span class=n>queue</span><span class=o>.</span><span class=n>join</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>logging</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Took </span><span class=si>%s</span><span class=s1>&#39;</span><span class=p>,</span> <span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>ts</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>Running this Python multithreading example on the same computer as before resulted in a download time of 4.1 seconds! This is 4.7 times faster than the previous version. Although considerably faster, it&rsquo;s essential to remember that because of the GIL, only one thread was actively running at any given time. This means the code is concurrent but not parallel. The performance improvement comes from the fact that downloading images is an IO-bound operation. The processor isn&rsquo;t under heavy load during the download process; most of the time is spent waiting for data from the network. This is where Python multithreading can significantly enhance speed. When one thread is waiting for network data, the processor can switch to another thread that&rsquo;s ready to work. However, using the threading module in Python, or any interpreted language with a GIL, can sometimes decrease performance. If your code is performing a CPU-bound task, like decompressing GZIP files, using the <code>threading</code> module will slow down execution. For genuinely parallel execution of CPU-bound tasks, we can utilize the <code>multiprocessing</code> module.</p><p>It&rsquo;s worth noting that while CPython, the primary Python implementation, has a GIL, this isn&rsquo;t true for all Python implementations. For instance, IronPython, a Python implementation based on the .NET framework, does not have a GIL. Neither does Jython, a Java-based implementation. You can find a list of available Python implementations <a class=link href=https://wiki.python.org/moin/PythonImplementations#Working_Implementations target=_blank rel=noopener>here</a>.</p><h2 id=python-multiprocessing-creating-multiple-processes>Python Multiprocessing: Creating Multiple Processes</h2><p>Compared to the threading module, the Python <code>multiprocessing</code> module is simpler to integrate. We don&rsquo;t need to create a new class like we did in the Python multithreading example. The only changes we need to make are in the main function.</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png" media="(min-width: 1920.1px)"><img alt="Python multiprocessing tutorial: Modules" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126088%2Ftoptal-blog-image-1526311071925-a4dc10cda4cf6b88a7f11fd5d4c76f9a.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>To leverage multiple processes, we create a <code>multiprocessing.Pool</code>. We then use its <code>map</code> method to provide a list of URLs to the pool. This action creates eight new processes, utilizing each to download the images in parallel. This is true parallelism, but it comes with a trade-off: the script&rsquo;s entire memory footprint is duplicated in each new subprocess. While this might not be an issue in this straightforward example, it can quickly become significant overhead in more complex programs.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>functools</span> <span class=kn>import</span> <span class=n>partial</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>multiprocessing.pool</span> <span class=kn>import</span> <span class=n>Pool</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>time</span> <span class=kn>import</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>download</span> <span class=kn>import</span> <span class=n>setup_download_dir</span><span class=p>,</span> <span class=n>get_links</span><span class=p>,</span> <span class=n>download_link</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>basicConfig</span><span class=p>(</span><span class=n>level</span><span class=o>=</span><span class=n>logging</span><span class=o>.</span><span class=n>DEBUG</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;</span><span class=si>%(asctime)s</span><span class=s1> - </span><span class=si>%(name)s</span><span class=s1> - </span><span class=si>%(levelname)s</span><span class=s1> - </span><span class=si>%(message)s</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=s1>&#39;requests&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>setLevel</span><span class=p>(</span><span class=n>logging</span><span class=o>.</span><span class=n>CRITICAL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ts</span> <span class=o>=</span> <span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>client_id</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>getenv</span><span class=p>(</span><span class=s1>&#39;IMGUR_CLIENT_ID&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>client_id</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Couldn&#39;t find IMGUR_CLIENT_ID environment variable!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_dir</span> <span class=o>=</span> <span class=n>setup_download_dir</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>links</span> <span class=o>=</span> <span class=n>get_links</span><span class=p>(</span><span class=n>client_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>download</span> <span class=o>=</span> <span class=n>partial</span><span class=p>(</span><span class=n>download_link</span><span class=p>,</span> <span class=n>download_dir</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=n>Pool</span><span class=p>(</span><span class=mi>4</span><span class=p>)</span> <span class=k>as</span> <span class=n>p</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>p</span><span class=o>.</span><span class=n>map</span><span class=p>(</span><span class=n>download</span><span class=p>,</span> <span class=n>links</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>logging</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Took </span><span class=si>%s</span><span class=s1> seconds&#39;</span><span class=p>,</span> <span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>ts</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=distributing-tasks-to-multiple-workers>Distributing Tasks to Multiple Workers</h2><p>Python&rsquo;s multithreading and multiprocessing modules are efficient for scripts running on your local machine. However, what if you want to execute tasks on a different machine or need to scale beyond the processing power of a single computer? A prime example is handling long-running background tasks for web applications. It&rsquo;s not ideal to create numerous subprocesses or threads on the same machine running your application code for these tasks. Doing so would degrade the application&rsquo;s performance for all users. A better solution is to offload these tasks to another machine, or even multiple machines.</p><p>An excellent Python library for this is <a class=link href=http://python-rq.org/ target=_blank rel=noopener>RQ</a>, a straightforward yet powerful tool. We can use this library to add a function and its arguments to a queue. This process <a class=link href=https://docs.python.org/3.4/library/pickle.html target=_blank rel=noopener>pickles</a> the function call, which is then appended to a <a class=link href=http://redis.io/ target=_blank rel=noopener>Redis</a> list. While queuing a task is the first step, it doesn&rsquo;t trigger its execution. We need at least one worker process monitoring that job queue.</p><div data-testid=image-container class="X3Bg-O9c _1xIzGpI7"><figure class=_1sK7TguO><picture class=!contents data-testid=picture><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=360, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=360&amp;dpr=2 2x" media="(max-width: 360px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=480, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=480&amp;dpr=2 2x" media="(min-width: 360.1px) and (max-width: 480px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=768, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=768&amp;dpr=2 2x" media="(min-width: 480.1px) and (max-width: 768px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=1024, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=1024&amp;dpr=2 2x" media="(min-width: 768.1px) and (max-width: 1024px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=1440, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=1440&amp;dpr=2 2x" media="(min-width: 1024.1px) and (max-width: 1440px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=1920, https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png&amp;width=1920&amp;dpr=2 2x" media="(min-width: 1440.1px) and (max-width: 1920px)"><source srcset="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png" media="(min-width: 1920.1px)"><img alt="Model of the RQ Python queue library" src="https://assets.toptal.io/images?url=https%3A%2F%2Fuploads.toptal.io%2Fblog%2Fimage%2F126089%2Ftoptal-blog-image-1526311086624-a103ca796ff5793c4e23d5c56ff66593.png" loading=lazy decoding=async class=Djd3YO_2></picture></figure></div><p>Before proceeding, you&rsquo;ll need to install and run a Redis server on your machine or have access to one that&rsquo;s already running. Once that&rsquo;s done, we only need to make a few minor adjustments to our existing code. First, we create an instance of an RQ Queue and provide it with an instance of a Redis server from the <a class=link href=https://github.com/andymccurdy/redis-py target=_blank rel=noopener>redis-py library</a>. Next, instead of directly calling our <code>download_link</code> method, we call <code>q.enqueue(download_link, download_dir, link)</code>. The <code>enqueue</code> method takes a function as its first argument, and any subsequent arguments or keyword arguments are passed to that function when the job is executed.</p><p>The final step is to start some worker processes. RQ offers a convenient script for running workers on the default queue. By executing <code>rqworker</code> in a terminal window, a worker process will start listening on the default queue. Ensure that your current working directory is the same as the one containing the scripts. If you want to monitor a different queue, you can run <code>rqworker queue_name</code>, replacing <code>queue_name</code> with the desired queue&rsquo;s name.</p><p>RQ&rsquo;s advantage is its scalability. As long as you can establish a connection to Redis, you can run as many worker processes as needed on any number of machines. This makes scaling up as your application grows remarkably easy. Here&rsquo;s the RQ version of our script:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>redis</span> <span class=kn>import</span> <span class=n>Redis</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>rq</span> <span class=kn>import</span> <span class=n>Queue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>download</span> <span class=kn>import</span> <span class=n>setup_download_dir</span><span class=p>,</span> <span class=n>get_links</span><span class=p>,</span> <span class=n>download_link</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>basicConfig</span><span class=p>(</span><span class=n>level</span><span class=o>=</span><span class=n>logging</span><span class=o>.</span><span class=n>DEBUG</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;</span><span class=si>%(asctime)s</span><span class=s1> - </span><span class=si>%(name)s</span><span class=s1> - </span><span class=si>%(levelname)s</span><span class=s1> - </span><span class=si>%(message)s</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=s1>&#39;requests&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>setLevel</span><span class=p>(</span><span class=n>logging</span><span class=o>.</span><span class=n>CRITICAL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>client_id</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>getenv</span><span class=p>(</span><span class=s1>&#39;IMGUR_CLIENT_ID&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>client_id</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Couldn&#39;t find IMGUR_CLIENT_ID environment variable!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_dir</span> <span class=o>=</span> <span class=n>setup_download_dir</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>links</span> <span class=o>=</span> <span class=n>get_links</span><span class=p>(</span><span class=n>client_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>q</span> <span class=o>=</span> <span class=n>Queue</span><span class=p>(</span><span class=n>connection</span><span class=o>=</span><span class=n>Redis</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s1>&#39;localhost&#39;</span><span class=p>,</span> <span class=n>port</span><span class=o>=</span><span class=mi>6379</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>link</span> <span class=ow>in</span> <span class=n>links</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>q</span><span class=o>.</span><span class=n>enqueue</span><span class=p>(</span><span class=n>download_link</span><span class=p>,</span> <span class=n>download_dir</span><span class=p>,</span> <span class=n>link</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>It&rsquo;s important to note that RQ is not the only Python job queue solution available. While RQ is user-friendly and excels in handling simple use cases, if you require more advanced features, you can explore other Python 3 queue solutions like Celery.</p><h2 id=multiprocessing-vs-multithreading-in-python-choosing-the-right-approach>Multiprocessing vs. Multithreading in Python: Choosing the Right Approach</h2><p>If your code is IO-bound, both multiprocessing and multithreading in Python can be beneficial. While Python multiprocessing is generally easier to implement than threading, it has a larger memory footprint. If your code is CPU-bound, multiprocessing is usually the preferred option, especially when the target machine has multiple cores or CPUs. For web applications and scenarios where you need to distribute work across several machines, RQ is the superior choice.</p><hr><h2 id=update>Update</h2><h3 id=enhancing-concurrency-in-python-32-with-concurrentfutures>Enhancing Concurrency in Python 3.2+ with <code>concurrent.futures</code></h3><p>The <code>concurrent.futures</code> package, introduced in Python 3.2, provides another way to implement parallelism and concurrency in Python. It was not covered in the original article.</p><p>In the original article, I stated that the Python <code>multiprocessing</code> module is simpler to integrate than the <code>threading</code> module. This was because using the Python 3 <code>threading</code> module required creating a subclass of the <code>Thread</code> class and setting up a <code>Queue</code> for threads to monitor for new tasks.</p><p>However, using a <a class=link href=https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor target=_blank rel=noopener>concurrent.futures.ThreadPoolExecutor</a> makes the Python threading example almost as straightforward as using the <code>multiprocessing</code> module.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>concurrent.futures</span> <span class=kn>import</span> <span class=n>ThreadPoolExecutor</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>functools</span> <span class=kn>import</span> <span class=n>partial</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>time</span> <span class=kn>import</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>download</span> <span class=kn>import</span> <span class=n>setup_download_dir</span><span class=p>,</span> <span class=n>get_links</span><span class=p>,</span> <span class=n>download_link</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>basicConfig</span><span class=p>(</span><span class=n>level</span><span class=o>=</span><span class=n>logging</span><span class=o>.</span><span class=n>INFO</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;</span><span class=si>%(asctime)s</span><span class=s1> - </span><span class=si>%(name)s</span><span class=s1> - </span><span class=si>%(levelname)s</span><span class=s1> - </span><span class=si>%(message)s</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>client_id</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>getenv</span><span class=p>(</span><span class=s1>&#39;IMGUR_CLIENT_ID&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>client_id</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Couldn&#39;t find IMGUR_CLIENT_ID environment variable!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_dir</span> <span class=o>=</span> <span class=n>setup_download_dir</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>links</span> <span class=o>=</span> <span class=n>get_links</span><span class=p>(</span><span class=n>client_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># By placing the executor inside a with block, the executors shutdown method</span>
+</span></span><span class=line><span class=cl>    <span class=c1># will be called cleaning up threads.</span>
+</span></span><span class=line><span class=cl>    <span class=c1># </span>
+</span></span><span class=line><span class=cl>    <span class=c1># By default, the executor sets number of workers to 5 times the number of</span>
+</span></span><span class=line><span class=cl>    <span class=c1># CPUs.</span>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=n>ThreadPoolExecutor</span><span class=p>()</span> <span class=k>as</span> <span class=n>executor</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Create a new partially applied function that stores the directory</span>
+</span></span><span class=line><span class=cl>        <span class=c1># argument.</span>
+</span></span><span class=line><span class=cl>        <span class=c1># </span>
+</span></span><span class=line><span class=cl>        <span class=c1># This allows the download_link function that normally takes two</span>
+</span></span><span class=line><span class=cl>        <span class=c1># arguments to work with the map function that expects a function of a</span>
+</span></span><span class=line><span class=cl>        <span class=c1># single argument.</span>
+</span></span><span class=line><span class=cl>        <span class=n>fn</span> <span class=o>=</span> <span class=n>partial</span><span class=p>(</span><span class=n>download_link</span><span class=p>,</span> <span class=n>download_dir</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=c1># Executes fn concurrently using threads on the links iterable. The</span>
+</span></span><span class=line><span class=cl>        <span class=c1># timeout is for the entire process, not a single call, so downloading</span>
+</span></span><span class=line><span class=cl>        <span class=c1># all images must complete within 30 seconds.</span>
+</span></span><span class=line><span class=cl>        <span class=n>executor</span><span class=o>.</span><span class=n>map</span><span class=p>(</span><span class=n>fn</span><span class=p>,</span> <span class=n>links</span><span class=p>,</span> <span class=n>timeout</span><span class=o>=</span><span class=mi>30</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now that we have downloaded all these images using our Python <code>ThreadPoolExecutor</code>, we can utilize them to test a CPU-bound task. Let&rsquo;s create thumbnail versions of all images, initially with a single-threaded, single-process script, and then compare its performance to a multiprocessing-based solution.</p><p>For resizing images, we&rsquo;ll use the <a class=link href=https://github.com/python-pillow/Pillow target=_blank rel=noopener>Pillow</a> library.</p><p>Here&rsquo;s our initial script:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>time</span> <span class=kn>import</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>PIL</span> <span class=kn>import</span> <span class=n>Image</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>basicConfig</span><span class=p>(</span><span class=n>level</span><span class=o>=</span><span class=n>logging</span><span class=o>.</span><span class=n>INFO</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;</span><span class=si>%(asctime)s</span><span class=s1> - </span><span class=si>%(name)s</span><span class=s1> - </span><span class=si>%(levelname)s</span><span class=s1> - </span><span class=si>%(message)s</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>create_thumbnail</span><span class=p>(</span><span class=n>size</span><span class=p>,</span> <span class=n>path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>    Creates a thumbnail of an image with the same name as image but with
+</span></span></span><span class=line><span class=cl><span class=s2>    _thumbnail appended before the extension.  E.g.:
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>    &gt;&gt;&gt; create_thumbnail((128, 128), &#39;image.jpg&#39;)
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>    A new thumbnail image is created with the name image_thumbnail.jpg
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>    :param size: A tuple of the width and height of the image
+</span></span></span><span class=line><span class=cl><span class=s2>    :param path: The path to the image file
+</span></span></span><span class=line><span class=cl><span class=s2>    :return: None
+</span></span></span><span class=line><span class=cl><span class=s2>    &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>image</span> <span class=o>=</span> <span class=n>Image</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>image</span><span class=o>.</span><span class=n>thumbnail</span><span class=p>(</span><span class=n>size</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>path</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>name</span> <span class=o>=</span> <span class=n>path</span><span class=o>.</span><span class=n>stem</span> <span class=o>+</span> <span class=s1>&#39;_thumbnail&#39;</span> <span class=o>+</span> <span class=n>path</span><span class=o>.</span><span class=n>suffix</span>
+</span></span><span class=line><span class=cl>    <span class=n>thumbnail_path</span> <span class=o>=</span> <span class=n>path</span><span class=o>.</span><span class=n>with_name</span><span class=p>(</span><span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>image</span><span class=o>.</span><span class=n>save</span><span class=p>(</span><span class=n>thumbnail_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ts</span> <span class=o>=</span> <span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>image_path</span> <span class=ow>in</span> <span class=n>Path</span><span class=p>(</span><span class=s1>&#39;images&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>iterdir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>create_thumbnail</span><span class=p>((</span><span class=mi>128</span><span class=p>,</span> <span class=mi>128</span><span class=p>),</span> <span class=n>image_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>logging</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Took </span><span class=si>%s</span><span class=s1>&#39;</span><span class=p>,</span> <span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>ts</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>This script iterates through the image file paths in the &ldquo;images&rdquo; folder. For each path, it calls the <code>create_thumbnail</code> function, which uses Pillow to open the image, generate a thumbnail, and save the resized image using the same name as the original, but with &ldquo;_thumbnail&rdquo; appended to it.</p><p>Running this script on 160 images, totaling 36 megabytes, takes 2.32 seconds. Now, let&rsquo;s see if we can improve this using a <a class=link href=https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor target=_blank rel=noopener>ProcessPoolExecutor</a>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>time</span> <span class=kn>import</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>functools</span> <span class=kn>import</span> <span class=n>partial</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>concurrent.futures</span> <span class=kn>import</span> <span class=n>ProcessPoolExecutor</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>PIL</span> <span class=kn>import</span> <span class=n>Image</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>basicConfig</span><span class=p>(</span><span class=n>level</span><span class=o>=</span><span class=n>logging</span><span class=o>.</span><span class=n>INFO</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;</span><span class=si>%(asctime)s</span><span class=s1> - </span><span class=si>%(name)s</span><span class=s1> - </span><span class=si>%(levelname)s</span><span class=s1> - </span><span class=si>%(message)s</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>create_thumbnail</span><span class=p>(</span><span class=n>size</span><span class=p>,</span> <span class=n>path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>    Creates a thumbnail of an image with the same name as image but with
+</span></span></span><span class=line><span class=cl><span class=s2>    _thumbnail appended before the extension. E.g.:
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>    &gt;&gt;&gt; create_thumbnail((128, 128), &#39;image.jpg&#39;)
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>    A new thumbnail image is created with the name image_thumbnail.jpg
+</span></span></span><span class=line><span class=cl><span class=s2>
+</span></span></span><span class=line><span class=cl><span class=s2>    :param size: A tuple of the width and height of the image
+</span></span></span><span class=line><span class=cl><span class=s2>    :param path: The path to the image file
+</span></span></span><span class=line><span class=cl><span class=s2>    :return: None
+</span></span></span><span class=line><span class=cl><span class=s2>    &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>path</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>name</span> <span class=o>=</span> <span class=n>path</span><span class=o>.</span><span class=n>stem</span> <span class=o>+</span> <span class=s1>&#39;_thumbnail&#39;</span> <span class=o>+</span> <span class=n>path</span><span class=o>.</span><span class=n>suffix</span>
+</span></span><span class=line><span class=cl>    <span class=n>thumbnail_path</span> <span class=o>=</span> <span class=n>path</span><span class=o>.</span><span class=n>with_name</span><span class=p>(</span><span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>image</span> <span class=o>=</span> <span class=n>Image</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>image</span><span class=o>.</span><span class=n>thumbnail</span><span class=p>(</span><span class=n>size</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>image</span><span class=o>.</span><span class=n>save</span><span class=p>(</span><span class=n>thumbnail_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>ts</span> <span class=o>=</span> <span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Partially apply the create_thumbnail method, setting the size to 128x128</span>
+</span></span><span class=line><span class=cl>    <span class=c1># and returning a function of a single argument.</span>
+</span></span><span class=line><span class=cl>    <span class=n>thumbnail_128</span> <span class=o>=</span> <span class=n>partial</span><span class=p>(</span><span class=n>create_thumbnail</span><span class=p>,</span> <span class=p>(</span><span class=mi>128</span><span class=p>,</span> <span class=mi>128</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Create the executor in a with block so shutdown is called when the block</span>
+</span></span><span class=line><span class=cl>    <span class=c1># is exited.</span>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=n>ProcessPoolExecutor</span><span class=p>()</span> <span class=k>as</span> <span class=n>executor</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>executor</span><span class=o>.</span><span class=n>map</span><span class=p>(</span><span class=n>thumbnail_128</span><span class=p>,</span> <span class=n>Path</span><span class=p>(</span><span class=s1>&#39;images&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>iterdir</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=n>logging</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Took </span><span class=si>%s</span><span class=s1>&#39;</span><span class=p>,</span> <span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>ts</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>create_thumbnail</code> method remains identical to the previous script. The primary difference is the creation of a <code>ProcessPoolExecutor</code>. We use the executor&rsquo;s <a class=link href=https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor.map target=_blank rel=noopener>map</a> method to create thumbnails in parallel. The <code>ProcessPoolExecutor</code> creates one subprocess for each CPU core by default. Running this script on the same set of 160 images took 1.05 seconds—a 2.2 times speed improvement!</p><h3 id=asyncawait-python-35-only>Async/Await (Python 3.5+ only)</h3><p>One of the most frequent requests in the comments on the original article was for an example using Python 3&rsquo;s <a class=link href=https://docs.python.org/3/library/asyncio.html#module-asyncio target=_blank rel=noopener>asyncio</a> module. This approach introduces some new Python syntax and concepts that might be unfamiliar to many developers. Additionally, Python&rsquo;s built-in <code>urllib</code> module is not asynchronous, which adds a layer of complexity. To fully utilize asyncio, we need to use an asynchronous HTTP library. For this purpose, we&rsquo;ll use <a class=link href=https://aiohttp.readthedocs.io/en/stable/index.html target=_blank rel=noopener>aiohttp</a>.</p><p>Let&rsquo;s dive into the code, and a detailed explanation will follow.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=kn>import</span> <span class=nn>asyncio</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>logging</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>time</span> <span class=kn>import</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>aiohttp</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>download</span> <span class=kn>import</span> <span class=n>setup_download_dir</span><span class=p>,</span> <span class=n>get_links</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>logging</span><span class=o>.</span><span class=n>basicConfig</span><span class=p>(</span><span class=n>level</span><span class=o>=</span><span class=n>logging</span><span class=o>.</span><span class=n>INFO</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;</span><span class=si>%(asctime)s</span><span class=s1> - </span><span class=si>%(name)s</span><span class=s1> - </span><span class=si>%(levelname)s</span><span class=s1> - </span><span class=si>%(message)s</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>logger</span> <span class=o>=</span> <span class=n>logging</span><span class=o>.</span><span class=n>getLogger</span><span class=p>(</span><span class=vm>__name__</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>async_download_link</span><span class=p>(</span><span class=n>session</span><span class=p>,</span> <span class=n>directory</span><span class=p>,</span> <span class=n>link</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>    Async version of the download_link method we&#39;ve been using in the other examples.
+</span></span></span><span class=line><span class=cl><span class=s2>    :param session: aiohttp ClientSession
+</span></span></span><span class=line><span class=cl><span class=s2>    :param directory: directory to save downloads
+</span></span></span><span class=line><span class=cl><span class=s2>    :param link: the url of the link to download
+</span></span></span><span class=line><span class=cl><span class=s2>    :return:
+</span></span></span><span class=line><span class=cl><span class=s2>    &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_path</span> <span class=o>=</span> <span class=n>directory</span> <span class=o>/</span> <span class=n>os</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>basename</span><span class=p>(</span><span class=n>link</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>async</span> <span class=k>with</span> <span class=n>session</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=n>link</span><span class=p>)</span> <span class=k>as</span> <span class=n>response</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=n>download_path</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=s1>&#39;wb&#39;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>while</span> <span class=kc>True</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=c1># await pauses execution until the 1024 (or less) bytes are read from the stream</span>
+</span></span><span class=line><span class=cl>                <span class=n>chunk</span> <span class=o>=</span> <span class=k>await</span> <span class=n>response</span><span class=o>.</span><span class=n>content</span><span class=o>.</span><span class=n>read</span><span class=p>(</span><span class=mi>1024</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=ow>not</span> <span class=n>chunk</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=c1># We are done reading the file, break out of the while loop</span>
+</span></span><span class=line><span class=cl>                    <span class=k>break</span>
+</span></span><span class=line><span class=cl>                <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>chunk</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Downloaded </span><span class=si>%s</span><span class=s1>&#39;</span><span class=p>,</span> <span class=n>link</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Main is now a coroutine</span>
+</span></span><span class=line><span class=cl><span class=k>async</span> <span class=k>def</span> <span class=nf>main</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=n>client_id</span> <span class=o>=</span> <span class=n>os</span><span class=o>.</span><span class=n>getenv</span><span class=p>(</span><span class=s1>&#39;IMGUR_CLIENT_ID&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>client_id</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>raise</span> <span class=ne>Exception</span><span class=p>(</span><span class=s2>&#34;Couldn&#39;t find IMGUR_CLIENT_ID environment variable!&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>download_dir</span> <span class=o>=</span> <span class=n>setup_download_dir</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=c1># We use a session to take advantage of tcp keep-alive</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Set a 3 second read and connect timeout. Default is 5 minutes</span>
+</span></span><span class=line><span class=cl>    <span class=k>async</span> <span class=k>with</span> <span class=n>aiohttp</span><span class=o>.</span><span class=n>ClientSession</span><span class=p>(</span><span class=n>conn_timeout</span><span class=o>=</span><span class=mi>3</span><span class=p>,</span> <span class=n>read_timeout</span><span class=o>=</span><span class=mi>3</span><span class=p>)</span> <span class=k>as</span> <span class=n>session</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>tasks</span> <span class=o>=</span> <span class=p>[(</span><span class=n>async_download_link</span><span class=p>(</span><span class=n>session</span><span class=p>,</span> <span class=n>download_dir</span><span class=p>,</span> <span class=n>l</span><span class=p>))</span> <span class=k>for</span> <span class=n>l</span> <span class=ow>in</span> <span class=n>get_links</span><span class=p>(</span><span class=n>client_id</span><span class=p>)]</span>
+</span></span><span class=line><span class=cl>        <span class=c1># gather aggregates all the tasks and schedules them in the event loop</span>
+</span></span><span class=line><span class=cl>        <span class=k>await</span> <span class=n>asyncio</span><span class=o>.</span><span class=n>gather</span><span class=p>(</span><span class=o>*</span><span class=n>tasks</span><span class=p>,</span> <span class=n>return_exceptions</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>ts</span> <span class=o>=</span> <span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=c1># Create the asyncio event loop</span>
+</span></span><span class=line><span class=cl>    <span class=n>loop</span> <span class=o>=</span> <span class=n>asyncio</span><span class=o>.</span><span class=n>get_event_loop</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>loop</span><span class=o>.</span><span class=n>run_until_complete</span><span class=p>(</span><span class=n>main</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>    <span class=k>finally</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=c1># Shutdown the loop even if there is an exception</span>
+</span></span><span class=line><span class=cl>        <span class=n>loop</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=n>logger</span><span class=o>.</span><span class=n>info</span><span class=p>(</span><span class=s1>&#39;Took </span><span class=si>%s</span><span class=s1> seconds to complete&#39;</span><span class=p>,</span> <span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>ts</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>There&rsquo;s quite a bit to unpack here. Let&rsquo;s start with the main entry point of our program. The first thing we do with the asyncio module is acquire the event loop. The event loop manages the execution of our asynchronous code. We then run the loop until it&rsquo;s complete, providing it with the <code>main</code> function. You&rsquo;ll notice new syntax in the definition of the <code>main</code> function: <code>async def</code>. You&rsquo;ll also see <code>await</code> and <code>with async</code> used within the code.</p><p>The <code>async/await</code> syntax was introduced in <a class=link href=https://www.python.org/dev/peps/pep-0492/ target=_blank rel=noopener>PEP492</a>. The <code>async def</code> syntax designates a function as a <a class=link href=https://www.python.org/dev/peps/pep-0492/#coroutine-objects target=_blank rel=noopener>coroutine</a>. Coroutines are internally based on Python generators, but they are not exactly the same. Similar to generators returning a generator object, coroutines return a coroutine object. To obtain the result of a coroutine, we use the <code>await</code> expression. When a coroutine calls <code>await</code>, its execution is suspended until the awaited task is complete. This suspension allows other tasks to run while the coroutine is waiting for a result. This result is typically some form of I/O operation, like a database request or, in our case, an HTTP request.</p><p>The <code>download_link</code> function required significant modification. Previously, it relied on <code>urllib</code> to handle most of the image reading process. To make our method compatible with asynchronous programming, we&rsquo;ve introduced a <code>while</code> loop that reads chunks of the image and suspends execution while waiting for the I/O operation to finish. This approach enables the event loop to cycle through downloading multiple images, switching between them as new data becomes available during download.</p><h2 id=there-should-be-oneand-preferably-only-oneobvious-way-to-do-it>There Should Be One—and Preferably Only One—Obvious Way to Do It</h2><p>Although the <a class=link href=https://www.python.org/dev/peps/pep-0020/ target=_blank rel=noopener>zen of Python</a> emphasizes having one clear way to accomplish a task, Python provides numerous approaches to incorporating concurrency into our programs. The most suitable method depends on your specific needs. Asynchronous programming scales better than threading or multiprocessing for highly concurrent workloads, such as web servers. However, to fully leverage its benefits, your code and its dependencies need to be asynchronous.</p><p>This article and its updated examples aim to guide you in understanding concurrency options within the Python standard library. I hope they provide a starting point for adding concurrency to your Python projects.</p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><footer class=site-footer><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3987358164777632" crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-5X67X4Q4")</script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5X67X4Q4" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
